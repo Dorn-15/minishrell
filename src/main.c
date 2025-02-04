@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/04 12:29:37 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:49:10 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	main(int ac, char **av, char **env)
 
 	bash_start();
 	cmd = read_cmd();
-	while (cmd) {
+	while (cmd)
+	{
 		if (!*cmd)
 			printf("cmd = NULL\n");
 		else
@@ -47,8 +48,7 @@ int	main(int ac, char **av, char **env)
 				cmd_path = find_path(cmd_tab[0], env);
 				if (!cmd_path)
 				{
-					ft_putstr_fd(cmd_tab[0], 2);
-					ft_putstr_fd(": command not found\n", 2);
+					cmd_not_found(cmd_tab[0]);
 					free_split(cmd_tab);
 					exit(127);
 				}

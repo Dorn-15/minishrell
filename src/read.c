@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:16:49 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/04 11:20:04 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/04 16:47:38 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ char	*read_cmd(void)
 
 	buffer = NULL;
 	bytes_read = getline(&buffer, &buf_size, stdin);
-	if (bytes_read == -1){
+	if (bytes_read == -1)
+	{
 		free(buffer);
 		return (NULL);
 	}
