@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/04 16:49:10 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/05 18:30:58 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,52 +15,42 @@
 void	exec_cmd(char *path, char **arg, char **env)
 {
 	execve(path, arg, env);
-	free(path);
-	free(arg);
+	kill_cmd(errno);
 }
 
 int	main(int ac, char **av, char **env)
 {
-	char	*cmd;
-	char	*cmd_path;
-	char	**cmd_tab;
-	__pid_t	pid;
+	pid_t	pid;
+	t_alloc *mem;
 
+	mem = kill_cmd(0);
 	bash_start();
-	cmd = read_cmd();
-	while (cmd)
+	mem->cmd = read_cmd();
+	while (mem->cmd)
 	{
-		if (!*cmd)
-			printf("cmd = NULL\n");
-		else
+		if (*(mem->cmd))
 		{
-			//a remplacer par le parsing
 			pid = fork();
 			if (pid == -1)
 			{
-				free_split(cmd_tab);
 				perror("fork");
-				exit(EXIT_FAILURE);
+				kill_cmd(EXIT_FAILURE);
 			}
 			if (pid == 0)
 			{
-				cmd_tab = ft_split(cmd, ' ');
-				cmd_path = find_path(cmd_tab[0], env);
-				if (!cmd_path)
-				{
-					cmd_not_found(cmd_tab[0]);
-					free_split(cmd_tab);
-					exit(127);
-				}
-				exec_cmd(cmd_path, cmd_tab, env);
+				mem->cmd_tab = ft_split(mem->cmd, ' ');
+				mem->cmd_path = find_path(mem->cmd_tab[0], env);
+				if (!mem->cmd_path)
+					cmd_not_found(mem->cmd_tab[0]);
+				exec_cmd(mem->cmd_path, mem->cmd_tab, env);
 			}
 		}
 		waitpid(pid, NULL, 0);
-		if (cmd)
-			free(cmd);
+		if (mem->cmd)
+			free(mem->cmd);
 		bash_start();
-		cmd = read_cmd();
+		mem->cmd = read_cmd();
 	}
-	printf("exit \n");
+	kill_cmd(0);
 	return (0);
 }

@@ -1,31 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 11:16:49 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/05 17:23:05 by adoireau         ###   ########.fr       */
+/*   Created: 2025/02/05 11:58:33 by adoireau          #+#    #+#             */
+/*   Updated: 2025/02/05 18:27:41 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-char	*read_cmd(void)
+void	pwd_cmd(void)
 {
-	char	*buffer;
-	size_t	buf_size;
-	ssize_t	bytes_read;
+	char path[PATH_MAX];
 
-	buffer = NULL;
-	bytes_read = getline(&buffer, &buf_size, stdin);
-	if (bytes_read == -1)
+	if (getcwd(path, sizeof(path)) == NULL)
 	{
-		free(buffer);
-		return (NULL);
+		perror("pwd: error retrieving current directory: getcwd");
+		kill_cmd(errno);
 	}
-	if (buffer[bytes_read - 1] == '\n')
-		buffer[bytes_read - 1] = '\0';
-	return (buffer);
+	printf("%s\n", path);
+	kill_cmd(0);
 }

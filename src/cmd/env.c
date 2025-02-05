@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   read.c                                             :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 11:16:49 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/05 17:23:05 by adoireau         ###   ########.fr       */
+/*   Created: 2025/02/05 12:43:20 by adoireau          #+#    #+#             */
+/*   Updated: 2025/02/05 18:30:44 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-char	*read_cmd(void)
+void	env_cmd(char **env)
 {
-	char	*buffer;
-	size_t	buf_size;
-	ssize_t	bytes_read;
+	int i;
 
-	buffer = NULL;
-	bytes_read = getline(&buffer, &buf_size, stdin);
-	if (bytes_read == -1)
+	if (!env)
+		kill_cmd(0);
+	i = 0;
+	while (env[i])
 	{
-		free(buffer);
-		return (NULL);
+		printf("%s\n", env[i]);
+		i++;
 	}
-	if (buffer[bytes_read - 1] == '\n')
-		buffer[bytes_read - 1] = '\0';
-	return (buffer);
+	kill_cmd(0);
 }

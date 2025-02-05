@@ -6,13 +6,14 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:32 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/04 11:56:31 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/05 17:22:47 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-char	*try_direct_path(char *cmd)
+/* try to access at cmd if start by '.' or '/' */
+static char	*try_direct_path(char *cmd)
 {
 	if (!cmd)
 		return (NULL);
@@ -21,7 +22,8 @@ char	*try_direct_path(char *cmd)
 	return (NULL);
 }
 
-char	*get_path_string(char **env)
+/* chr PATh line on env */
+static char	*get_path_string(char **env)
 {
 	int	i;
 
@@ -33,7 +35,8 @@ char	*get_path_string(char **env)
 	return (env[i] + 5);
 }
 
-char	*try_path(char *path_dir, char *cmd)
+/* join potential path to cmd name & try to access */
+static char	*try_path(char *path_dir, char *cmd)
 {
 	char	*full_path;
 	char	*cmd_path;
