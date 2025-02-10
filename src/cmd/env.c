@@ -6,23 +6,24 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 12:43:20 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/05 18:30:44 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:54:29 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+/* voir si ajouter les cas d'erreur de env */
 void	env_cmd(char **env)
 {
-	int i;
+	int	i;
 
 	if (!env)
-		kill_cmd(0);
+		return ;
 	i = 0;
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		if (ft_strchr(env[i], '='))
+			printf("%s\n", env[i]);
 		i++;
 	}
-	kill_cmd(0);
 }

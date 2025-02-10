@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:32 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/05 17:22:47 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/10 17:15:27 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,6 @@ static char	*try_direct_path(char *cmd)
 	return (NULL);
 }
 
-/* chr PATh line on env */
-static char	*get_path_string(char **env)
-{
-	int	i;
-
-	i = 0;
-	while (env[i] && ft_strncmp(env[i], "PATH=", 5))
-		i++;
-	if (!env[i])
-		return (NULL);
-	return (env[i] + 5);
-}
-
 /* join potential path to cmd name & try to access */
 static char	*try_path(char *path_dir, char *cmd)
 {
@@ -46,7 +33,9 @@ static char	*try_path(char *path_dir, char *cmd)
 		return (NULL);
 	cmd_path = ft_strjoin(full_path, cmd);
 	free(full_path);
-	if (cmd_path && access(cmd_path, X_OK) == 0)
+	if (!cmd_path)
+		return (NULL);
+	if (access(cmd_path, X_OK) == 0)
 		return (cmd_path);
 	free(cmd_path);
 	return (NULL);
@@ -61,11 +50,11 @@ char	*find_path(char *cmd, char **env)
 	cmd_path = try_direct_path(cmd);
 	if (cmd_path || !env)
 		return (cmd_path);
-	paths = ft_split(get_path_string(env), ':');
+	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 		return (NULL);
-	i = 0;
-	while (paths[i])
+	i = -1;
+	while (paths[++i])
 	{
 		cmd_path = try_path(paths[i], cmd);
 		if (cmd_path)
@@ -73,7 +62,6 @@ char	*find_path(char *cmd, char **env)
 			free_split(paths);
 			return (cmd_path);
 		}
-		i++;
 	}
 	free_split(paths);
 	return (NULL);

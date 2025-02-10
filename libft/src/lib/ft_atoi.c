@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/30 15:06:15 by adoireau          #+#    #+#             */
-/*   Updated: 2024/12/04 16:47:26 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/10 16:54:15 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_atoi(const char *str)
 	int	s;
 	int	r;
 
+	if (!str)
+		return (0);
 	i = 0;
 	s = 1;
 	r = 0;

@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   kill.c                                             :+:      :+:    :+:   */
+/*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/05 18:24:12 by adoireau         ###   ########.fr       */
+/*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
+/*   Updated: 2025/02/10 17:50:15 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/minishell.h"
+#include "../inc/minishell.h"
 
-static void	init_mem(t_alloc **mem)
+void	null_mem(t_alloc *mem)
 {
-	(*mem)->cmd_path = NULL;
-	(*mem)->cmd_tab = NULL;
-	(*mem)->cmd = NULL;
+	if (mem->cmd_path)
+	{
+		free(mem->cmd_path);
+		mem->cmd_path = NULL;
+	}
+	if (mem->cmd_tab)
+	{
+		free_split(mem->cmd_tab);
+		mem->cmd_tab = NULL;
+	}
+	if (mem->cmd)
+	{
+		free(mem->cmd);
+		mem->cmd = NULL;
+	}
 }
 
-static void	free_mem(t_alloc *mem)
+void	free_mem(t_alloc *mem)
 {
 	if (mem->cmd_path)
 		free(mem->cmd_path);
@@ -27,19 +39,20 @@ static void	free_mem(t_alloc *mem)
 		free_split(mem->cmd_tab);
 	if (mem->cmd)
 		free(mem->cmd);
-	free(mem);
+	if (mem->env)
+		free_split(mem->env);
 }
 
-t_alloc	*kill_cmd(int err)
+t_alloc	*mem_exit(int err)
 {
 	static t_alloc	*mem = NULL;
 
 	if (!mem)
 	{
-		mem = malloc(sizeof(t_alloc));
-		init_mem(&mem);
+		mem = ft_calloc(1, sizeof(t_alloc));
 		return (mem);
 	}
 	free_mem(mem);
+	free(mem);
 	exit(err);
 }

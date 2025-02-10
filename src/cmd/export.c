@@ -1,26 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   write.c                                            :+:      :+:    :+:   */
+/*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/04 11:19:17 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/10 17:15:22 by adoireau         ###   ########.fr       */
+/*   Created: 2025/02/06 12:21:41 by adoireau          #+#    #+#             */
+/*   Updated: 2025/02/10 17:52:44 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
+#include "../../inc/minishell.h"
 
-void	bash_start(void)
+/*chercher tous les cas particulier de export*/
+void	export_cmd(char **env, char *arg)
 {
-	write(1, "minishell$ ", 11);
-}
-
-void	cmd_not_found(char *cmd)
-{
-	ft_putstr_fd("minishell: ", 2);
-	ft_putstr_fd(cmd, 2);
-	ft_putstr_fd(": command not found\n", 2);
-	mem_exit(127);
+	if (!arg)
+		env_cmd(env);
 }
