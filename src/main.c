@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/10 17:56:09 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:09:33 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ static int	try_builtins(t_alloc *mem)
 {
 	if (!ft_strcmp(mem->cmd_tab[0], "pwd"))
 	{
-		pwd_cmd();
+		//a envoyer dans un processus enfant ou trouver le moyen de changer l'errno
+		pwd_cmd(mem->env, mem->cmd_tab[1]);
 		return (0);
 	}
 	else if (!ft_strcmp(mem->cmd_tab[0], "exit"))
-		exit_cmd(mem->cmd_tab[1]);
+		exit_cmd(mem->cmd_tab);
 	else if(!ft_strcmp(mem->cmd_tab[0], "env"))
 	{
 		env_cmd(mem->env);
@@ -86,6 +87,7 @@ int	main(int ac, char **av, char **env)
 	mem = mem_exit(0);
 	mem->env = dup_env(env);
 	shell_loop(mem);
+	printf("\n");
 	mem_exit(0);
 	return (0);
 }

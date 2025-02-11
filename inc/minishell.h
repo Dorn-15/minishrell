@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/10 17:47:20 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/11 10:10:14 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ char		**dup_env(char **env);
 char		*find_path(char *cmd, char **env);
 
 void		env_cmd(char **env);
-void		pwd_cmd(void);
-void		exit_cmd(char *err);
+void		pwd_cmd(char **env, char *argm);
+void		exit_cmd(char **arg);
 void		free_mem(t_alloc *mem);
-t_alloc		*mem_exit(int err);
+t_alloc	*mem_exit(int err);
 void		null_mem(t_alloc *mem);
 
 

@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:28 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/10 17:54:34 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/10 20:20:15 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,31 @@ bash: cd: HOME not set
 
 exit (0), valid
 exit (1), fail
+
+use change_dir pour changer sur l'env principale puis aply env[pwd] a newenv
 */
 
 void	cd_cmd(char **arg, char **env)
 {
-	int i;
+	int	i;
+	int	pwd;
+	int	oldpwd;
 
-	i = 0;
 	if (!arg || !env)
 		return;
+	i = 0;
+	pwd = -1;
+	oldpwd = -1;
+	while(env[i])
+	{
+		if (ft_strncmp(env[i], "PWD=", 4))
+			pwd = i;
+		if (ft_strncmp(env[i], "OLDPWD=", 8))
+			oldpwd = i;
+		i++;
+	}
+	if (pwd == -1)
+	{
+		//dup + 1 de env
+	}
 }
