@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/11 10:10:14 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:20:18 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ typedef struct s_alloc
 	char	**cmd_tab;
 	char	*cmd_path;
 	char	*cmd;
+	int	exit_status;
 }	t_alloc;
 
 char		*read_cmd(void);
@@ -40,12 +41,15 @@ char		**dup_env(char **env);
 
 char		*find_path(char *cmd, char **env);
 
-void		env_cmd(char **env);
-void		pwd_cmd(char **env, char *argm);
-void		exit_cmd(char **arg);
+int		env_cmd(char **env, char **arg);
+int		pwd_cmd(char **env, char *argm);
+int		exit_cmd(char **arg);
 void		free_mem(t_alloc *mem);
 t_alloc	*mem_exit(int err);
 void		null_mem(t_alloc *mem);
 
-
+void		put_no_such_file(char *cmd, char *arg);
+void		put_invalid_option(char *cmd, char arg);
+void		put_unrecognized_option(char *cmd, char *arg);
+void		put_permission_denied(char *cmd, char *arg);
 #endif

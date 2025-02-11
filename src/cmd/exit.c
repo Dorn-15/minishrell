@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/11 10:26:44 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/11 17:28:33 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	str_isdigit(char *arg)
 {
 	int i;
-	
+
 	i = 0;
 	while(arg[i])
 	{
@@ -26,23 +26,25 @@ static int	str_isdigit(char *arg)
 	return(0);
 }
 
-void	exit_cmd(char **arg)
+int	exit_cmd(char **arg)
 {
-	if (arg && arg[0])
+	if (!arg || !arg[0] || (arg[0] && !arg[1]))
 	{
-	  	if (!arg[1])
-			mem_exit(0);
-		if (str_isdigit(arg[1]))
-		{
-			if (arg[2])
-				//message d'erreur trop d'arguments et juste return 
-			else
-				mem_exit(ft_atoi(arg));
-		}
-		else
-		{
-			//message d'erreur argument numérique nécessaire
-			mem_exit(2);
-		}
+		ft_putstr_fd("exit\n", 1);
+		mem_exit(0);
 	}
+	if (str_isdigit(arg[1]) != 0)
+	{
+		ft_putstr_fd("exit\nbash: exit: ", 2);
+		ft_putstr_fd(arg[1], 2);
+		ft_putstr_fd(": numeric argument required\n", 2);
+		mem_exit(2);
+	}
+	else if (arg[2])
+	{
+		ft_putstr_fd("exit\nbash: exit: too many arguments\n", 2);
+		return (1);
+	}
+	ft_putstr_fd("exit\n", 1);
+	mem_exit(ft_atoi(arg[1]));
 }

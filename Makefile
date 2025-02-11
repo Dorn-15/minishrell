@@ -11,7 +11,8 @@ SRCS = src/main.c \
 	src/mem.c \
 	src/cmd/env.c \
 	src/cmd/exit.c \
-	src/cmd/pwd.c
+	src/cmd/pwd.c \
+	src/err.c
 
 OBJS = $(SRCS:.c=.o)
 

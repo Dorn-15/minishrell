@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:28 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/10 20:20:15 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/11 12:38:33 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,21 +17,20 @@
 oldpwd = pwd
 
 cd = (pwd == home)
-cd - = (pwd == OLDPWD)
-cd /xxx = (pwd == "/xxx")
+cd - = (pwd == OLDPWD) swap pwd et oldpwd
+cd /xxx = (pwd == "/xxx") envoie brut dans change dir
 
-cd ./xxx = rester sur le dossier actuel
+cd ./xxx = join du pwd actuel avec le xxx en suprimant tous les autres ./
 cd xxx = ./xxx
 
-cd ../xxx = revenir au dossier precedant
+cd ../xxx = supr le dernier str de pwd jusquau / en partant de la fin
 
 cd ~/xxx = valide uniquement en premier start at $home/xxx
-ne pas geree si home n'existe pas
-
+chemin absolut si home n'existe pas
 
 accepter les / a la fin mais de pas les ajouter a env
-accepte les in et out file mais ne renvoie rien
-ne s'execute pas avec des pip | devant et derriere
+accepte les in et out file mais ne renvoie rien (geree au parsing)
+pas d'impacte avec les pip cat procesusse enfant
 
 bash: cd: to many argument
 bash: cd: (arg): No such file or directory
