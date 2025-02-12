@@ -9,10 +9,12 @@ SRCS = src/main.c \
 	src/write.c \
 	src/env_utile.c \
 	src/mem.c \
-	src/cmd/env.c \
+	src/cmd/env/env.c \
+	src/cmd/env/env_err.c \
 	src/cmd/exit.c \
 	src/cmd/pwd.c \
-	src/err.c
+	src/cmd/export/export.c \
+	src/cmd/export/export_sort.c
 
 OBJS = $(SRCS:.c=.o)
 

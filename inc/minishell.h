@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/11 17:20:18 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:33:02 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <limits.h>
 # include <fcntl.h>
 # include <sys/wait.h>
+# include <sys/types.h>
+# include <sys/stat.h>
 
 typedef struct s_alloc
 {
@@ -37,19 +39,25 @@ char		*read_cmd(void);
 void		bash_start(void);
 void		cmd_not_found(char *cmd);
 
+void		swap_env(char **env1, char **env2);
 char		**dup_env(char **env);
+char		**tmp_env(char **env);
 
 char		*find_path(char *cmd, char **env);
 
 int		env_cmd(char **env, char **arg);
-int		pwd_cmd(char **env, char *argm);
+void		env_no_such_file(char *arg);
+void		env_invalid_option(char arg);
+void		env_unrecognized_option(char *arg);
+void		env_permission_denied(char *arg);
+
+int		pwd_cmd(char **arg);
 int		exit_cmd(char **arg);
+int		export_cmd(char **env, char **arg);
+int		sort_export(char **env);
+
 void		free_mem(t_alloc *mem);
 t_alloc	*mem_exit(int err);
 void		null_mem(t_alloc *mem);
 
-void		put_no_such_file(char *cmd, char *arg);
-void		put_invalid_option(char *cmd, char arg);
-void		put_unrecognized_option(char *cmd, char *arg);
-void		put_permission_denied(char *cmd, char *arg);
 #endif

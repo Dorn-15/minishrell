@@ -6,11 +6,20 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:38:29 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/10 17:54:40 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:27:27 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+void	swap_env(char **env1, char **env2)
+{
+	char	*tmp;
+
+	tmp = *env1;
+	*env1 = *env2;
+	*env2 = tmp;
+}
 
 static char	**new_env(void)
 {
@@ -19,10 +28,7 @@ static char	**new_env(void)
 
 	env = ft_calloc(4, sizeof(char*));
 	if (!env)
-	{
-		perror("new_env");
-		mem_exit(errno);
-	}
+		mem_exit(EXIT_FAILURE);
 	env[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
 	env[1] = ft_strdup("SHLVL=1");
 	env[2] = ft_strdup("_=");
@@ -51,12 +57,29 @@ char	**dup_env(char **env)
 		i++;
 	envb = ft_calloc(i + 1, sizeof(char*));
 	if (!(envb))
-	{
-		perror("dup_env");
-		mem_exit(errno);
-	}
+		mem_exit(EXIT_FAILURE);
 	i = -1;
 	while (env[++i])
 		envb[i] = ft_strdup(env[i]);
 	return(envb);
+}
+
+char **tmp_env(char **env)
+{
+	char	**tmp;
+	int		i;
+
+	i = 0;
+	while (env[i])
+		i++;
+	tmp = ft_calloc(i + 1, sizeof(char*));
+	if (!tmp)
+		return (NULL);
+	i = 0;
+	while (env[i])
+	{
+		tmp[i] = env[i];
+		i++;
+	}
+	return (tmp);
 }

@@ -6,37 +6,41 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:58:33 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/11 17:23:50 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:33:08 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	pwd_cmd(char **env, char *arg)
+static int	pwd_err_access(void)
+{
+	ft_putstr_fd("pwd: error retrieving current directory: getcwd: ", 2);
+	ft_putstr_fd("cannot access parent directories: ", 2);
+	ft_putstr_fd("No such file or directory\n", 2);
+	return (1);
+}
+
+static int	pwd_err_options(char arg)
+{
+	ft_putstr_fd("bash: pwd: -", 2);
+	ft_putchar_fd(arg, 2);
+	ft_putstr_fd(": invalid option\n", 2);
+	ft_putstr_fd("pwd: usage: pwd [no options]\n", 2);
+	return (2);
+}
+
+int	pwd_cmd(char **arg)
 {
 	char	cwd[PATH_MAX];
-
-	if (arg && arg[0] == '-')
-	{
-		if ((arg[1] && arg[1] != '-') || (arg[1] == '-' && arg[2]))
-		{
-			ft_putstr_fd("pwd: -", 2);
-			ft_putchar_fd(arg[1], 2);
-			ft_putstr_fd(" : option non valable\n", 2);
-			ft_putstr_fd("pwd : utilisation :pwd [no options]\n", 2);
-			return (2);
-		}
-	}
-	if (getcwd(cwd, sizeof(cwd)) != NULL)
-	{
-		printf("%s\n", cwd);
+	
+	if (!arg && !arg[0])
 		return (0);
-	}
-	else
-	{
-		ft_putstr_fd("pwd: error retrieving current directory: getcwd: ", 2);
-		ft_putstr_fd("cannot access parent directories: ", 2);
-		ft_putstr_fd("No such file or directory\n", 2);
-		return (1);
-	}
+	else if (arg[1] && arg[1][0] == '-' 
+		&& ((arg[1][1] && arg[1][1] != '-') 
+		|| (arg[1][1] == '-' && arg[1][2])))
+		return (pwd_err_options(arg[1][1]));
+	else if (getcwd(cwd, sizeof(cwd)) == NULL)
+		return (pwd_err_access());
+	printf("%s\n", cwd);
+	return (0);
 }
