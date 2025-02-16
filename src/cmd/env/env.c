@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 12:43:20 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/12 12:36:45 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/16 18:19:42 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 static int	env_err(char **arg)
 {
-	struct stat st;
-	
-	if (arg[1][0] == '-') 
+	struct stat	st;
+
+	if (arg[1][0] == '-')
 	{
 		if (arg[1][1] == '\0' || arg[1][1] != '-')
 			env_invalid_option(arg[1][1]);
@@ -40,20 +40,20 @@ static int	env_err(char **arg)
 	}
 }
 
-int	env_cmd(char **env, char **arg) {
-	int	i = 0;
-	
+int	env_cmd(char **env, char **arg)
+{
+	int	i;
+
+	i = 0;
 	if (!env)
 		return (1);
-	if (arg && arg[0] && arg[1]) 
+	if (arg && arg[0] && arg[1])
 		return (env_err(arg));
-	while (env[i]) 
-	{ 
-		if (ft_strchr(env[i], '=')) 
-		{
+	while (env[i])
+	{
+		if (ft_strchr(env[i], '='))
 			printf("%s\n", env[i]);
-			i++;
-		}
+		i++;
 	}
 	return (0);
 }

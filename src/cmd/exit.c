@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/12 15:33:15 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:54:51 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static int	str_isdigit(char *arg)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(arg[i])
+	while (arg[i])
 	{
 		if (!ft_isdigit(arg[i]))
-			return(1);
+			return (1);
 		i++;
 	}
-	return(0);
+	return (0);
 }
 
 int	exit_cmd(char **arg)

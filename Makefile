@@ -14,7 +14,9 @@ SRCS = src/main.c \
 	src/cmd/exit.c \
 	src/cmd/pwd.c \
 	src/cmd/export/export.c \
-	src/cmd/export/export_sort.c
+	src/cmd/export/export_sort.c \
+	src/cmd/export/export_add.c \
+	src/cmd/unset/unset.c
 
 OBJS = $(SRCS:.c=.o)
 

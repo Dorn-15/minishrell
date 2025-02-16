@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:38:29 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/12 16:54:58 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:58:48 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@ void	swap_env(char **env1, char **env2)
 
 static char	**new_env(void)
 {
-	char **env;
-	char cwd[PATH_MAX];
-	
-	env = ft_calloc(4, sizeof(char*));
+	char	**env;
+	char	cwd[PATH_MAX];
+
+	env = ft_calloc(4, sizeof(char *));
 	if (!env)
 		mem_exit(EXIT_FAILURE);
 	env[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
@@ -42,20 +42,20 @@ static char	**new_env(void)
 			free(env[2]);
 		free(env);
 	}
-	return(env);
+	return (env);
 }
 
 char	**dup_env(char **env)
 {
-	int	i;
-	char **envb;
+	int		i;
+	char	**envb;
 
 	if (!env || !env[0])
 		return (new_env());
 	i = 0;
 	while (env[i])
 		i++;
-	envb = ft_calloc(i + 1, sizeof(char*));
+	envb = ft_calloc(i + 1, sizeof(char *));
 	if (!(envb))
 		mem_exit(EXIT_FAILURE);
 	i = -1;
@@ -66,10 +66,10 @@ char	**dup_env(char **env)
 		else
 			envb[i] = ft_strdup("_=/usr/bin/env");
 	}
-	return(envb);
+	return (envb);
 }
 
-char **tmp_env(char **env)
+char	**tmp_env(char **env)
 {
 	char	**tmp;
 	int		i;
@@ -77,7 +77,7 @@ char **tmp_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	tmp = ft_calloc(i + 1, sizeof(char*));
+	tmp = ft_calloc(i + 1, sizeof(char *));
 	if (!tmp)
 		return (NULL);
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 16:15:38 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/12 17:21:46 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:53:33 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	env_no_such_file(char *arg)
 	ft_putstr_fd(arg, 2);
 	ft_putstr_fd("': no such file or directory\n", 2);
 }
+
 void	env_permission_denied(char *arg)
 {
 	ft_putstr_fd("env: '", 2);

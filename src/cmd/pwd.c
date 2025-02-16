@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:58:33 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/12 16:55:12 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/13 11:56:02 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ static int	pwd_err_options(char arg)
 int	pwd_cmd(char **arg)
 {
 	char	cwd[PATH_MAX];
-	
+
 	if (!arg && !arg[0])
 		return (0);
-	else if (arg[1] && arg[1][0] == '-' 
-		&& ((arg[1][1] && arg[1][1] != '-') 
-		|| (arg[1][1] == '-' && arg[1][2])))
+	else if (arg[1] && arg[1][0] == '-'
+			&& ((arg[1][1] && arg[1][1] != '-')
+			|| (arg[1][1] == '-' && arg[1][2])))
 		return (pwd_err_options(arg[1][1]));
 	else if (getcwd(cwd, sizeof(cwd)) == NULL)
 		return (pwd_err_access());

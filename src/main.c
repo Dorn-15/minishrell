@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/12 16:55:28 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/16 19:00:57 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	child_process(t_alloc *mem)
 {
 	pid_t	pid;
-	int	status;
+	int		status;
 
 	pid = fork();
 	if (pid == -1)
@@ -35,9 +35,9 @@ static void	child_process(t_alloc *mem)
 		mem->exit_status = 128 + WTERMSIG(status);
 }
 
+//remplacer la foret de if par un double tableau
 static int	try_builtins(t_alloc *mem)
 {
-	//remplacer la foret de if par un double tableau qui me renvoie la valeur pour definir les builtins
 	if (!ft_strcmp(mem->cmd_tab[0], "pwd"))
 	{
 		mem->exit_status = pwd_cmd(mem->cmd_tab);
@@ -48,14 +48,19 @@ static int	try_builtins(t_alloc *mem)
 		mem->exit_status = exit_cmd(mem->cmd_tab);
 		return (0);
 	}
-	else if(!ft_strcmp(mem->cmd_tab[0], "env"))
+	else if (!ft_strcmp(mem->cmd_tab[0], "env"))
 	{
 		mem->exit_status = env_cmd(mem->env, mem->cmd_tab);
 		return (0);
 	}
 	else if (!ft_strcmp(mem->cmd_tab[0], "export"))
 	{
-		mem->exit_status = export_cmd(mem->env, mem->cmd_tab);
+		mem->exit_status = export_cmd(mem, mem->cmd_tab);
+		return (0);
+	}
+	else if (!ft_strcmp(mem->cmd_tab[0], "unset"))
+	{
+		mem->exit_status = unset_cmd(mem->env, mem->cmd_tab);
 		return (0);
 	}
 	return (1);
