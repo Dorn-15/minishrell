@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:23:11 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/16 18:57:12 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:31:15 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,39 +22,16 @@ static int	check_export(char *arg)
 	return (0);
 }
 
-static int	new_export(t_alloc *mem, char *arg, int i)
-{
-	char	**tmp;
-
-	tmp = ft_calloc(i + 2, sizeof(char *));
-	if (!tmp)
-		return (1);
-	i = 0;
-	while (mem->env[i])
-	{
-		tmp[i] = mem->env[i];
-		i++;
-	}
-	tmp[i] = ft_strdup(arg);
-	if (!tmp[i])
-	{
-		free(tmp);
-		return (1);
-	}
-	tmp[i + 1] = NULL;
-	free(mem->env);
-	mem->env = tmp;
-	return (0);
-}
-
 static int	add_export_with_equal(t_alloc *mem, char *arg)
 {
 	int		i;
 	int		len;
 
+	len = 0;
 	while (arg[len] && arg[len] != '=')
 		len++;
 	i = 0;
+	printf("%d\n", len);
 	while (mem->env[i])
 	{
 		if (!ft_strncmp(mem->env[i], arg, len)
@@ -67,8 +44,9 @@ static int	add_export_with_equal(t_alloc *mem, char *arg)
 			return (0);
 		}
 		i++;
+		
 	}
-	return (new_export(mem, arg, i));
+	return (new_var_env(mem, arg, i));
 }
 
 static int	add_export_no_equal(t_alloc *mem, char *arg)
@@ -85,7 +63,7 @@ static int	add_export_no_equal(t_alloc *mem, char *arg)
 			return (0);
 		i++;
 	}
-	return (new_export(mem, arg, i));
+	return (new_var_env(mem, arg, i));
 }
 
 int	add_export(t_alloc *mem, char **arg)

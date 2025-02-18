@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:38:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/16 19:04:32 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:26:54 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,10 @@ static void	unset_rm_env(char **env, char *arg)
 	int		i;
 	int		len;
 
-	while (arg[len] && arg[len] != '=')
-		len++;
+	
+	
 	i = 0;
+	len = ft_strlen(arg);
 	while (env[i])
 	{
 		if (!ft_strncmp(env[i], arg, len)
@@ -54,12 +55,15 @@ int	unset_cmd(char **env, char **arg)
 
 	i = 0;
 	if (!arg || !env || !*arg)
-		return (2);
+		return (1);
+	if (!arg[1])
+		return (0);
 	if (arg[1][0] == '-')
 		return (unset_invalid_option(arg[1][1]));
 	while (arg[i])
 	{
-		unset_rm_env(env, arg[i]);
+		if (ft_strchr(arg[i], '=') == NULL)
+			unset_rm_env(env, arg[i]);
 		i++;
 	}
 	return (0);

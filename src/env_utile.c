@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:38:29 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/13 11:58:48 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:18:50 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,4 +87,29 @@ char	**tmp_env(char **env)
 		i++;
 	}
 	return (tmp);
+}
+
+int	new_var_env(t_alloc *mem, char *arg, int i)
+{
+	char	**tmp;
+
+	tmp = ft_calloc(i + 2, sizeof(char *));
+	if (!tmp)
+		return (1);
+	i = 0;
+	while (mem->env[i])
+	{
+		tmp[i] = mem->env[i];
+		i++;
+	}
+	tmp[i] = ft_strdup(arg);
+	if (!tmp[i])
+	{
+		free(tmp);
+		return (1);
+	}
+	tmp[i + 1] = NULL;
+	free(mem->env);
+	mem->env = tmp;
+	return (0);
 }

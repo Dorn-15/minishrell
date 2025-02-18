@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/12 12:31:34 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/17 15:48:52 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ t_alloc	*mem_exit(int err)
 	if (!mem)
 	{
 		mem = ft_calloc(1, sizeof(t_alloc));
+		getcwd(mem->oldpwd, sizeof(mem->oldpwd));
 		mem->exit_status = 0;
 		return (mem);
 	}

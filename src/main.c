@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/16 19:00:57 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/17 16:21:06 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,11 @@ static int	try_builtins(t_alloc *mem)
 	else if (!ft_strcmp(mem->cmd_tab[0], "unset"))
 	{
 		mem->exit_status = unset_cmd(mem->env, mem->cmd_tab);
+		return (0);
+	}
+	else if (!ft_strcmp(mem->cmd_tab[0], "cd"))
+	{
+		mem->exit_status = cd_cmd(mem, mem->cmd_tab);
 		return (0);
 	}
 	return (1);
