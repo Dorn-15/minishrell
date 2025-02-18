@@ -20,7 +20,8 @@ SRCS = src/main.c \
 	src/cmd/cd/cd.c \
 	src/cmd/cd/cd_err_1.c \
 	src/cmd/cd/cd_err_2.c \
-	src/cmd/cd/cd_env.c
+	src/cmd/cd/cd_env.c \
+	src/cmd/echo.c
 
 OBJS = $(SRCS:.c=.o)
 

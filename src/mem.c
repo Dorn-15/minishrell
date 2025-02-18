@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/17 15:48:52 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:02:47 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	null_mem(t_alloc *mem)
 
 void	free_mem(t_alloc *mem)
 {
-	if (mem->cmd_path)
-		free(mem->cmd_path);
 	if (mem->cmd_tab)
 		free_split(mem->cmd_tab);
+	if (mem->cmd_path)
+		free(mem->cmd_path);
 	if (mem->cmd)
 		free(mem->cmd);
 	if (mem->env)

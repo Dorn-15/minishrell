@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:23:11 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/17 16:31:15 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:09:13 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ static int	add_export_with_equal(t_alloc *mem, char *arg)
 	while (arg[len] && arg[len] != '=')
 		len++;
 	i = 0;
-	printf("%d\n", len);
 	while (mem->env[i])
 	{
 		if (!ft_strncmp(mem->env[i], arg, len)
@@ -44,7 +43,6 @@ static int	add_export_with_equal(t_alloc *mem, char *arg)
 			return (0);
 		}
 		i++;
-		
 	}
 	return (new_var_env(mem, arg, i));
 }

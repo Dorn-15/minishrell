@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:38:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/17 16:26:54 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:39:29 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ static void	unset_rm_env(char **env, char *arg)
 	int		i;
 	int		len;
 
-	
-	
 	i = 0;
 	len = ft_strlen(arg);
 	while (env[i])

@@ -6,62 +6,61 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:24:45 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/17 16:33:06 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:41:06 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../inc/minishell.h"
 
-char  *cd_getenv(char *name, char **env)
+char	*cd_getenv(char *name, char **env)
 {
-	int     i;
-	int     len;
+	int	i;
+	int	len;
 
 	i = 0;
 	len = ft_strlen(name);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
-		return (ft_strdup(&env[i][len + 1]));
+			return (ft_strdup(&env[i][len + 1]));
 		i++;
 	}
-    return (NULL);
+	return (NULL);
 }
 
-void  cd_update_oldpwd(t_alloc *mem)
+void	cd_update_oldpwd(t_alloc *mem)
 {
 	char	*oldpwd;
-      int     i;
-      int     b;
+	int		i;
+	int		b;
 
-      i = 0;
-      b = 0;
-      oldpwd = ft_strjoin("OLDPWD=", mem->oldpwd);
-      while (mem->env[i])
-      {
-            if (ft_strncmp(mem->env[i], "OLDPWD", 6) == 0)
-            {
-                  free(mem->env[i]);
-                  mem->env[i] = oldpwd;
-                  b = 1;
-            }
-            i++;
-      }
-      if (b == 0)
-      {
-            new_var_env(mem, oldpwd, i);
-            free(oldpwd);
-      }
+	i = 0;
+	b = 0;
+	oldpwd = ft_strjoin("OLDPWD=", mem->oldpwd);
+	while (mem->env[i])
+	{
+		if (ft_strncmp(mem->env[i], "OLDPWD", 6) == 0)
+		{
+			free(mem->env[i]);
+			mem->env[i] = oldpwd;
+			b = 1;
+		}
+		i++;
+	}
+	if (b == 0)
+	{
+		new_var_env(mem, oldpwd, i);
+		free(oldpwd);
+	}
 }
-
 
 void	cd_update_env(t_alloc *mem)
 {
 	int	i;
 	int	b;
-      
-      cd_update_oldpwd(mem);
-      getcwd(mem->oldpwd, sizeof(mem->oldpwd));
+
+	cd_update_oldpwd(mem);
+	getcwd(mem->oldpwd, sizeof(mem->oldpwd));
 	i = 0;
 	b = 0;
 	while (mem->env[i])

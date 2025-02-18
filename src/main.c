@@ -6,11 +6,39 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/17 16:21:06 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/18 16:26:54 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+static int	try_builtins(t_alloc *mem)
+{
+	static char	*builtins[7] = {"pwd", "exit", "env",
+		"export", "unset", "cd", "echo"};
+	int			i;
+
+	i = 0;
+	while (i < 7 && ft_strcmp(mem->cmd_tab[0], builtins[i]))
+		i++;
+	if (i >= 7)
+		return (1);
+	else if (i == 0)
+		mem->exit_status = pwd_cmd(mem->cmd_tab);
+	else if (i == 1)
+		mem->exit_status = exit_cmd(mem->cmd_tab);
+	else if (i == 2)
+		mem->exit_status = env_cmd(mem->env, mem->cmd_tab);
+	else if (i == 3)
+		mem->exit_status = export_cmd(mem, mem->cmd_tab);
+	else if (i == 4)
+		mem->exit_status = unset_cmd(mem->env, mem->cmd_tab);
+	else if (i == 5)
+		mem->exit_status = cd_cmd(mem, mem->cmd_tab);
+	else if (i == 6)
+		mem->exit_status = echo_cmd(mem->cmd_tab);
+	return (0);
+}
 
 static void	child_process(t_alloc *mem)
 {
@@ -22,6 +50,9 @@ static void	child_process(t_alloc *mem)
 		mem_exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
+		//ajouter pipe
+		if (!try_builtins(mem))
+			mem_exit(mem->exit_status);
 		mem->cmd_path = find_path(mem->cmd_tab[0], mem->env);
 		if (!mem->cmd_path)
 			cmd_not_found(mem->cmd_tab[0]);
@@ -35,42 +66,6 @@ static void	child_process(t_alloc *mem)
 		mem->exit_status = 128 + WTERMSIG(status);
 }
 
-//remplacer la foret de if par un double tableau
-static int	try_builtins(t_alloc *mem)
-{
-	if (!ft_strcmp(mem->cmd_tab[0], "pwd"))
-	{
-		mem->exit_status = pwd_cmd(mem->cmd_tab);
-		return (0);
-	}
-	else if (!ft_strcmp(mem->cmd_tab[0], "exit"))
-	{
-		mem->exit_status = exit_cmd(mem->cmd_tab);
-		return (0);
-	}
-	else if (!ft_strcmp(mem->cmd_tab[0], "env"))
-	{
-		mem->exit_status = env_cmd(mem->env, mem->cmd_tab);
-		return (0);
-	}
-	else if (!ft_strcmp(mem->cmd_tab[0], "export"))
-	{
-		mem->exit_status = export_cmd(mem, mem->cmd_tab);
-		return (0);
-	}
-	else if (!ft_strcmp(mem->cmd_tab[0], "unset"))
-	{
-		mem->exit_status = unset_cmd(mem->env, mem->cmd_tab);
-		return (0);
-	}
-	else if (!ft_strcmp(mem->cmd_tab[0], "cd"))
-	{
-		mem->exit_status = cd_cmd(mem, mem->cmd_tab);
-		return (0);
-	}
-	return (1);
-}
-
 static void	shell_loop(t_alloc *mem)
 {
 	while (1)
@@ -81,6 +76,7 @@ static void	shell_loop(t_alloc *mem)
 			break ;
 		if (*(mem->cmd))
 		{
+			//remplacer split et $? par parsing
 			mem->cmd_tab = ft_split(mem->cmd, ' ');
 			if (!ft_strcmp(mem->cmd_tab[0], "$?"))
 			{

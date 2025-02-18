@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:28 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/17 17:04:44 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:09:02 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,18 @@ static int	cd_chdir(t_alloc *mem, char *path)
 			err = cd_no_such_file(path);
 		else if (errno == ENOTDIR)
 			err = cd_not_a_directory(path);
+		else
+			err = cd_no_such_file(path);
 	}
 	else
 		cd_update_env(mem);
 	return (err);
 }
 
-int   cd_home(t_alloc *mem)
+int	cd_home(t_alloc *mem)
 {
 	char	*home;
-	int	err;
+	int		err;
 
 	home = cd_getenv("HOME", mem->env);
 	if (!home)
@@ -55,26 +57,32 @@ int   cd_home(t_alloc *mem)
 	return (err);
 }
 
-int  cd_oldpwd(t_alloc *mem)
+int	cd_oldpwd(t_alloc *mem)
 {
 	char	*oldpwd;
-	int	err;
+	int		err;
 
 	oldpwd = cd_getenv("OLDPWD", mem->env);
 	if (!oldpwd)
 		return (cd_oldpwd_not_set());
+	if (!*oldpwd)
+	{
+		cd_update_oldpwd(mem);
+		free(oldpwd);
+		printf("\n");
+		return (0);
+	}
 	err = cd_chdir(mem, oldpwd);
 	if (err == 0)
 		printf("%s\n", oldpwd);
 	free(oldpwd);
 	return (err);
 }
+
 int	cd_cmd(t_alloc *mem, char **arg)
 {
-	int i;
 	int	err;
 
-	i = 1;
 	err = 0;
 	if (!arg || !*arg)
 		return (1);
