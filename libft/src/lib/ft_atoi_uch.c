@@ -1,35 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atoi_uch.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/30 15:06:15 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 16:50:09 by adoireau         ###   ########.fr       */
+/*   Created: 2025/02/19 17:20:27 by adoireau          #+#    #+#             */
+/*   Updated: 2025/02/19 17:21:01 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libft.h"
 
-/* Converts a string to an integer */
-int	ft_atoi(const char *str)
+unsigned char	ft_atoi_uch(const char *str)
 {
-	int	i;
-	int	s;
-	int	r;
+	unsigned char	result;
+	int				sign;
 
-	if (!str)
-		return (0);
-	i = 0;
-	s = 1;
-	r = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '+' || str[i] == '-')
-		if (str[i++] == '-')
-			s = -1;
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
-		r = (r * 10) + (str[i++] - '0');
-	return (r * s);
+	result = 0;
+	sign = 1;
+	while (*str && (*str == ' ' || (*str >= 9 && *str <= 13)))
+		str++;
+	if (*str == '-' || *str == '+')
+	{
+		if (*str == '-')
+			sign = -1;
+		str++;
+	}
+	while (ft_isdigit(*str))
+	{
+		result = result * 10 + (*str - '0');
+		str++;
+	}
+	return (result * sign);
 }

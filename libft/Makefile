@@ -6,6 +6,8 @@ SRCS_DIR = src/
 
 LIB = ft_abs.c \
 	ft_atoi.c \
+	ft_atoi_ull.c \
+	ft_atoi_uch.c \
 	ft_atof.c \
 	ft_bzero.c \
 	ft_calloc.c \

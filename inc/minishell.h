@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 15:14:06 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:29:30 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
-
 
 typedef enum s_token{
 	cmd_cpt,
@@ -54,7 +53,6 @@ typedef struct s_alloc
 	char	oldpwd[PATH_MAX];
 	int		exit_status;
 	t_cmd	*cmd;
-	//char	**cmd_tab;
 	char	*cmd_path;
 }	t_alloc;
 
