@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 12:16:23 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:09:56 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ t_cmd	*launch_pars(t_alloc *mem)
 	char	*tk_str;
 	t_cmd	*list;
 
-	str = clear_param(mem->cmd);
+	str = clear_param(mem->line);
 	if (!str)
 	{
 		ft_printf("Invalid Synthax\n");

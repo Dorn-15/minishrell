@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 12:07:49 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:14:06 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,46 +49,55 @@ typedef struct s_cmd
 
 typedef struct s_alloc
 {
-	//toutes les adresse des elements a potentielement free
-	char	**cmd_tab;
-	char	*cmd_path;
-	char	*cmd;
+	char	*line;
 	char	**env;
 	char	oldpwd[PATH_MAX];
 	int		exit_status;
+	t_cmd	*cmd;
+	//char	**cmd_tab;
+	char	*cmd_path;
 }	t_alloc;
 
+//read_right
 char		*read_cmd(void);
-
 void		bash_start(void);
 void		cmd_not_found(char *cmd);
 
+//env_utils
 void		swap_env(char **env1, char **env2);
 char		**dup_env(char **env);
 char		**tmp_env(char **env);
 int			new_var_env(t_alloc *mem, char *arg, int i);
 
+//find_path
 char		*find_path(char *cmd, char **env);
 
+//env_cmd
 int			env_cmd(char **env, char **arg);
 void		env_no_such_file(char *arg);
 void		env_invalid_option(char arg);
 void		env_unrecognized_option(char *arg);
 void		env_permission_denied(char *arg);
 
+//other_cmd
 int			pwd_cmd(char **arg);
 int			exit_cmd(char **arg);
 int			unset_cmd(char **arg, char **env);
 int			echo_cmd(char **arg);
 
+//export_cmd
 int			export_cmd(t_alloc *mem, char **arg);
 int			sort_export(char **env);
 int			add_export(t_alloc *mem, char **arg);
 
+//cd_cmd
 int			cd_cmd(t_alloc *mem, char **arg);
 void		cd_update_env(t_alloc *mem);
 void		cd_update_oldpwd(t_alloc *mem);
+int			cd_oldpwd(t_alloc *mem);
 char		*cd_getenv(char *name, char **env);
+
+//cd_error
 int			cd_invalid_option(char c);
 int			cd_to_many_arg(void);
 int			cd_home_not_set(void);
@@ -97,14 +106,13 @@ int			cd_permission_denied(char *arg);
 int			cd_too_many_links(char *arg);
 int			cd_no_such_file(char *arg);
 int			cd_not_a_directory(char *arg);
-int			cd_oldpwd(t_alloc *mem);
 
+//free
 void		free_mem(t_alloc *mem);
 t_alloc		*mem_exit(int err);
 void		null_mem(t_alloc *mem);
 
 //Clear
-
 char		*clear_param(char *str);
 char		*error_clear(char *str);
 
@@ -116,7 +124,6 @@ int			count_tab(char**tab);
 char		*clear_word(char *str);
 
 //Parsing
-
 t_cmd		*parsing_list(char *tk_str, char **split_arg);
 t_cmd		*launch_pars(t_alloc *mem);
 
@@ -125,7 +132,6 @@ char		*expand(const char *str, char **envp);
 int			is_expand(const char *str);
 
 //List
-
 t_cmd		*ft_lstclear_pars(t_cmd **list);
 
 #endif

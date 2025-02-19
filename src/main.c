@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 11:54:46 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:34:34 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,24 @@ static int	try_builtins(t_alloc *mem)
 	int			i;
 
 	i = 0;
-	while (i < 7 && ft_strcmp(mem->cmd_tab[0], builtins[i]))
+	while (i < 7 && ft_strcmp(mem->cmd->cmd[0], builtins[i]))
 		i++;
 	if (i >= 7)
 		return (1);
 	else if (i == 0)
-		mem->exit_status = pwd_cmd(mem->cmd_tab);
+		mem->exit_status = pwd_cmd(mem->cmd->cmd);
 	else if (i == 1)
-		mem->exit_status = exit_cmd(mem->cmd_tab);
+		mem->exit_status = exit_cmd(mem->cmd->cmd);
 	else if (i == 2)
-		mem->exit_status = env_cmd(mem->env, mem->cmd_tab);
+		mem->exit_status = env_cmd(mem->env, mem->cmd->cmd);
 	else if (i == 3)
-		mem->exit_status = export_cmd(mem, mem->cmd_tab);
+		mem->exit_status = export_cmd(mem, mem->cmd->cmd);
 	else if (i == 4)
-		mem->exit_status = unset_cmd(mem->env, mem->cmd_tab);
+		mem->exit_status = unset_cmd(mem->env, mem->cmd->cmd);
 	else if (i == 5)
-		mem->exit_status = cd_cmd(mem, mem->cmd_tab);
+		mem->exit_status = cd_cmd(mem, mem->cmd->cmd);
 	else if (i == 6)
-		mem->exit_status = echo_cmd(mem->cmd_tab);
+		mem->exit_status = echo_cmd(mem->cmd->cmd);
 	return (0);
 }
 
@@ -52,10 +52,10 @@ static void	child_process(t_alloc *mem)
 	{
 		if (!try_builtins(mem))
 			mem_exit(mem->exit_status);
-		mem->cmd_path = find_path(mem->cmd_tab[0], mem->env);
+		mem->cmd_path = find_path(mem->cmd->cmd[0], mem->env);
 		if (!mem->cmd_path)
-			cmd_not_found(mem->cmd_tab[0]);
-		execve(mem->cmd_path, mem->cmd_tab, mem->env);
+			cmd_not_found(mem->cmd->cmd[0]);
+		execve(mem->cmd_path, mem->cmd->cmd, mem->env);
 		mem_exit(EXIT_FAILURE);
 	}
 	waitpid(pid, &status, 0);
@@ -67,25 +67,31 @@ static void	child_process(t_alloc *mem)
 
 static void	shell_loop(t_alloc *mem)
 {
+	t_cmd	*tmp;
+
 	while (1)
 	{
 		bash_start();
-		mem->cmd = read_cmd();
-		if (mem->cmd == NULL)
+		mem->line = read_cmd();
+		if (mem->line == NULL)
 			break ;
-		if (*(mem->cmd))
+		if (*(mem->line))
 		{
-			launch_pars(mem);
-			//remplacer split et $? par parsing
-			mem->cmd_tab = ft_split(mem->cmd, ' ');
-			if (!ft_strcmp(mem->cmd_tab[0], "$?"))
-			{
-				free(mem->cmd_tab[0]);
-				mem->cmd_tab[0] = ft_itoa(mem->exit_status);
-			}
-			//ajouter pipe
-			if (try_builtins(mem))
+			mem->cmd = launch_pars(mem);
+			//ajouter les pipe
+			if (!mem->cmd->next && try_builtins(mem))
 				child_process(mem);
+			else
+			{
+				tmp = mem->cmd;
+				while (tmp->next)
+				{
+					child_process(mem);
+					tmp = tmp->next;
+				}
+				// dernier processus
+				child_process(mem);
+			}
 		}
 		null_mem(mem);
 	}
