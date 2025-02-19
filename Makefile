@@ -21,7 +21,12 @@ SRCS = src/main.c \
 	src/cmd/cd/cd_err_1.c \
 	src/cmd/cd/cd_err_2.c \
 	src/cmd/cd/cd_env.c \
-	src/cmd/echo.c
+	src/cmd/echo.c \
+	src/parsing/parsing_utils.c src/parsing/parsing.c \
+	src/lexing/lex_split.c src/lexing/lexer.c src/lexing/utils_lexer.c \
+	src/expand/expand.c \
+	src/clear/clear_param.c src/clear/error_pars.c
+
 
 OBJS = $(SRCS:.c=.o)
 

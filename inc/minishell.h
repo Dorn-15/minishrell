@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/18 16:03:47 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/19 12:07:49 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,29 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <sys/stat.h>
+
+
+typedef enum s_token{
+	cmd_cpt,
+	pipe_cpt,
+	in_op,
+	out_op,
+	here_doc_op,
+	append_op,
+	limiter,
+	fd_in_cpt,
+	fd_out_cpt,
+	initialized,
+}	t_token;
+
+typedef struct s_cmd
+{
+	char			**cmd;
+	char			*limiter;
+	int				fd_in;
+	int				fd_out;
+	struct s_cmd	*next;
+}					t_cmd;
 
 typedef struct s_alloc
 {
@@ -79,5 +102,30 @@ int			cd_oldpwd(t_alloc *mem);
 void		free_mem(t_alloc *mem);
 t_alloc		*mem_exit(int err);
 void		null_mem(t_alloc *mem);
+
+//Clear
+
+char		*clear_param(char *str);
+char		*error_clear(char *str);
+
+//Lexer
+char		*lexer(char **split_arg);
+char		**lex_split(char *str, char **envp);
+char		**ft_freetab(char **dest);
+int			count_tab(char**tab);
+char		*clear_word(char *str);
+
+//Parsing
+
+t_cmd		*parsing_list(char *tk_str, char **split_arg);
+t_cmd		*launch_pars(t_alloc *mem);
+
+//Expand
+char		*expand(const char *str, char **envp);
+int			is_expand(const char *str);
+
+//List
+
+t_cmd		*ft_lstclear_pars(t_cmd **list);
 
 #endif

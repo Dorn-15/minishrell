@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/18 16:26:54 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/19 11:54:46 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	child_process(t_alloc *mem)
 		mem_exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
-		//ajouter pipe
 		if (!try_builtins(mem))
 			mem_exit(mem->exit_status);
 		mem->cmd_path = find_path(mem->cmd_tab[0], mem->env);
@@ -76,6 +75,7 @@ static void	shell_loop(t_alloc *mem)
 			break ;
 		if (*(mem->cmd))
 		{
+			launch_pars(mem);
 			//remplacer split et $? par parsing
 			mem->cmd_tab = ft_split(mem->cmd, ' ');
 			if (!ft_strcmp(mem->cmd_tab[0], "$?"))
@@ -83,6 +83,7 @@ static void	shell_loop(t_alloc *mem)
 				free(mem->cmd_tab[0]);
 				mem->cmd_tab[0] = ft_itoa(mem->exit_status);
 			}
+			//ajouter pipe
 			if (try_builtins(mem))
 				child_process(mem);
 		}
