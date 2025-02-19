@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 17:24:50 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/19 18:38:02 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,16 @@ static int	str_isdigit(char *arg)
 	return (0);
 }
 
-static int	exit_test_long(char *arg)
+static int	exit_test_long(char *arg, int signe)
 {
+	unsigned long long		nb;
+	
 	if (ft_strlen(arg) > 19)
 		return (1);
-	if (ft_atoi_ull(arg) > LLONG_MAX)
+	nb = ft_atoi_ull(arg);
+	if (signe == 1 && nb > (unsigned long long)LLONG_MIN)
+		return (1);
+	if (signe == 0 && nb > LLONG_MAX)
 		return (1);
 	return (0);
 }
@@ -65,7 +70,7 @@ int	exit_cmd(char **arg)
 		exit_num_err(arg);
 	else if (arg[2])
 		return (exit_too_many_arg());
-	else if (exit_test_long(arg[1] + i) != 0)
+	else if (exit_test_long(arg[1] + i, i) != 0)
 		exit_num_err(arg);
 	ft_putstr_fd("exit\n", 1);
 	mem_exit(ft_atoi_uch(arg[1]));
