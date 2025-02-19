@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 15:34:34 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/19 15:54:06 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,18 +78,21 @@ static void	shell_loop(t_alloc *mem)
 		if (*(mem->line))
 		{
 			mem->cmd = launch_pars(mem);
-			//ajouter les pipe
-			if (!mem->cmd->next && try_builtins(mem))
-				child_process(mem);
+			if (!mem->cmd->next)
+			{
+				//ajouter les pipe
+				if (try_builtins(mem))
+					child_process(mem);
+			}
 			else
 			{
 				tmp = mem->cmd;
+				//ajouter les pipe
 				while (tmp->next)
 				{
 					child_process(mem);
 					tmp = tmp->next;
 				}
-				// dernier processus
 				child_process(mem);
 			}
 		}
