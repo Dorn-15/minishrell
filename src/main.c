@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 15:54:06 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:11:44 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ static void	shell_loop(t_alloc *mem)
 		if (*(mem->line))
 		{
 			mem->cmd = launch_pars(mem);
-			if (!mem->cmd->next)
+			if (mem->cmd && !mem->cmd->next)
 			{
 				//ajouter les pipe
 				if (try_builtins(mem))
 					child_process(mem);
 			}
-			else
+			else if (mem->cmd)
 			{
 				tmp = mem->cmd;
 				//ajouter les pipe

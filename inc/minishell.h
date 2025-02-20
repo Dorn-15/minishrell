@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 17:29:30 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:09:55 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@
 # include <sys/types.h>
 # include <sys/stat.h>
 
-typedef enum s_token{
+typedef enum s_token
+{
 	cmd_cpt,
 	pipe_cpt,
 	in_op,
@@ -116,7 +117,7 @@ char		*error_clear(char *str);
 
 //Lexer
 char		*lexer(char **split_arg);
-char		**lex_split(char *str, char **envp);
+char		**lex_split(char *str, t_alloc *mem);
 char		**ft_freetab(char **dest);
 int			count_tab(char**tab);
 char		*clear_word(char *str);
@@ -124,10 +125,16 @@ char		*clear_word(char *str);
 //Parsing
 t_cmd		*parsing_list(char *tk_str, char **split_arg);
 t_cmd		*launch_pars(t_alloc *mem);
+t_cmd		*error_pars(int n, char **split_arg, char *tk_str, t_alloc *mem);
+int			count_cmd(char *tk_str, int i);
 
 //Expand
-char		*expand(const char *str, char **envp);
+char		*expand(const char *str, t_alloc *mem);
+char		*search_expand_utils(const char *str, int *i, int *j, t_alloc *mem);
+char		*expand_getenv(char *name, char **env);
+char		*tmp_create(const char *str, char **exp);
 int			is_expand(const char *str);
+int			expand_size(const char *str);
 
 //List
 t_cmd		*ft_lstclear_pars(t_cmd **list);

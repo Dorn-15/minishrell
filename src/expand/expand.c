@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 12:57:03 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:40:28 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-static int	expand_size(const char *str)
+int	expand_size(const char *str)
 {
 	int	i;
 
@@ -22,24 +22,15 @@ static int	expand_size(const char *str)
 	return (i);
 }
 
-static char	*create_exp_line(const char *str, char **exp)
+static char	*create_exp_line(const char *str, char **exp, int i, int j)
 {
 	char	*tmp;
-	int		i;
 	int		len;
-	int		j;
 
-	j = 0;
-	i = 0;
-	len = ft_strlen(str);
-	while (exp[i])
-		len += ft_strlen(exp[i++]);
-	tmp = malloc(sizeof(char) * (len + 1));
-	if (!tmp)
-		return (NULL);
-	tmp[0] = '\0';
-	i = 0;
 	len = 0;
+	tmp = tmp_create(str, exp);
+	if (!tmp)
+		return (ft_freetab(exp), NULL);
 	while (str[i])
 	{
 		if (str[i] == '$')
@@ -57,30 +48,31 @@ static char	*create_exp_line(const char *str, char **exp)
 			tmp[len] = '\0';
 		}
 	}
-	return (tmp);
+	return (ft_freetab(exp), tmp);
 }
 
-static char	*search_getenv(char *name, char **env)
+char	*expand_getenv(char *name, char **env)
 {
 	int	i;
 	int	len;
 
 	i = 0;
+	if (!name)
+		return (NULL);
 	len = ft_strlen(name);
 	while (env[i])
 	{
 		if (ft_strncmp(env[i], name, len) == 0 && env[i][len] == '=')
-			return (ft_strdup(&env[i][len + 1]));
+			return (free(name), ft_strdup(&env[i][len + 1]));
 		i++;
 	}
-	return (ft_strdup("\0"));
+	return (free(name), ft_strdup("\0"));
 }
 
-static char	**search_expand(const char *str, char **exp, char **envp)
+static char	**search_expand(const char *str, char **exp, t_alloc *mem)
 {
 	int		i;
 	int		j;
-	char	*tmp;
 
 	i = 0;
 	j = 0;
@@ -88,14 +80,9 @@ static char	**search_expand(const char *str, char **exp, char **envp)
 	{
 		if (str[i] == '$')
 		{
-			tmp = ft_substr(str, i + 1, expand_size(&str[i + 1]));
-			if (!tmp)
-				return (ft_freetab(exp));
-			exp[j] = search_getenv(tmp, envp);
-			free(tmp);
+			exp[j] = search_expand_utils(str, &i, &j, mem);
 			if (!exp[j])
 				return (ft_freetab(exp));
-			i = i + expand_size(&str[i + 1]);
 			j++;
 		}
 		i++;
@@ -104,7 +91,7 @@ static char	**search_expand(const char *str, char **exp, char **envp)
 	return (exp);
 }
 
-char	*expand(const char *str, char **envp)
+char	*expand(const char *str, t_alloc *mem)
 {
 	int		i;
 	int		count;
@@ -121,9 +108,10 @@ char	*expand(const char *str, char **envp)
 	exp = malloc(sizeof(char *) * (count + 1));
 	if (!exp)
 		return (NULL);
-	exp = search_expand(str, exp, envp);
+	exp = search_expand(str, exp, mem);
 	if (!exp)
 		return (NULL);
-	ft_freetab(exp);
-	return (create_exp_line(str, exp));
+	i = 0;
+	count = 0;
+	return (create_exp_line(str, exp, i, count));
 }

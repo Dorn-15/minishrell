@@ -1,47 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing_utils.c                                    :+:      :+:    :+:   */
+/*   error_pars_handle.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 10:47:15 by altheven         ###   ########.fr       */
+/*   Created: 2025/02/20 10:48:15 by altheven          #+#    #+#             */
+/*   Updated: 2025/02/20 11:09:48 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	count_cmd(char *tk_str, int i)
+t_cmd	*error_pars(int n, char **split_arg, char *tk_str, t_alloc *mem)
 {
-	int	c;
-
-	c = 0;
-	while (tk_str[i] && tk_str[i] != '1')
-	{
-		if (tk_str[i] == '0')
-			c++;
-		i++;
-	}
-	return (c);
-}
-
-t_cmd	*ft_lstclear_pars(t_cmd **list)
-{
-	t_cmd	*tmp;
-
-	if (!list)
-		return (NULL);
-	tmp = *list;
-	while (tmp)
-	{
-		*list = tmp->next;
-		ft_freetab(tmp->cmd);
-		if (tmp->limiter)
-			free(tmp->limiter);
-		if (tmp)
-			free(tmp);
-		tmp = *list;
-	}
+	if (tk_str)
+		free(tk_str);
+	if (split_arg)
+		ft_freetab(split_arg);
+	if (n == 1)
+		write(2, "Invalid Synthax\n", 17);
+	mem->exit_status = 2;
 	return (NULL);
 }

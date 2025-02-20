@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 15:09:56 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/20 10:54:44 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,7 @@ static t_cmd	*search_cmd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	int	c;
 
 	n = i;
-	c = 0;
-	while (tk_str[i] && tk_str[i] != '1')
-	{
-		if (tk_str[i] == '0')
-			c++;
-		i++;
-	}
+	c = count_cmd(tk_str, i);
 	new_cmd->cmd = malloc(sizeof(char *) * (c + 1));
 	if (!new_cmd->cmd)
 		return (NULL);
@@ -124,25 +118,16 @@ t_cmd	*launch_pars(t_alloc *mem)
 
 	str = clear_param(mem->line);
 	if (!str)
-	{
-		ft_printf("Invalid Synthax\n");
-		return (NULL);
-	}
-	split_arg = lex_split(str, mem->env);
+		return (error_pars(1, NULL, NULL, mem));
+	split_arg = lex_split(str, mem);
 	if (!split_arg)
-		return (NULL);
+		return (error_pars(0, NULL, NULL, mem));
 	tk_str = lexer(split_arg);
 	if (!tk_str)
-	{
-		ft_freetab(split_arg);
-		return (NULL);
-	}
+		return (error_pars(0, split_arg, NULL, mem));
 	list = parsing_list(tk_str, split_arg);
 	if (!list)
-	{
-		free (tk_str);
-		return (0);
-	}
+		return (error_pars(0, NULL, tk_str, mem));
 	split_arg = NULL;
 	free (tk_str);
 	return (list);

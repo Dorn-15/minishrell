@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lex_split.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 08:20:59 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 11:54:03 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:07:26 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,11 @@ int	quote_counter(const char *str)
 	return (i);
 }
 
-static size_t	ft_countword(char const *str, size_t tk)
+static size_t	ft_countword(char const *str, size_t tk, int i)
 {
-	int		i;
 	int		space;
 
 	space = 1;
-	i = 0;
 	while (str[i])
 	{
 		if ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')
@@ -83,7 +81,7 @@ static size_t	ft_wordlen(const char *s)
 	return (i);
 }
 
-static char	*ft_word_to_dest(char const *str, char **envp)
+static char	*ft_word_to_dest(char const *str, t_alloc *mem)
 {
 	char	*word;
 	size_t	lenw;
@@ -95,7 +93,7 @@ static char	*ft_word_to_dest(char const *str, char **envp)
 		tmp = ft_substr(str, 0, lenw + 1);
 		if (!tmp)
 			return (NULL);
-		word = expand(tmp, envp);
+		word = expand(tmp, mem);
 		free(tmp);
 	}
 	else
@@ -109,23 +107,23 @@ static char	*ft_word_to_dest(char const *str, char **envp)
 	return (word);
 }
 
-char	**lex_split(char *str, char **envp)
+char	**lex_split(char *str, t_alloc *mem)
 {
 	size_t	countw;
 	size_t	w;
 	char	**dest;
 
 	countw = 0;
-	countw = ft_countword(str, countw);
+	w = 0;
+	countw = ft_countword(str, countw, w);
 	dest = malloc(sizeof(char *) * (countw + 1));
 	if (!dest)
 		return (NULL);
-	w = 0;
 	while (w < countw && str)
 	{
 		if (str[0] && !(str[0] >= 9 && str[0] <= 13) && str[0] != ' ')
 		{
-			dest[w] = ft_word_to_dest(str, envp);
+			dest[w] = ft_word_to_dest(str, mem);
 			if (!dest[w])
 				return (ft_freetab(dest));
 			str = str + ft_wordlen(str);
