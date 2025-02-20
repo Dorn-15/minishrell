@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/20 11:09:55 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:22:48 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void		env_permission_denied(char *arg);
 
 //other_cmd
 int			pwd_cmd(char **arg);
-int			exit_cmd(char **arg);
+int			exit_cmd(char **arg, int exit_status);
 int			unset_cmd(char **arg, char **env);
 int			echo_cmd(char **arg);
 

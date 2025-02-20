@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 18:38:02 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:22:18 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,21 @@ static int	str_isdigit(char *arg)
 static int	exit_test_long(char *arg, int signe)
 {
 	unsigned long long		nb;
-	
-	if (ft_strlen(arg) > 19)
+	unsigned long long		max;
+	int						len;
+
+	max = LLONG_MAX;
+	len = ft_strlen(arg);
+	if (len > 19)
 		return (1);
-	nb = ft_atoi_ull(arg);
-	if (signe == 1 && nb > (unsigned long long)LLONG_MIN)
-		return (1);
-	if (signe == 0 && nb > LLONG_MAX)
-		return (1);
+	if (len == 19)
+	{
+		nb = ft_atoi_ull(arg);
+		if (signe == 1 && nb > max + 1)
+			return (1);
+		if (signe == 0 && nb > max)
+			return (1);
+	}
 	return (0);
 }
 
@@ -54,7 +61,7 @@ static int	exit_too_many_arg(void)
 	return (1);
 }
 
-int	exit_cmd(char **arg)
+int	exit_cmd(char **arg, int exit_status)
 {
 	int	i;
 
@@ -62,7 +69,7 @@ int	exit_cmd(char **arg)
 	if (!arg || !arg[0] || (arg[0] && !arg[1]))
 	{
 		ft_putstr_fd("exit\n", 1);
-		mem_exit(0);
+		mem_exit(exit_status);
 	}
 	if (arg[1][0] == '-')
 		i = 1;

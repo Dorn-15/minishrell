@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/20 11:11:44 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/20 11:23:02 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	try_builtins(t_alloc *mem)
 	else if (i == 0)
 		mem->exit_status = pwd_cmd(mem->cmd->cmd);
 	else if (i == 1)
-		mem->exit_status = exit_cmd(mem->cmd->cmd);
+		mem->exit_status = exit_cmd(mem->cmd->cmd, mem->exit_status);
 	else if (i == 2)
 		mem->exit_status = env_cmd(mem->env, mem->cmd->cmd);
 	else if (i == 3)
@@ -110,6 +110,6 @@ int	main(int ac, char **av, char **env)
 	mem->env = dup_env(env);
 	shell_loop(mem);
 	printf("\n");
-	exit_cmd(NULL);
+	exit_cmd(NULL, mem->exit_status);
 	return (0);
 }
