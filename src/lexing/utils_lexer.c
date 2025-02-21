@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 09:31:11 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 11:54:16 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:22:09 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	**ft_freetab(char **dest)
 	size_t	w;
 
 	w = 0;
+	if (!dest)
+		return (NULL);
 	while (dest[w])
 	{
 		free(dest[w]);

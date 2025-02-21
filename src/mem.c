@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 15:16:59 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/21 11:08:59 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	free_mem(t_alloc *mem)
 		free_split(mem->env);
 	if (mem->cmd)
 		ft_lstclear_pars(&mem->cmd);
+	clear_history();
 }
 
 t_alloc	*mem_exit(int err)

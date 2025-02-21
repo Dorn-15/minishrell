@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 17:03:46 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:27:57 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	count_cmd(char *tk_str, int i, int n)
+int	count_cmd(char *tk_str, int i, char n)
 {
 	int	c;
 
@@ -36,7 +36,8 @@ t_cmd	*ft_lstclear_pars(t_cmd **list)
 	while (tmp)
 	{
 		*list = tmp->next;
-		ft_freetab(tmp->cmd);
+		if (tmp->cmd)
+			ft_freetab(tmp->cmd);
 		if (tmp->limiter)
 			ft_freetab(tmp->limiter);
 		if (tmp)
@@ -77,7 +78,7 @@ char	**limiter_setting(char *tk_str, char **arg, int i)
 	char	**limiter;
 
 	j = 0;
-	limiter = malloc (sizeof(char *) * (count_cmd(tk_str, i, 6) + 1));
+	limiter = malloc (sizeof(char *) * (count_cmd(tk_str, i, '6') + 1));
 	if (!limiter)
 		return (NULL);
 	while (tk_str[i] && tk_str[i] != '1')

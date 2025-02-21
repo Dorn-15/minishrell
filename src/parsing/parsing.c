@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 15:38:55 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:28:03 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ static t_cmd	*search_cmd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	int	c;
 
 	n = i;
-	c = count_cmd(tk_str, i, 0);
+	c = count_cmd(tk_str, i, '0');
 	new_cmd->cmd = malloc(sizeof(char *) * (c + 1));
+	printf("%d\n", c);
 	if (!new_cmd->cmd)
 		return (NULL);
 	i = n;

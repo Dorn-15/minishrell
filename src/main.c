@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/20 11:23:02 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/21 12:11:59 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	try_builtins(t_alloc *mem)
 	return (0);
 }
 
-static void	child_process(t_alloc *mem)
+void	child_process(t_alloc *mem)
 {
 	pid_t	pid;
 	int		status;
@@ -68,10 +68,12 @@ static void	child_process(t_alloc *mem)
 static void	shell_loop(t_alloc *mem)
 {
 	t_cmd	*tmp;
+	int		stdinstock;
 
+	stdinstock = dup(0);
 	while (1)
 	{
-		bash_start();
+		dup2(stdinstock, 0);
 		mem->line = read_cmd();
 		if (mem->line == NULL)
 			break ;
@@ -80,7 +82,8 @@ static void	shell_loop(t_alloc *mem)
 			mem->cmd = launch_pars(mem);
 			if (mem->cmd && !mem->cmd->next)
 			{
-				//ajouter les pipe
+				if (mem->cmd->limiter)
+					here_doc(mem);
 				if (try_builtins(mem))
 					child_process(mem);
 			}
@@ -109,7 +112,6 @@ int	main(int ac, char **av, char **env)
 	mem = mem_exit(0);
 	mem->env = dup_env(env);
 	shell_loop(mem);
-	printf("\n");
 	exit_cmd(NULL, mem->exit_status);
 	return (0);
 }
