@@ -6,20 +6,20 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 10:47:15 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:03:46 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
-int	count_cmd(char *tk_str, int i)
+int	count_cmd(char *tk_str, int i, int n)
 {
 	int	c;
 
 	c = 0;
 	while (tk_str[i] && tk_str[i] != '1')
 	{
-		if (tk_str[i] == '0')
+		if (tk_str[i] == n)
 			c++;
 		i++;
 	}
@@ -38,10 +38,59 @@ t_cmd	*ft_lstclear_pars(t_cmd **list)
 		*list = tmp->next;
 		ft_freetab(tmp->cmd);
 		if (tmp->limiter)
-			free(tmp->limiter);
+			ft_freetab(tmp->limiter);
 		if (tmp)
 			free(tmp);
 		tmp = *list;
 	}
 	return (NULL);
+}
+
+t_cmd	*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
+{
+	if (tk_str[i] == '8')
+	{
+		if (new_cmd->fd_out != 1)
+			close(new_cmd->fd_out);
+		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT
+				| O_TRUNC, 0777);
+	}
+	if (tk_str[i] == '7')
+	{
+		if (new_cmd->fd_in != 0)
+			close(new_cmd->fd_in);
+		new_cmd->fd_in = open(arg[i], O_RDONLY, 0777);
+	}
+	if (tk_str[i] == '5')
+	{
+		if (new_cmd->fd_in != 1)
+			close(new_cmd->fd_out);
+		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT
+				| O_APPEND, 0777);
+	}
+	return (new_cmd);
+}
+
+char	**limiter_setting(char *tk_str, char **arg, int i)
+{
+	int		j;
+	char	**limiter;
+
+	j = 0;
+	limiter = malloc (sizeof(char *) * (count_cmd(tk_str, i, 6) + 1));
+	if (!limiter)
+		return (NULL);
+	while (tk_str[i] && tk_str[i] != '1')
+	{
+		if (tk_str[i] == '6')
+		{
+			limiter[j] = ft_strdup(arg[i]);
+			if (!limiter[j])
+				return (ft_freetab(limiter), NULL);
+			j++;
+		}
+		i++;
+	}
+	limiter[j] = NULL;
+	return (limiter);
 }

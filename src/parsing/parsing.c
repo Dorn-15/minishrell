@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 10:54:44 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:38:55 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static t_cmd	*search_cmd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	int	c;
 
 	n = i;
-	c = count_cmd(tk_str, i);
+	c = count_cmd(tk_str, i, 0);
 	new_cmd->cmd = malloc(sizeof(char *) * (c + 1));
 	if (!new_cmd->cmd)
 		return (NULL);
@@ -35,7 +35,7 @@ static t_cmd	*search_cmd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 		}
 		i++;
 	}
-	new_cmd->cmd[c] = NULL;
+	new_cmd->cmd[n] = NULL;
 	return (new_cmd);
 }
 
@@ -46,23 +46,16 @@ static t_cmd	*search_fd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	new_cmd->fd_out = 1;
 	while (tk_str[i] && tk_str[i] != '1')
 	{
-		if (tk_str[i] == '6')
+		if (tk_str[i] == '6' && !new_cmd->limiter)
 		{
-			new_cmd->limiter = ft_strdup(arg[i]);
+			new_cmd->limiter = limiter_setting(tk_str, arg, i);
 			if (!new_cmd->limiter)
 			{
 				free(new_cmd);
 				return (NULL);
 			}
 		}
-		if (tk_str[i] == '8')
-			new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT
-					| O_TRUNC, 0777);
-		if (tk_str[i] == '7')
-			new_cmd->fd_in = open(arg[i], O_RDONLY, 0777);
-		if (tk_str[i] == '5')
-			new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT
-					| O_APPEND, 0777);
+		new_cmd = fd_handler(tk_str, arg, i, new_cmd);
 		i++;
 	}
 	return (new_cmd);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 10:58:22 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 12:57:19 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:47:57 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static char	*token_verif(char *tk_str, char **split_arg)
 	{
 		if ((tk_str[i] == '2' || tk_str[i] == '3'
 				|| tk_str[i] == '4' || tk_str[i] == '5') && tk_str[i + 1]
-			&& (tk_str[i] == '2' || tk_str[i] == '3'
-				|| tk_str[i] == '4' || tk_str[i] == '5'))
+			&& (tk_str[i + 1] == '2' || tk_str[i + 1] == '3'
+				|| tk_str[i + 1] == '4' || tk_str[i + 1] == '5'))
 		{
 			free(tk_str);
 			ft_printf("Invalid Token \"%s\"\n", split_arg[i]);

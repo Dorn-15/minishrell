@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/20 11:22:48 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/20 17:36:35 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ typedef enum s_token
 typedef struct s_cmd
 {
 	char			**cmd;
-	char			*limiter;
+	char			**limiter;
 	int				fd_in;
 	int				fd_out;
 	struct s_cmd	*next;
@@ -111,6 +111,11 @@ void		free_mem(t_alloc *mem);
 t_alloc		*mem_exit(int err);
 void		null_mem(t_alloc *mem);
 
+//Exec
+void		here_doc(t_alloc *mem);
+void		child_process(t_alloc *mem);
+void		multiple_pipe(t_alloc *mem);
+
 //Clear
 char		*clear_param(char *str);
 char		*error_clear(char *str);
@@ -126,7 +131,9 @@ char		*clear_word(char *str);
 t_cmd		*parsing_list(char *tk_str, char **split_arg);
 t_cmd		*launch_pars(t_alloc *mem);
 t_cmd		*error_pars(int n, char **split_arg, char *tk_str, t_alloc *mem);
-int			count_cmd(char *tk_str, int i);
+t_cmd		*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd);
+char		**limiter_setting(char *tk_str, char **arg, int i);
+int			count_cmd(char *tk_str, int i, int n);
 
 //Expand
 char		*expand(const char *str, t_alloc *mem);
