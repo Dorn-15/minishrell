@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/23 17:42:10 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:32:13 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ t_cmd		*parsing_list(char *tk_str, char **split_arg);
 t_cmd		*launch_pars(t_alloc *mem);
 t_cmd		*error_pars(int n, char **split_arg, char *tk_str, t_alloc *mem);
 t_cmd		*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd);
-t_cmd		*check_special_case(t_cmd *list, t_cmd *tmp);
+t_cmd		*check_special_case(t_cmd *list, t_cmd *tmp, t_alloc *mem);
 char		**limiter_setting(char *tk_str, char **arg, int i);
 int			count_cmd(char *tk_str, int i, char n);
 
