@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/21 12:28:03 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/23 17:41:55 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static t_cmd	*search_cmd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	n = i;
 	c = count_cmd(tk_str, i, '0');
 	new_cmd->cmd = malloc(sizeof(char *) * (c + 1));
-	printf("%d\n", c);
 	if (!new_cmd->cmd)
 		return (NULL);
 	i = n;
@@ -109,7 +108,9 @@ t_cmd	*launch_pars(t_alloc *mem)
 	char	**split_arg;
 	char	*tk_str;
 	t_cmd	*list;
+	t_cmd	*tmp;
 
+	tmp = NULL;
 	str = clear_param(mem->line);
 	if (!str)
 		return (error_pars(1, NULL, NULL, mem));
@@ -124,5 +125,6 @@ t_cmd	*launch_pars(t_alloc *mem)
 		return (error_pars(0, NULL, tk_str, mem));
 	split_arg = NULL;
 	free (tk_str);
+	list = check_special_case(list, tmp);
 	return (list);
 }

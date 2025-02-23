@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 18:09:25 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/23 15:26:37 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	here_doc_read(int fd[2], char *limiter)
 	exit(0);
 }
 
-static void	here_doc_handle(char *limiter, int i)
+static void	here_doc_handle(char *limiter, int i, int stdin, int stdout)
 {
 	int	pid;
 	int	fd[2];
@@ -41,7 +41,11 @@ static void	here_doc_handle(char *limiter, int i)
 	if (pid == -1)
 		return ;
 	if (pid == 0)
+	{
+		close(stdin);
+		close(stdout);
 		here_doc_read(fd, limiter);
+	}
 	else
 	{
 		close(fd[1]);
@@ -55,14 +59,16 @@ static void	here_doc_handle(char *limiter, int i)
 void	here_doc(t_alloc *mem)
 {
 	int	i;
-	
+
 	i = 0;
 	while (mem->cmd->limiter[i])
 	{
 		if (!mem->cmd->limiter[i + 1])
-			here_doc_handle(mem->cmd->limiter[i], 1);
+			here_doc_handle(mem->cmd->limiter[i], 1,
+				mem->stdinstock, mem->stdoutstock);
 		else
-			here_doc_handle(mem->cmd->limiter[i], 0);
+			here_doc_handle(mem->cmd->limiter[i], 0,
+				mem->stdinstock, mem->stdoutstock);
 		i++;
 	}
 }

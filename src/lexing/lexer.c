@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 10:58:22 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 14:47:57 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/23 17:37:19 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,15 @@ static char	*token_verif(char *tk_str, char **split_arg)
 	while (tk_str[i])
 	{
 		if ((tk_str[i] == '2' || tk_str[i] == '3'
-				|| tk_str[i] == '4' || tk_str[i] == '5') && tk_str[i + 1]
-			&& (tk_str[i + 1] == '2' || tk_str[i + 1] == '3'
-				|| tk_str[i + 1] == '4' || tk_str[i + 1] == '5'))
+				|| tk_str[i] == '4' || tk_str[i] == '5'))
 		{
-			free(tk_str);
-			ft_printf("Invalid Token \"%s\"\n", split_arg[i]);
-			return (NULL);
+			if (!tk_str[i + 1] || (tk_str[i + 1] && !(tk_str[i + 1] == '8'
+						|| tk_str[i + 1] == '7' || tk_str[i + 1] == '9')))
+			{
+				free(tk_str);
+				ft_printf("Invalid Token \"%s\"\n", split_arg[i]);
+				return (NULL);
+			}
 		}
 		i++;
 	}
@@ -54,7 +56,7 @@ static char	token_search(int i, char *tk_str, char *str)
 	else if (i > 0 && tk_str[i - 1] == '4')
 		tk = limiter;
 	else if (i > 0 && tk_str[i - 1] == '5')
-		tk = fd_out_cpt;
+		tk = append_out;
 	else
 		tk = cmd_cpt;
 	return ('0' + tk);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/21 12:27:57 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/23 16:27:06 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ t_cmd	*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 			close(new_cmd->fd_in);
 		new_cmd->fd_in = open(arg[i], O_RDONLY, 0777);
 	}
-	if (tk_str[i] == '5')
+	if (tk_str[i] == '9')
 	{
 		if (new_cmd->fd_in != 1)
 			close(new_cmd->fd_out);

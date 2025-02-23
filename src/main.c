@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/21 12:11:59 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:00:03 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
 
-static int	try_builtins(t_alloc *mem)
+int	try_builtins(t_alloc *mem)
 {
 	static char	*builtins[7] = {"pwd", "exit", "env",
 		"export", "unset", "cd", "echo"};
@@ -50,6 +50,8 @@ void	child_process(t_alloc *mem)
 		mem_exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
+		close(mem->stdinstock);
+		close(mem->stdoutstock);
 		if (!try_builtins(mem))
 			mem_exit(mem->exit_status);
 		mem->cmd_path = find_path(mem->cmd->cmd[0], mem->env);
@@ -65,42 +67,50 @@ void	child_process(t_alloc *mem)
 		mem->exit_status = 128 + WTERMSIG(status);
 }
 
-static void	shell_loop(t_alloc *mem)
+static void	exec_launch(t_alloc *mem)
 {
+	int		fd[2];
 	t_cmd	*tmp;
-	int		stdinstock;
 
-	stdinstock = dup(0);
-	while (1)
+	fd[0] = 0;
+	fd[1] = 1;
+	if (*(mem->line))
 	{
-		dup2(stdinstock, 0);
-		mem->line = read_cmd();
-		if (mem->line == NULL)
-			break ;
-		if (*(mem->line))
+		mem->cmd = launch_pars(mem);
+		tmp = mem->cmd;
+		if (mem->cmd && !mem->cmd->next)
 		{
-			mem->cmd = launch_pars(mem);
-			if (mem->cmd && !mem->cmd->next)
+			if (mem->cmd->limiter)
+				here_doc(mem);
+			if (mem->cmd->cmd)
 			{
-				if (mem->cmd->limiter)
-					here_doc(mem);
+				change_fd(mem, fd);
 				if (try_builtins(mem))
 					child_process(mem);
 			}
-			else if (mem->cmd)
-			{
-				tmp = mem->cmd;
-				//ajouter les pipe
-				while (tmp->next)
-				{
-					child_process(mem);
-					tmp = tmp->next;
-				}
-				child_process(mem);
-			}
 		}
-		null_mem(mem);
+		else if (mem->cmd)
+			multiple_pipe(mem);
+		mem->cmd = tmp;
 	}
+}
+
+static void	shell_loop(t_alloc *mem)
+{
+	mem->stdinstock = dup(0);
+	mem->stdoutstock = dup(1);
+	while (1)
+	{
+		mem->line = read_cmd();
+		if (!mem->line)
+			break ;
+		exec_launch(mem);
+		null_mem(mem);
+		dup2(mem->stdoutstock, 1);
+		dup2(mem->stdinstock, 0);
+	}
+	close(mem->stdinstock);
+	close(mem->stdoutstock);
 }
 
 int	main(int ac, char **av, char **env)

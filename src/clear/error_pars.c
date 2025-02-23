@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_pars.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:23:02 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 11:53:55 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/23 18:02:54 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,5 @@
 
 char	*error_clear(char *str)
 {
-	if (str)
-		free(str);
 	return (NULL);
 }

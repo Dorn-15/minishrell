@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/21 12:27:35 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/23 17:42:10 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef enum s_token
 	limiter,
 	fd_in_cpt,
 	fd_out_cpt,
+	append_out,
 	initialized,
 }	t_token;
 
@@ -57,6 +58,8 @@ typedef struct s_alloc
 	int		exit_status;
 	t_cmd	*cmd;
 	char	*cmd_path;
+	int		stdinstock;
+	int		stdoutstock;
 }	t_alloc;
 
 //read_right
@@ -117,6 +120,8 @@ void		null_mem(t_alloc *mem);
 void		here_doc(t_alloc *mem);
 void		child_process(t_alloc *mem);
 void		multiple_pipe(t_alloc *mem);
+void		change_fd(t_alloc *mem, int pip_fd[2]);
+int			try_builtins(t_alloc *mem);
 
 //Clear
 char		*clear_param(char *str);
@@ -134,6 +139,7 @@ t_cmd		*parsing_list(char *tk_str, char **split_arg);
 t_cmd		*launch_pars(t_alloc *mem);
 t_cmd		*error_pars(int n, char **split_arg, char *tk_str, t_alloc *mem);
 t_cmd		*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd);
+t_cmd		*check_special_case(t_cmd *list, t_cmd *tmp);
 char		**limiter_setting(char *tk_str, char **arg, int i);
 int			count_cmd(char *tk_str, int i, char n);
 
