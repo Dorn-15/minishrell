@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/23 21:32:13 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:14:06 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
+
+extern int	g_sign;
 
 typedef enum s_token
 {
@@ -113,8 +116,9 @@ int			cd_not_a_directory(char *arg);
 
 //free
 void		free_mem(t_alloc *mem);
-t_alloc		*mem_exit(int err);
+void		mem_exit(int err);
 void		null_mem(t_alloc *mem);
+t_alloc		*get_mem(void);
 
 //Exec
 void		here_doc(t_alloc *mem);
@@ -153,5 +157,10 @@ int			expand_size(const char *str);
 
 //List
 t_cmd		*ft_lstclear_pars(t_cmd **list);
+
+//Signal
+void		setup_parent_signals(void);
+void		setup_child_signals(void);
+void		setup_heredoc_signals(void);
 
 #endif

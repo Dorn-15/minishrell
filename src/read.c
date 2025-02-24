@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:16:49 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/21 10:58:52 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:15:31 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ char	*read_cmd(void)
 {
 	char	*buffer;
 
+	setup_parent_signals();
 	buffer = readline("minishell$ ");
 	if (buffer == NULL)
 		return (NULL);

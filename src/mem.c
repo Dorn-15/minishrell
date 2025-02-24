@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/23 21:23:24 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:13:22 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,17 @@ void	free_mem(t_alloc *mem)
 	clear_history();
 }
 
-t_alloc	*mem_exit(int err)
+void	mem_exit(int err)
+{
+	t_alloc	*mem;
+
+	mem = get_mem();
+	free_mem(mem);
+	free(mem);
+	exit(err);
+}
+
+t_alloc	*get_mem(void)
 {
 	static t_alloc	*mem = NULL;
 
@@ -49,7 +59,5 @@ t_alloc	*mem_exit(int err)
 		mem->exit_status = 0;
 		return (mem);
 	}
-	free_mem(mem);
-	free(mem);
-	exit(err);
+	return (mem);
 }

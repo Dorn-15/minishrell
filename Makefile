@@ -28,7 +28,8 @@ SRCS = src/main.c \
 	src/lexing/lex_split.c src/lexing/lexer.c src/lexing/utils_lexer.c \
 	src/expand/expand.c src/expand/expand_utils.c\
 	src/clear/clear_param.c src/clear/error_pars.c \
-	src/exec/here_doc.c src/exec/pipe.c
+	src/exec/here_doc.c src/exec/pipe.c \
+	src/signal.c
 
 
 OBJS = $(SRCS:.c=.o)

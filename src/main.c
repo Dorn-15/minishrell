@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 09:13:44 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:22:06 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/minishell.h"
+
+int	g_sign;
 
 int	try_builtins(t_alloc *mem)
 {
@@ -50,6 +52,8 @@ void	child_process(t_alloc *mem)
 		mem_exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
+		g_sign = 1;
+		setup_child_signals();
 		close(mem->stdinstock);
 		close(mem->stdoutstock);
 		if (!try_builtins(mem))
@@ -82,6 +86,7 @@ static void	exec_launch(t_alloc *mem)
 		{
 			if (mem->cmd->limiter)
 				here_doc(mem);
+			g_sign = 0;
 			if (mem->cmd->cmd)
 			{
 				change_fd(mem, fd);
@@ -101,6 +106,7 @@ static void	shell_loop(t_alloc *mem)
 	mem->stdoutstock = dup(1);
 	while (1)
 	{
+		g_sign = 0;
 		mem->line = read_cmd();
 		if (!mem->line)
 			break ;
@@ -119,7 +125,7 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
-	mem = mem_exit(0);
+	mem = get_mem();
 	mem->env = dup_env(env);
 	shell_loop(mem);
 	exit_cmd(NULL, mem->exit_status);
