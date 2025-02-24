@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 17:01:24 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:40:31 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,17 @@ int	try_builtins(t_alloc *mem)
 	return (0);
 }
 
+//trouver solution pour detecter minishell si autre chemin
 void	child_process(t_alloc *mem)
 {
 	pid_t	pid;
 	int		status;
 
-	setup_parent_fork();
+	if (mem->cmd->cmd[0] && strcmp(mem->cmd->cmd[0]
+		+ ft_strlen(mem->cmd->cmd[0]) - 10, "/minishell"))
+		setup_parent_fork();
+	else
+		setup_parent_minishell();
 	pid = fork();
 	if (pid == -1)
 		mem_exit(EXIT_FAILURE);
@@ -124,6 +129,7 @@ static void	shell_loop(t_alloc *mem)
 int	main(int ac, char **av, char **env)
 {
 	t_alloc	*mem;
+
 
 	(void)ac;
 	(void)av;

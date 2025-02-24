@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:13:06 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 17:16:02 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:21:48 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ static void	signal_handler_fork(int signum)
 	}
 }
 
+static void	signal_handler_minishell(int signum)
+{
+	if (signum == SIGINT)
+	{
+		rl_on_new_line();
+	}
+}
 static void	signal_handler_heredoc(int signum)
 {
 	if (signum == SIGINT)
@@ -69,5 +76,11 @@ void setup_child_signals(void)
 void setup_heredoc_signals(void)
 {
 	signal(SIGINT, signal_handler_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void setup_parent_minishell(void)
+{
+	signal(SIGINT, signal_handler_minishell);
 	signal(SIGQUIT, SIG_IGN);
 }
