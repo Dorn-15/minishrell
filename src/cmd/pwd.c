@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 11:58:33 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/20 15:44:12 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:16:20 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,6 @@ int	pwd_cmd(char **arg)
 		return (pwd_err_options(arg[1][1]));
 	else if (getcwd(cwd, sizeof(cwd)) == NULL)
 		return (pwd_err_access());
-	//printf("%s\n", cwd);
+	printf("%s\n", cwd);
 	return (0);
 }

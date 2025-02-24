@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/23 21:31:19 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 08:55:26 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ static t_cmd	*create_new_node(char *tk_str, char **split_arg, int *i)
 	new_cmd = search_cmd(tk_str, split_arg, *i, new_cmd);
 	if (!new_cmd)
 		return (NULL);
+	if (new_cmd->cmd && !new_cmd->cmd[0])
+		new_cmd->cmd = ft_freetab(new_cmd->cmd);
 	while (tk_str[*i] != '1' && tk_str[*i])
 		*i += 1;
 	if (tk_str[*i] == '1')

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/20 10:40:28 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:06:42 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	expand_size(const char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && ft_isalpha(str[i]))
+	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?'))
 		i++;
 	return (i);
 }

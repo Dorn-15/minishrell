@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 10:58:22 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/23 17:37:19 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 10:50:08 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ static char	*token_verif(char *tk_str, char **split_arg)
 				|| tk_str[i] == '4' || tk_str[i] == '5'))
 		{
 			if (!tk_str[i + 1] || (tk_str[i + 1] && !(tk_str[i + 1] == '8'
-						|| tk_str[i + 1] == '7' || tk_str[i + 1] == '9')))
+						|| tk_str[i + 1] == '7' || tk_str[i + 1] == '9'
+						|| tk_str[i + 1] == '6')))
 			{
 				free(tk_str);
-				ft_printf("Invalid Token \"%s\"\n", split_arg[i]);
+				ft_putstr_fd("Invalid Token ", 2);
+				ft_putstr_fd(split_arg[i], 2);
+				ft_putstr_fd("\n", 2);
 				return (NULL);
 			}
 		}

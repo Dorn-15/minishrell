@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:32 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 10:56:59 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:11:29 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ char	*find_path(char *cmd, char **env)
 
 	cmd_path = try_direct_path(cmd);
 	if (cmd_path || !env)
-		return (cmd_path);
+		return (ft_strdup(cmd_path));
 	paths = ft_split(getenv("PATH"), ':');
 	if (!paths)
 		return (NULL);
