@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 12:13:06 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 16:15:57 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:16:02 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,15 @@ static void	signal_handler(int signum)
 		mem->exit_status = 130;
 	}
 }
+//trouver solition pour retirer le \n si ./minishell
+static void	signal_handler_fork(int signum)
+{
+	if (signum == SIGINT)
+	{
+		write(1, "\n", 1);
+		rl_on_new_line();
+	}
+}
 
 static void	signal_handler_heredoc(int signum)
 {
@@ -42,6 +51,12 @@ static void	signal_handler_heredoc(int signum)
 void setup_parent_signals(void)
 {
 	signal(SIGINT, signal_handler);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void setup_parent_fork(void)
+{
+	signal(SIGINT, signal_handler_fork);
 	signal(SIGQUIT, SIG_IGN);
 }
 

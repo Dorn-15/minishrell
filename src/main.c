@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 16:22:06 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:01:24 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	child_process(t_alloc *mem)
 	pid_t	pid;
 	int		status;
 
+	setup_parent_fork();
 	pid = fork();
 	if (pid == -1)
 		mem_exit(EXIT_FAILURE);
@@ -65,6 +66,7 @@ void	child_process(t_alloc *mem)
 		mem_exit(EXIT_FAILURE);
 	}
 	waitpid(pid, &status, 0);
+	setup_parent_signals();
 	if (WIFEXITED(status))
 		mem->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))

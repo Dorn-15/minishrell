@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 16:14:06 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:01:36 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,5 +162,5 @@ t_cmd		*ft_lstclear_pars(t_cmd **list);
 void		setup_parent_signals(void);
 void		setup_child_signals(void);
 void		setup_heredoc_signals(void);
-
+void		setup_parent_fork(void);
 #endif
