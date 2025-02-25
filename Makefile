@@ -29,8 +29,8 @@ SRCS = src/main.c \
 	src/expand/expand.c src/expand/expand_utils.c\
 	src/clear/clear_param.c src/clear/error_pars.c \
 	src/exec/here_doc.c src/exec/pipe.c \
-	src/signal.c
-
+	src/signal/signal_parent.c \
+	src/signal/signal_child.c
 
 OBJS = $(SRCS:.c=.o)
 

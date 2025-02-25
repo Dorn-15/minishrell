@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 17:40:31 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:30:50 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,7 @@ void	child_process(t_alloc *mem)
 	pid_t	pid;
 	int		status;
 
-	if (mem->cmd->cmd[0] && strcmp(mem->cmd->cmd[0]
-		+ ft_strlen(mem->cmd->cmd[0]) - 10, "/minishell"))
-		setup_parent_fork();
-	else
-		setup_parent_minishell();
+	check_minishell_signal(mem->cmd->cmd[0]);
 	pid = fork();
 	if (pid == -1)
 		mem_exit(EXIT_FAILURE);

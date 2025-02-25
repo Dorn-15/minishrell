@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 17:22:07 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/25 17:30:08 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,5 +164,6 @@ void		setup_child_signals(void);
 void		setup_heredoc_signals(void);
 void		setup_parent_fork(void);
 void		setup_parent_minishell(void);
+void		check_minishell_signal(char *cmd);
 
 #endif
