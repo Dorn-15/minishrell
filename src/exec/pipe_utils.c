@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:11:54 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/26 15:26:11 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:36:45 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	reset_fd(t_alloc *mem, int pip_fd[2])
 	if (mem->cmd->fd_out != 1)
 	{
 		fd_out = dup(mem->stdoutstock);
-		dup2(fd_out, pip_fd[1]);
+		dup2(fd_out, 1);
 		close(fd_out);
 	}
 	if (mem->cmd->fd_in != 0)
 	{
 		fd_in = dup(mem->stdinstock);
-		dup2(fd_in, pip_fd[0]);
+		dup2(fd_in, 0);
 		close(fd_in);
 	}
 }

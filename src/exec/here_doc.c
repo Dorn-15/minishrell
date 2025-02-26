@@ -6,11 +6,31 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/26 13:26:48 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:19:20 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
+
+static int	verif_limiter(char *s1, char *s2)
+{
+	size_t			i;
+	unsigned char	*s1b;
+	unsigned char	*s2b;
+
+	i = 0;
+	s1b = (unsigned char *)s1;
+	s2b = (unsigned char *)s2;
+	while (s1b[i] && s2b[i])
+	{
+		if (s1b[i] != s2b[i])
+			return (s1b[i] - s2b[i]);
+		i++;
+	}
+	if (s1b[i] == '\n' && !s2b[i])
+		return(0);
+	return (s1b[i] - s2b[i]);
+}
 
 static void	here_doc_read(int fd[2], char *limiter)
 {
@@ -20,7 +40,8 @@ static void	here_doc_read(int fd[2], char *limiter)
 	close(fd[0]);
 	ft_putstr_fd(">", 1);
 	str = ft_get_next_line(0);
-	while (ft_strncmp(str, limiter, ft_strlen(limiter)))
+	//printf("%s\n", str);
+	while (verif_limiter(str, limiter))
 	{
 		ft_putstr_fd(str, fd[1]);
 		free(str);
@@ -54,8 +75,8 @@ static void	here_doc_handle(char *limiter, int i, t_alloc *mem)
 		close(fd[1]);
 		if (i == 1)
 			dup2(fd[0], 0);
-		wait(&pid);
 		close(fd[0]);
+		wait(&pid);
 	}
 }
 
