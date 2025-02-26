@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/25 11:48:53 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 13:26:48 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,13 @@ static void	here_doc_read(int fd[2], char *limiter)
 
 	setup_heredoc_signals();
 	close(fd[0]);
+	ft_putstr_fd(">", 1);
 	str = ft_get_next_line(0);
 	while (ft_strncmp(str, limiter, ft_strlen(limiter)))
 	{
 		ft_putstr_fd(str, fd[1]);
 		free(str);
+		ft_putstr_fd(">", 1);
 		str = ft_get_next_line(0);
 	}
 	free(str);
@@ -31,7 +33,7 @@ static void	here_doc_read(int fd[2], char *limiter)
 	exit(0);
 }
 
-static void	here_doc_handle(char *limiter, int i, int stdin, int stdout)
+static void	here_doc_handle(char *limiter, int i, t_alloc *mem)
 {
 	int	pid;
 	int	fd[2];
@@ -43,8 +45,8 @@ static void	here_doc_handle(char *limiter, int i, int stdin, int stdout)
 		return ;
 	if (pid == 0)
 	{
-		close(stdin);
-		close(stdout);
+		close(mem->stdinstock);
+		close(mem->stdoutstock);
 		here_doc_read(fd, limiter);
 	}
 	else
@@ -57,20 +59,20 @@ static void	here_doc_handle(char *limiter, int i, int stdin, int stdout)
 	}
 }
 
-void	here_doc(t_alloc *mem)
+void	here_doc(t_alloc *mem, int fd_out)
 {
 	int	i;
 
 	i = 0;
 	g_sign = 1;
+	(void) fd_out;
 	while (mem->cmd->limiter[i])
 	{
 		if (!mem->cmd->limiter[i + 1])
-			here_doc_handle(mem->cmd->limiter[i], 1,
-				mem->stdinstock, mem->stdoutstock);
+			here_doc_handle(mem->cmd->limiter[i], 1, mem);
 		else
 			here_doc_handle(mem->cmd->limiter[i], 0,
-				mem->stdinstock, mem->stdoutstock);
+				mem);
 		i++;
 	}
 }

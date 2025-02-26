@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 16:13:22 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:04:36 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	mem_exit(int err)
 	t_alloc	*mem;
 
 	mem = get_mem();
+	close(mem->stdoutstock);
+	close(mem->stdinstock);
 	free_mem(mem);
 	free(mem);
 	exit(err);

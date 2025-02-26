@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 11:51:22 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 12:42:44 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,11 +122,17 @@ void		null_mem(t_alloc *mem);
 t_alloc		*get_mem(void);
 
 //Exec
-void		here_doc(t_alloc *mem);
+void		here_doc(t_alloc *mem, int fd_out);
 void		child_process(t_alloc *mem);
 void		multiple_pipe(t_alloc *mem);
-void		change_fd(t_alloc *mem, int pip_fd[2]);
+void		multiple_pipe_utils(t_alloc *mem, int pip_fd[2], int *i, int *pid);
+void		wait_process(int i, int c, int *pid, t_alloc *mem);
+void		close_fd_child(t_alloc *mem);
+void		reset_fd(t_alloc *mem, int pip_fd[2]);
+int			change_fd(t_alloc *mem, int pip_fd[2]);
 int			try_builtins(t_alloc *mem);
+int			*init_tab_pid(int c);
+int			create_process(t_alloc *mem, int fd[2]);
 
 //Clear
 char		*clear_param(char *str);

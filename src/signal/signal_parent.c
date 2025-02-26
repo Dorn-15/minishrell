@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:45:03 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 12:04:22 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:51:11 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ static void	signal_handler_heredoc(int signum)
 
 void	setup_heredoc_signals(void)
 {
+
 	signal(SIGINT, signal_handler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }

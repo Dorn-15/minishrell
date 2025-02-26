@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 11:37:53 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:38:40 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ static void	exec_launch(t_alloc *mem)
 		tmp = mem->cmd;
 		if (mem->cmd && !mem->cmd->next)
 		{
-			if (mem->cmd->limiter)
-				here_doc(mem);
 			g_sign = 0;
-			if (mem->cmd->cmd)
+			if (mem->cmd)
 			{
+				if (mem->cmd->limiter)
+					here_doc(mem, fd[0]);
 				change_fd(mem, fd);
-				if (try_builtins(mem))
+				if (mem->cmd->cmd && change_fd(mem, fd) && try_builtins(mem))
 					child_process(mem);
 			}
 		}
@@ -124,7 +124,6 @@ static void	shell_loop(t_alloc *mem)
 int	main(int ac, char **av, char **env)
 {
 	t_alloc	*mem;
-
 
 	(void)ac;
 	(void)av;

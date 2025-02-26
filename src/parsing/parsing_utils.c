@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/23 16:27:06 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:19:59 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,10 @@ t_cmd	*ft_lstclear_pars(t_cmd **list)
 			ft_freetab(tmp->cmd);
 		if (tmp->limiter)
 			ft_freetab(tmp->limiter);
+		if (tmp->fd_in != 0)
+			close(tmp->fd_in);
+		if (tmp->fd_out != 1)
+			close(tmp->fd_out);
 		if (tmp)
 			free(tmp);
 		tmp = *list;
@@ -53,8 +57,7 @@ t_cmd	*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	{
 		if (new_cmd->fd_out != 1)
 			close(new_cmd->fd_out);
-		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT
-				| O_TRUNC, 0777);
+		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	}
 	if (tk_str[i] == '7')
 	{
@@ -66,8 +69,12 @@ t_cmd	*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	{
 		if (new_cmd->fd_in != 1)
 			close(new_cmd->fd_out);
-		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT
-				| O_APPEND, 0777);
+		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT | O_APPEND, 0777);
+	}
+	if (tk_str[i] == '6' && new_cmd->fd_in != 0)
+	{
+		close(new_cmd->fd_in);
+		new_cmd->fd_in = 0;
 	}
 	return (new_cmd);
 }
