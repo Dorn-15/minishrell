@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:38:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/18 14:39:29 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:19:12 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	unset_rm_env(char **env, char *arg)
 int	unset_cmd(char **env, char **arg)
 {
 	int		i;
+	t_alloc	*mem;
 
 	i = 0;
 	if (!arg || !env || !*arg)
@@ -62,6 +63,13 @@ int	unset_cmd(char **env, char **arg)
 	{
 		if (ft_strchr(arg[i], '=') == NULL)
 			unset_rm_env(env, arg[i]);
+		if (ft_strcmp(arg[i], "PATH") == 0)
+		{
+			mem = get_mem();
+			if (mem->env_path)
+				free(mem->env_path);
+			mem->env_path = NULL;
+		}
 		i++;
 	}
 	return (0);

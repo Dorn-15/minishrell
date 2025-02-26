@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:32 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/24 11:11:29 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:17:02 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,24 @@ static char	*try_path(char *path_dir, char *cmd)
 	return (NULL);
 }
 
+static char	*path_env(char *cmd, char **env)
+{
+	int		i;
+	char	*path;
+
+	i = 0;
+	path = NULL;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0 && ft_strlen(env[i]) > 5)
+			path = env[i] + 5;
+		i++;
+	}
+	if (!path)
+		return (NULL);
+	return (path);
+}
+
 char	*find_path(char *cmd, char **env)
 {
 	char	**paths;
@@ -50,7 +68,9 @@ char	*find_path(char *cmd, char **env)
 	cmd_path = try_direct_path(cmd);
 	if (cmd_path || !env)
 		return (ft_strdup(cmd_path));
-	paths = ft_split(getenv("PATH"), ':');
+	paths = ft_split(path_env(cmd, env), ':');
+	if (!paths)
+		paths = ft_split(get_mem()->env_path, ':');
 	if (!paths)
 		return (NULL);
 	i = -1;

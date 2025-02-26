@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 12:42:44 by altheven         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:35:09 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ typedef struct s_alloc
 	int		exit_status;
 	t_cmd	*cmd;
 	char	*cmd_path;
+	char	*env_path;
 	int		stdinstock;
 	int		stdoutstock;
 }	t_alloc;

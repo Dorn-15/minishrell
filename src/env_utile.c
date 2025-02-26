@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:38:29 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/17 15:18:50 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 15:42:19 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,17 @@ static char	**new_env(void)
 {
 	char	**env;
 	char	cwd[PATH_MAX];
+	t_alloc	*mem;
 
+	mem = get_mem();
+	mem->env_path = ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:"
+		"/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin");
 	env = ft_calloc(4, sizeof(char *));
 	if (!env)
 		mem_exit(EXIT_FAILURE);
 	env[0] = ft_strjoin("PWD=", getcwd(cwd, sizeof(cwd)));
 	env[1] = ft_strdup("SHLVL=1");
-	env[2] = ft_strdup("_=/urs/bin/env");
+	env[2] = ft_strdup("_=/usr/bin/env");
 	if (!env[0] || !env[1] || !env[2])
 	{
 		if (env[0])
