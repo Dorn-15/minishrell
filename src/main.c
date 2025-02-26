@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/25 17:30:50 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 11:37:53 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ int	try_builtins(t_alloc *mem)
 	return (0);
 }
 
-//trouver solution pour detecter minishell si autre chemin
 void	child_process(t_alloc *mem)
 {
 	pid_t	pid;
