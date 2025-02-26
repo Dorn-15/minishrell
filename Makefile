@@ -8,8 +8,9 @@ SRCS = src/main.c \
 	src/path.c \
 	src/read.c \
 	src/write.c \
-	src/env_utile.c \
 	src/mem.c \
+	src/env/env_utile.c \
+	src/env/env_utile2.c \
 	src/cmd/env/env.c \
 	src/cmd/env/env_err.c \
 	src/cmd/exit.c \

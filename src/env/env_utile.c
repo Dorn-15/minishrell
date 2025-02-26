@@ -6,20 +6,11 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:38:29 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 15:42:19 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/02/26 16:52:27 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/minishell.h"
-
-void	swap_env(char **env1, char **env2)
-{
-	char	*tmp;
-
-	tmp = *env1;
-	*env1 = *env2;
-	*env2 = tmp;
-}
+#include "../../inc/minishell.h"
 
 static char	**new_env(void)
 {
@@ -49,6 +40,16 @@ static char	**new_env(void)
 	return (env);
 }
 
+static char	*new_shlvl(char *env)
+{
+	char	*shlvl;
+	int		lvl;
+
+	lvl = ft_atoi(env + 6);
+	lvl++;
+	shlvl = ft_strjoin("SHLVL=", ft_itoa(lvl));
+	return (shlvl);
+}
 char	**dup_env(char **env)
 {
 	int		i;
@@ -65,55 +66,12 @@ char	**dup_env(char **env)
 	i = -1;
 	while (env[++i])
 	{
-		if (ft_strncmp(env[i], "_=", 2) != 0)
+		if (ft_strncmp(env[i], "_=", 2) != 0 && ft_strncmp(env[i], "SHLVL=", 6) != 0)
 			envb[i] = ft_strdup(env[i]);
+		else if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
+			envb[i] = new_shlvl(env[i]);
 		else
 			envb[i] = ft_strdup("_=/usr/bin/env");
 	}
 	return (envb);
-}
-
-char	**tmp_env(char **env)
-{
-	char	**tmp;
-	int		i;
-
-	i = 0;
-	while (env[i])
-		i++;
-	tmp = ft_calloc(i + 1, sizeof(char *));
-	if (!tmp)
-		return (NULL);
-	i = 0;
-	while (env[i])
-	{
-		tmp[i] = env[i];
-		i++;
-	}
-	return (tmp);
-}
-
-int	new_var_env(t_alloc *mem, char *arg, int i)
-{
-	char	**tmp;
-
-	tmp = ft_calloc(i + 2, sizeof(char *));
-	if (!tmp)
-		return (1);
-	i = 0;
-	while (mem->env[i])
-	{
-		tmp[i] = mem->env[i];
-		i++;
-	}
-	tmp[i] = ft_strdup(arg);
-	if (!tmp[i])
-	{
-		free(tmp);
-		return (1);
-	}
-	tmp[i + 1] = NULL;
-	free(mem->env);
-	mem->env = tmp;
-	return (0);
 }
