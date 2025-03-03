@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/26 16:19:20 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:41:01 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	verif_limiter(char *s1, char *s2)
 	unsigned char	*s1b;
 	unsigned char	*s2b;
 
+	if(!s1 || !s2)
+		return (1);
 	i = 0;
 	s1b = (unsigned char *)s1;
 	s2b = (unsigned char *)s2;
@@ -38,18 +40,15 @@ static void	here_doc_read(int fd[2], char *limiter)
 
 	setup_heredoc_signals();
 	close(fd[0]);
-	ft_putstr_fd(">", 1);
-	str = ft_get_next_line(0);
-	//printf("%s\n", str);
+	str = readline(">");
 	while (verif_limiter(str, limiter))
 	{
 		ft_putstr_fd(str, fd[1]);
+		ft_putstr_fd("\n", fd[1]);
 		free(str);
-		ft_putstr_fd(">", 1);
-		str = ft_get_next_line(0);
+		str = readline(">");
 	}
 	free(str);
-	ft_get_next_line(-2);
 	close(fd[1]);
 	exit(0);
 }

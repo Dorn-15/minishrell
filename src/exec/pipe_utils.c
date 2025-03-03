@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:11:54 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/26 15:36:45 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:07:13 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ void	reset_fd(t_alloc *mem, int pip_fd[2])
 	if (mem->cmd->fd_out != 1)
 	{
 		fd_out = dup(mem->stdoutstock);
-		dup2(fd_out, 1);
+		dup2(fd_out, pip_fd[1]);
 		close(fd_out);
 	}
 	if (mem->cmd->fd_in != 0)
 	{
 		fd_in = dup(mem->stdinstock);
-		dup2(fd_in, 0);
+		dup2(fd_in, pip_fd[0]);
 		close(fd_in);
 	}
 }
@@ -72,6 +72,7 @@ void	multiple_pipe_utils(t_alloc *mem, int pip_fd[2], int *i, int *pid)
 		close(pip_fd[0]);
 		close(pip_fd[1]);
 	}
+	close_fd_handle(mem);
 }
 
 void	close_fd_child(t_alloc *mem)
@@ -82,7 +83,7 @@ void	close_fd_child(t_alloc *mem)
 	cmd = cmd->next;
 	while (cmd)
 	{
-		if (cmd->fd_in != 0)
+		if (cmd->fd_in != 0 && cmd->fd_in != -2)
 			close (cmd->fd_in);
 		if (cmd->fd_out != 1)
 			close (cmd->fd_out);

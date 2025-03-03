@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 15:35:09 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:09:13 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,8 @@ int			change_fd(t_alloc *mem, int pip_fd[2]);
 int			try_builtins(t_alloc *mem);
 int			*init_tab_pid(int c);
 int			create_process(t_alloc *mem, int fd[2]);
+int			change_fd_child(t_alloc *mem, int pip_fd[2]);
+void		close_fd_handle(t_alloc *mem);
 
 //Clear
 char		*clear_param(char *str);
