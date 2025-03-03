@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:38:29 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 16:52:27 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:30:51 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static char	**new_env(void)
 
 	mem = get_mem();
 	mem->env_path = ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:"
-		"/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin");
+			"/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin");
 	env = ft_calloc(4, sizeof(char *));
 	if (!env)
 		mem_exit(EXIT_FAILURE);
@@ -43,13 +43,17 @@ static char	**new_env(void)
 static char	*new_shlvl(char *env)
 {
 	char	*shlvl;
+	char	*char_lvl;
 	int		lvl;
 
 	lvl = ft_atoi(env + 6);
 	lvl++;
-	shlvl = ft_strjoin("SHLVL=", ft_itoa(lvl));
+	char_lvl = ft_itoa(lvl);
+	shlvl = ft_strjoin("SHLVL=", char_lvl);
+	free(char_lvl);
 	return (shlvl);
 }
+
 char	**dup_env(char **env)
 {
 	int		i;
@@ -66,7 +70,8 @@ char	**dup_env(char **env)
 	i = -1;
 	while (env[++i])
 	{
-		if (ft_strncmp(env[i], "_=", 2) != 0 && ft_strncmp(env[i], "SHLVL=", 6) != 0)
+		if (ft_strncmp(env[i], "_=", 2) != 0
+			&& ft_strncmp(env[i], "SHLVL=", 6) != 0)
 			envb[i] = ft_strdup(env[i]);
 		else if (ft_strncmp(env[i], "SHLVL=", 6) == 0)
 			envb[i] = new_shlvl(env[i]);

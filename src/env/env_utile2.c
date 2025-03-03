@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 16:49:33 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 16:52:34 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:23:40 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	swap_env(char **env1, char **env2)
 	*env1 = *env2;
 	*env2 = tmp;
 }
+
 char	**tmp_env(char **env)
 {
 	char	**tmp;

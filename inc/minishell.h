@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/03 15:09:13 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:39:56 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void		env_no_such_file(char *arg);
 void		env_invalid_option(char arg);
 void		env_unrecognized_option(char *arg);
 void		env_permission_denied(char *arg);
+void		env_no_arg(char *arg);
 
 //other_cmd
 int			pwd_cmd(char **arg);

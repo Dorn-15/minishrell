@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 12:43:20 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/16 18:19:42 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/03 20:39:14 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	env_err(char **arg)
 			env_permission_denied(arg[1]);
 			return (126);
 		}
-		env_no_such_file(arg[1]);
+		env_no_arg(arg[1]);
 		return (127);
 	}
 }
