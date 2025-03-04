@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/03 13:41:01 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:35:57 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static int	verif_limiter(char *s1, char *s2)
 	unsigned char	*s1b;
 	unsigned char	*s2b;
 
-	if(!s1 || !s2)
+	if (!s1 || !s2)
 		return (1);
 	i = 0;
 	s1b = (unsigned char *)s1;
@@ -30,7 +30,7 @@ static int	verif_limiter(char *s1, char *s2)
 		i++;
 	}
 	if (s1b[i] == '\n' && !s2b[i])
-		return(0);
+		return (0);
 	return (s1b[i] - s2b[i]);
 }
 
@@ -75,7 +75,7 @@ static void	here_doc_handle(char *limiter, int i, t_alloc *mem)
 		if (i == 1)
 			dup2(fd[0], 0);
 		close(fd[0]);
-		wait(&pid);
+		waitpid(pid, NULL, 0);
 	}
 }
 

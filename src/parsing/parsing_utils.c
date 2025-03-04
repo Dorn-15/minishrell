@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/03 13:14:36 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 11:12:20 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,19 +59,19 @@ t_cmd	*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 			close(new_cmd->fd_out);
 		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT | O_TRUNC, 0777);
 	}
-	if (tk_str[i] == '7')
+	else if (tk_str[i] == '7')
 	{
-		if (new_cmd->fd_in != 0)
+		if (new_cmd->fd_in != 0 && new_cmd->fd_in != -2 && new_cmd->fd_in != -1)
 			close(new_cmd->fd_in);
 		new_cmd->fd_in = open(arg[i], O_RDONLY, 0777);
 	}
-	if (tk_str[i] == '9')
+	else if (tk_str[i] == '9')
 	{
-		if (new_cmd->fd_in != 1)
+		if (new_cmd->fd_out != 1)
 			close(new_cmd->fd_out);
 		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT | O_APPEND, 0777);
 	}
-	if (tk_str[i] == '6')
+	else if (tk_str[i] == '6')
 	{
 		if (new_cmd->fd_in != 0 && new_cmd->fd_in != -2)
 			close(new_cmd->fd_in);

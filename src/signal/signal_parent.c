@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:45:03 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 14:51:11 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:34:49 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	signal_handler_heredoc(int signum)
 	t_alloc	*mem;
 
 	mem = get_mem();
+	g_sign = 5;
 	if (signum == SIGINT)
 	{
 		mem_exit(130);
@@ -51,7 +52,6 @@ static void	signal_handler_heredoc(int signum)
 
 void	setup_heredoc_signals(void)
 {
-
 	signal(SIGINT, signal_handler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
 }

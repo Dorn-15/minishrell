@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:44:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/03 15:09:40 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:55:18 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	change_fd_child(t_alloc *mem, int pip_fd[2])
 {
-	if (mem->cmd->fd_in != 0 && mem->cmd->fd_in != -2 )
+	if (mem->cmd->fd_in != 0 && mem->cmd->fd_in != -2)
 	{
 		if (mem->cmd->fd_in != -1)
 		{

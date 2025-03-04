@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/24 08:55:26 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:02:16 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,12 +89,17 @@ t_cmd	*parsing_list(char *tk_str, char **split_arg)
 	t_cmd	*new_cmd;
 	t_cmd	*list;
 	int		i;
+	int		n;
 
+	n = 0;
 	i = 0;
 	new_cmd = create_new_node(tk_str, split_arg, &i);
 	list = new_cmd;
 	while (tk_str[i] && new_cmd)
 	{
+		n++;
+		if (n > 250)
+			return (ft_lstclear_pars(&list));
 		new_cmd->next = create_new_node(tk_str, split_arg, &i);
 		if (!new_cmd)
 			return (ft_lstclear_pars(&list));

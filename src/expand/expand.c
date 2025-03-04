@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/24 11:06:42 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 12:00:00 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,11 @@ int	expand_size(const char *str)
 
 	i = 0;
 	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?'))
+	{
+		if (str[i] == '?')
+			return (i + 1);
 		i++;
+	}
 	return (i);
 }
 
@@ -42,12 +46,14 @@ static char	*create_exp_line(const char *str, char **exp, int i, int j)
 			i += expand_size(&str[i]);
 			j++;
 		}
-		if (str[i] && str[i] != '$')
+		if (str[i] && str[i] != '$' )
 		{
 			tmp[len++] = str[i++];
 			tmp[len] = '\0';
 		}
 	}
+	if ( tmp[ft_strlen(tmp) - 1] == ' ')
+		tmp[ft_strlen(tmp) - 1] = '\0';
 	return (ft_freetab(exp), tmp);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/03 13:48:37 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 09:58:10 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	create_process(t_alloc *mem, int fd[2])
 
 	pid = fork();
 	if (pid == -1)
-		return (-1); //gestion de retour d'erreur a faire
+		mem_exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
 		close(fd[0]);
@@ -101,7 +101,7 @@ void	multiple_pipe(t_alloc *mem)
 	c = ft_lstsize_pipe(mem->cmd);
 	pid = init_tab_pid(c);
 	if (!pid)
-		return ;
+		mem_exit(EXIT_FAILURE);
 	while (mem->cmd)
 	{
 		if (mem->cmd->limiter)
