@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:45:03 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/04 15:07:39 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:33:49 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	signal_handler_heredoc(int signum)
 	g_sign = 5;
 	if (signum == SIGINT)
 	{
+		close(0);
 		mem_exit(130);
 	}
 }

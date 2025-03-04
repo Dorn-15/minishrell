@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/04 14:35:57 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:42:29 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,18 @@ static void	here_doc_read(int fd[2], char *limiter)
 	setup_heredoc_signals();
 	close(fd[0]);
 	str = readline(">");
-	while (verif_limiter(str, limiter))
+	while (str != NULL && verif_limiter(str, limiter))
 	{
 		ft_putstr_fd(str, fd[1]);
 		ft_putstr_fd("\n", fd[1]);
 		free(str);
 		str = readline(">");
 	}
-	free(str);
+	if (str)
+		free(str);
+	else
+		ft_putstr_fd("bash: warning: here-document delimited by"
+			"end-of-file (wanted `limiter')\n", 2);
 	close(fd[1]);
 	exit(0);
 }
