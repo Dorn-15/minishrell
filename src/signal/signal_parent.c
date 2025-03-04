@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_parent.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:45:03 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/04 14:34:49 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:07:39 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	setup_parent_signals(void)
 /*heredoc*/
 static void	signal_handler_heredoc(int signum)
 {
-	t_alloc	*mem;
-
-	mem = get_mem();
 	g_sign = 5;
 	if (signum == SIGINT)
 	{

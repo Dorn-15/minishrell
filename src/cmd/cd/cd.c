@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:28 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/19 15:49:07 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:58:50 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	cd_oldpwd(t_alloc *mem)
 	{
 		cd_update_oldpwd(mem);
 		free(oldpwd);
-		printf("\n");
+		write(1, "\n", 1);
 		return (0);
 	}
 	err = cd_chdir(mem, oldpwd);

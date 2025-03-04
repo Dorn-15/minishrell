@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:23:11 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/27 11:41:14 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:02:36 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,18 @@ static int	check_export(char *arg)
 	i = 0;
 	if (!arg || !arg[0] || arg[0] == '=' || ft_isdigit(arg[0]) || arg[0] == '-')
 	{
-		printf("bash: export: `%s' : not a valid identifier\n", arg);
+		ft_putstr_fd("bash: export: `", 2);
+		ft_putstr_fd(arg, 2);
+		ft_putstr_fd("' : not a valid identifier\n", 2);
 		return (1);
 	}
 	while (arg[i] && arg[i] != '=')
 	{
 		if (!ft_isalnum(arg[i]) && arg[i] != '_')
 		{
-			printf("bash: export: `%s' : not a valid identifier\n", arg);
+			ft_putstr_fd("bash: export: `", 2);
+			ft_putstr_fd(arg, 2);
+			ft_putstr_fd("' : not a valid identifier\n", 2);
 			return (1);
 		}
 		i++;
