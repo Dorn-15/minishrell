@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/04 12:00:00 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 10:47:24 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,7 @@ static char	*create_exp_line(const char *str, char **exp, int i, int j)
 			tmp[len] = '\0';
 		}
 	}
-	if ( tmp[ft_strlen(tmp) - 1] == ' ')
-		tmp[ft_strlen(tmp) - 1] = '\0';
-	return (ft_freetab(exp), tmp);
+	return (del_space_tmp(exp, tmp));
 }
 
 char	*expand_getenv(char *name, char **env)

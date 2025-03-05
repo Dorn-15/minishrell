@@ -29,7 +29,7 @@ SRCS = src/main.c \
 	src/lexing/lex_split.c src/lexing/lexer.c src/lexing/utils_lexer.c \
 	src/expand/expand.c src/expand/expand_utils.c\
 	src/clear/clear_param.c src/clear/error_pars.c \
-	src/exec/here_doc.c src/exec/pipe.c src/exec/pipe_utils.c src/exec/child_utils.c\
+	src/exec/here_doc.c src/exec/pipe.c src/exec/pipe_utils.c src/exec/child_utils.c src/exec/here_doc_utils.c\
 	src/signal/signal_parent.c \
 	src/signal/signal_child.c
 

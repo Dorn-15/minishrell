@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/03 20:39:56 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:44:37 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_alloc
 	char	*env_path;
 	int		stdinstock;
 	int		stdoutstock;
+	int		*pid;
 }	t_alloc;
 
 //read_right
@@ -132,6 +133,7 @@ void		wait_process(int i, int c, int *pid, t_alloc *mem);
 void		close_fd_child(t_alloc *mem);
 void		reset_fd(t_alloc *mem, int pip_fd[2]);
 int			change_fd(t_alloc *mem, int pip_fd[2]);
+int			*get_fd_here_doc(int *fd);
 int			try_builtins(t_alloc *mem);
 int			*init_tab_pid(int c);
 int			create_process(t_alloc *mem, int fd[2]);
@@ -163,6 +165,7 @@ char		*expand(const char *str, t_alloc *mem);
 char		*search_expand_utils(const char *str, int *i, int *j, t_alloc *mem);
 char		*expand_getenv(char *name, char **env);
 char		*tmp_create(const char *str, char **exp);
+char		*del_space_tmp(char **exp, char *tmp);
 int			is_expand(const char *str);
 int			expand_size(const char *str);
 

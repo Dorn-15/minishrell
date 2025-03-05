@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/04 09:58:10 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:58:41 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,18 +31,13 @@ int	change_fd(t_alloc *mem, int pip_fd[2])
 	{
 		if (mem->cmd->fd_in != -1)
 			dup2(mem->cmd->fd_in, pip_fd[0]);
-		else
-			ft_putstr_fd("Minishell = Invalid infile fd\n", 2);
-		close(mem->cmd->fd_in);
 	}
 	if (mem->cmd->fd_out != 1)
 	{
 		if (mem->cmd->fd_out != -1)
 			dup2(mem->cmd->fd_out, pip_fd[1]);
-		else
-			ft_putstr_fd("Minishell = Invalid outfile fd\n", 2);
-		close(mem->cmd->fd_out);
 	}
+	close_fd_handle(mem);
 	if (mem->cmd->fd_out != -1 && mem->cmd->fd_in != -1)
 		return (1);
 	else
@@ -85,6 +80,8 @@ int	create_process(t_alloc *mem, int fd[2])
 		close(fd[1]);
 		if ((mem->cmd->next && mem->cmd->next->fd_in == 0) || !mem->cmd->next)
 			dup2(fd[0], 0);
+		if ((mem->cmd->next && mem->cmd->next->fd_in == -2))
+			waitpid(pid, NULL, 0);
 		close(fd[0]);
 		return (pid);
 	}
@@ -92,26 +89,26 @@ int	create_process(t_alloc *mem, int fd[2])
 
 void	multiple_pipe(t_alloc *mem)
 {
-	int	c;
-	int	pip_fd[2];
-	int	*pid;
-	int	i;
+	int		c;
+	int		pip_fd[2];
+	int		i;
+	t_alloc	tmp;
 
-	i = 0;
 	c = ft_lstsize_pipe(mem->cmd);
-	pid = init_tab_pid(c);
-	if (!pid)
+	mem->pid = init_tab_pid(c);
+	if (!mem->pid)
 		mem_exit(EXIT_FAILURE);
-	while (mem->cmd)
+	tmp = *mem;
+	i = 0;
+	while (tmp.cmd)
 	{
-		if (mem->cmd->limiter)
-			here_doc(mem, pip_fd[0]);
-		if (pipe(pip_fd) == -1 && mem->cmd->next)
+		if (tmp.cmd->limiter)
+			here_doc(&tmp, pip_fd[0]);
+		if (pipe(pip_fd) == -1 && tmp.cmd->next)
 			return ;
-		multiple_pipe_utils(mem, pip_fd, &i, pid);
-		mem->cmd = mem->cmd->next;
+		multiple_pipe_utils(&tmp, pip_fd, &i, tmp.pid);
+		tmp.cmd = tmp.cmd->next;
 	}
 	if (i > 0)
-		wait_process(i, c, pid, mem);
-	free(pid);
+		wait_process(i, c, tmp.pid, &tmp);
 }

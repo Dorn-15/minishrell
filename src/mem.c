@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 15:48:33 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:49:22 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,20 @@ void	free_mem(t_alloc *mem)
 		ft_lstclear_pars(&mem->cmd);
 	if (mem->env_path)
 		free(mem->env_path);
+	if (mem->pid)
+		free(mem->pid);
 	clear_history();
 }
 
 void	mem_exit(int err)
 {
 	t_alloc	*mem;
+	int		*fd;
 
 	mem = get_mem();
+	fd = get_fd_here_doc(NULL);
+	if (fd)
+		close(fd[1]);
 	close(mem->stdoutstock);
 	close(mem->stdinstock);
 	free_mem(mem);
@@ -62,6 +68,7 @@ t_alloc	*get_mem(void)
 		getcwd(mem->oldpwd, sizeof(mem->oldpwd));
 		mem->exit_status = 0;
 		mem->env_path = NULL;
+		mem->pid = NULL;
 		return (mem);
 	}
 	return (mem);
