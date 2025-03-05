@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 14:19:33 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:13:31 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ int	create_process(t_alloc *mem, int fd[2])
 {
 	int	pid;
 
-	pipe(fd);
 	pid = fork();
 	if (pid == -1)
 		mem_exit(EXIT_FAILURE);
@@ -105,7 +104,7 @@ void	multiple_pipe(t_alloc *mem)
 	{
 		if (tmp.cmd->limiter && !here_doc(&tmp, pip_fd[0]))
 			return ;
-		if (pipe(pip_fd) == -1 && tmp.cmd->next)
+		if (tmp.cmd->next && pipe(pip_fd) == -1)
 			return ;
 		multiple_pipe_utils(&tmp, pip_fd, &i, tmp.pid);
 		tmp.cmd = tmp.cmd->next;
