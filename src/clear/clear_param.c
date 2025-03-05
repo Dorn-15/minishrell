@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:14:22 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/19 12:56:47 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 15:31:30 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ static int	check_quote(char *str, int *j)
 
 	i = 0;
 	c = str[i];
+	i++;
 	while (str[i])
 	{
 		if (str[i] == c && i != 0)
@@ -72,14 +73,14 @@ char	*clear_param(char *str)
 	{
 		if ((str[i] == '"' || str[i] == '\'') && !check_quote(&str[i], &i))
 			return (error_clear(str));
-		if (!check_carac(str[i]))
+		else if (!check_carac(str[i]))
 			return (error_clear(str));
-		if (str[i] == '|' && !check_pipe(&str[i]))
+		else if (str[i] == '|' && !check_pipe(&str[i]))
 			return (error_clear(str));
-		if (str[i] && str[i] != '|' && str[i] != ' ' && str[i] != '\t'
+		else if (str[i] && str[i] != '|' && str[i] != ' ' && str[i] != '\t'
 			&& str[i] != '\n')
 			c++;
-		if (str[i] == '|' && c == 0)
+		else if (str[i] == '|' && c == 0)
 			return (error_clear(str));
 		i++;
 	}

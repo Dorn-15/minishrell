@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 09:31:11 by altheven          #+#    #+#             */
-/*   Updated: 2025/02/21 12:22:09 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/05 16:14:36 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,8 @@ char	*clear_word(char *str)
 		return (NULL);
 	while (str[i] && str[j])
 	{
-		if (str[i] == '\'' || str[i] == '"')
-		{
-			j = i + 1;
-			c = str[i];
-			while (str[j] && str[j] != c)
-				str[i++] = str[j++];
+		if (str[j] == '\'' || str[j] == '"')
 			j++;
-		}
 		else
 			str[i++] = str[j++];
 	}
