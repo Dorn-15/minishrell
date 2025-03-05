@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/05 12:30:37 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:20:03 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static void	exec_launch(t_alloc *mem)
 		tmp = mem->cmd;
 		if (mem->cmd && !mem->cmd->next)
 		{
-			g_sign = 0;
 			if (mem->cmd)
 			{
 				if (mem->cmd->limiter && !here_doc(mem, fd[0]))
@@ -105,7 +104,6 @@ static void	shell_loop(t_alloc *mem)
 	mem->stdoutstock = dup(1);
 	while (1)
 	{
-		g_sign = 0;
 		mem->line = read_cmd();
 		if (!mem->line)
 			break ;

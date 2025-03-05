@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:45:03 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/04 15:33:49 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:46:24 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,17 @@ static void	signal_handler(int signum)
 	mem = get_mem();
 	if (signum == SIGINT)
 	{
-		write(1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		if (!g_sign)
+		if (g_sign == 0)
 		{
+			write(1, "\n", 1);
+			rl_on_new_line();
+			rl_replace_line("", 0);
 			rl_redisplay();
+		}
+		else
+		{
+			write(1, "^C\n", 3);
+			rl_on_new_line();
 		}
 		mem->exit_status = 130;
 	}
@@ -40,7 +45,6 @@ void	setup_parent_signals(void)
 /*heredoc*/
 static void	signal_handler_heredoc(int signum)
 {
-	g_sign = 5;
 	if (signum == SIGINT)
 	{
 		close(0);

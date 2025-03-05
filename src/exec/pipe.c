@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 15:13:31 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:43:20 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,14 @@ int	create_process(t_alloc *mem, int fd[2])
 {
 	int	pid;
 
+	check_minishell_signal(mem->cmd->cmd[0]);
 	pid = fork();
 	if (pid == -1)
 		mem_exit(EXIT_FAILURE);
 	if (pid == 0)
 	{
+		g_sign = 1;
+		setup_child_signals();
 		close(fd[0]);
 		exec_child_process(mem, fd);
 	}
@@ -111,4 +114,5 @@ void	multiple_pipe(t_alloc *mem)
 	}
 	if (i > 0)
 		wait_process(i, c, tmp.pid, &tmp);
+	setup_parent_signals();
 }

@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 16:45:53 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 12:04:24 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/05 22:47:06 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,13 @@
 /*fork*/
 static void	signal_handler_fork(int signum)
 {
-	if (signum == SIGINT || signum == SIGQUIT)
+	if (signum == SIGINT)
 	{
 		write(2, "\n", 1);
 		rl_on_new_line();
 	}
+	else if (signum == SIGQUIT)
+		write(2, "Quit (core dumped)\n", 19);
 }
 
 void	setup_parent_fork(void)
