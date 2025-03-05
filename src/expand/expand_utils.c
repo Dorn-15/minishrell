@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:15:30 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 12:23:34 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:39:09 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	*tmp_create(const char *str, char **exp)
 	len = ft_strlen(str);
 	while (exp[i])
 		len += ft_strlen(exp[i++]);
-	tmp = malloc(sizeof(char) * (len + 1));
+	tmp = ft_calloc(sizeof(char), (len + 1));
 	if (!tmp)
 		return (NULL);
 	tmp[0] = '\0';
@@ -46,7 +46,10 @@ char	*search_expand_utils(const char *str, int *i, t_alloc *mem)
 
 char	*del_space_tmp(char **exp, char *tmp)
 {
-	if (tmp[ft_strlen(tmp) - 1] == ' ')
+	int	i;
+
+	i = ft_strlen(tmp);
+	if (tmp && i > 0 && tmp[i - 1] && tmp[i - 1] == ' ')
 		tmp[ft_strlen(tmp) - 1] = '\0';
 	ft_freetab(exp);
 	return (tmp);

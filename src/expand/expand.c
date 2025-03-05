@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 12:23:57 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:08:52 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,17 @@ int	expand_size(const char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && (ft_isalpha(str[i]) || str[i] == '_' || str[i] == '?'))
+	if (!str[i])
+		return (0);
+	if ((str[i] == '$' && !str[i + 1]) || ((str[i] == '$' && str[i + 1])
+			&& ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')))
+		return (i);
+	else
+		i++;
+	if (str[i] && !(ft_isalpha(str[i + 1]) || str[i + 1] == '_'
+			|| str[i + 1] == '?'))
+		return (i + 1);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'))
 	{
 		if (str[i] == '?')
 			return (i + 1);
@@ -42,11 +52,10 @@ static char	*create_exp_line(const char *str, char **exp, int i, int j)
 			ft_strlcat(tmp, (const char *) exp[j],
 				ft_strlen(exp[j]) + 1 + ft_strlen(tmp));
 			len += ft_strlen(exp[j]);
-			i++;
 			i += expand_size(&str[i]);
 			j++;
 		}
-		if (str[i] && str[i] != '$' )
+		if (str[i])
 		{
 			tmp[len++] = str[i++];
 			tmp[len] = '\0';

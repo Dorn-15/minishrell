@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_pars.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:03:29 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 12:32:07 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 21:09:06 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ t_cmd	*check_special_case(t_cmd *list, t_alloc *mem)
 	start = list;
 	while (list)
 	{
-		if (list->cmd && !ft_strncmp(list->cmd[0], ":", 1))
+		if (list->cmd && (!ft_strncmp(list->cmd[0], ":", 1)
+				|| !ft_strncmp(list->cmd[0], "!", 1)))
 			list->cmd = ft_freetab(list->cmd);
 		if (list->cmd && check_if_repo(list->cmd[0], mem))
 			list->cmd = ft_freetab(list->cmd);

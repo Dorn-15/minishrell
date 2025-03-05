@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clear_param.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 13:14:22 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 15:31:30 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 20:13:23 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	check_pipe(char *str)
 
 static int	check_carac(char c)
 {
-	if (c == '&' || c == ';' || c == '\\')
+	if (c == '&' || c == ';' || c == '\\' || c == ')' || c == '(')
 		return (0);
 	return (1);
 }
