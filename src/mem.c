@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/05 11:49:22 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:01:01 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,9 @@ void	null_mem(t_alloc *mem)
 		free(mem->line);
 	if (mem->cmd)
 		ft_lstclear_pars(&mem->cmd);
+	if (mem->pid)
+		free(mem->pid);
+	mem->pid = NULL;
 	mem->cmd_path = NULL;
 	mem->line = NULL;
 	mem->cmd = NULL;

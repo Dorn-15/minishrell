@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 11:58:41 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 11:59:53 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,8 +102,8 @@ void	multiple_pipe(t_alloc *mem)
 	i = 0;
 	while (tmp.cmd)
 	{
-		if (tmp.cmd->limiter)
-			here_doc(&tmp, pip_fd[0]);
+		if (tmp.cmd->limiter && !here_doc(&tmp, pip_fd[0]))
+			return ;
 		if (pipe(pip_fd) == -1 && tmp.cmd->next)
 			return ;
 		multiple_pipe_utils(&tmp, pip_fd, &i, tmp.pid);

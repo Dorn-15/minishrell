@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 11:21:50 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:01:58 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ static int	here_doc_handle(char *limiter, int i, t_alloc *mem)
 	return (check_return_here_doc(status));
 }
 
-void	here_doc(t_alloc *mem, int fd_out)
+int	here_doc(t_alloc *mem, int fd_out)
 {
 	int	i;
 	int	r;
@@ -111,5 +111,8 @@ void	here_doc(t_alloc *mem, int fd_out)
 			r = here_doc_handle(mem->cmd->limiter[i], 0, mem);
 		i++;
 	}
+	if (r == 130)
+		return (0);
 	mem->exit_status = 0;
+	return (1);
 }

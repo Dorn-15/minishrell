@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/05 11:44:37 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:01:26 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void		null_mem(t_alloc *mem);
 t_alloc		*get_mem(void);
 
 //Exec
-void		here_doc(t_alloc *mem, int fd_out);
+int			here_doc(t_alloc *mem, int fd_out);
 void		child_process(t_alloc *mem);
 void		multiple_pipe(t_alloc *mem);
 void		multiple_pipe_utils(t_alloc *mem, int pip_fd[2], int *i, int *pid);
