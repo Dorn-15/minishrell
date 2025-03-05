@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/05 12:01:26 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:20:12 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,7 @@ void		multiple_pipe_utils(t_alloc *mem, int pip_fd[2], int *i, int *pid);
 void		wait_process(int i, int c, int *pid, t_alloc *mem);
 void		close_fd_child(t_alloc *mem);
 void		reset_fd(t_alloc *mem, int pip_fd[2]);
+void		check_status_child(int status, t_alloc *mem);
 int			change_fd(t_alloc *mem, int pip_fd[2]);
 int			*get_fd_here_doc(int *fd);
 int			try_builtins(t_alloc *mem);
@@ -156,13 +157,13 @@ t_cmd		*parsing_list(char *tk_str, char **split_arg);
 t_cmd		*launch_pars(t_alloc *mem);
 t_cmd		*error_pars(int n, char **split_arg, char *tk_str, t_alloc *mem);
 t_cmd		*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd);
-t_cmd		*check_special_case(t_cmd *list, t_cmd *tmp, t_alloc *mem);
+t_cmd		*check_special_case(t_cmd *list, t_alloc *mem);
 char		**limiter_setting(char *tk_str, char **arg, int i);
 int			count_cmd(char *tk_str, int i, char n);
 
 //Expand
 char		*expand(const char *str, t_alloc *mem);
-char		*search_expand_utils(const char *str, int *i, int *j, t_alloc *mem);
+char		*search_expand_utils(const char *str, int *i, t_alloc *mem);
 char		*expand_getenv(char *name, char **env);
 char		*tmp_create(const char *str, char **exp);
 char		*del_space_tmp(char **exp, char *tmp);

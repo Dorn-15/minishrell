@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/03 12:12:00 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:30:37 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ void	child_process(t_alloc *mem)
 	}
 	waitpid(pid, &status, 0);
 	setup_parent_signals();
-	if (WIFEXITED(status))
-		mem->exit_status = WEXITSTATUS(status);
-	else if (WIFSIGNALED(status))
-		mem->exit_status = 128 + WTERMSIG(status);
+	check_status_child(status, mem);
 }
 
 static void	exec_launch(t_alloc *mem)
@@ -89,8 +86,8 @@ static void	exec_launch(t_alloc *mem)
 			g_sign = 0;
 			if (mem->cmd)
 			{
-				if (mem->cmd->limiter)
-					here_doc(mem, fd[0]);
+				if (mem->cmd->limiter && !here_doc(mem, fd[0]))
+					return ;
 				change_fd(mem, fd);
 				if (mem->cmd->cmd && change_fd(mem, fd) && try_builtins(mem))
 					child_process(mem);

@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/04 14:02:16 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 14:20:04 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,6 @@ t_cmd	*launch_pars(t_alloc *mem)
 		return (error_pars(0, NULL, tk_str, mem));
 	split_arg = NULL;
 	free (tk_str);
-	list = check_special_case(list, tmp, mem);
+	list = check_special_case(list, mem);
 	return (list);
 }

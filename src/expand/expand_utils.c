@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:15:30 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 10:36:32 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:23:34 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ char	*tmp_create(const char *str, char **exp)
 	return (tmp);
 }
 
-char	*search_expand_utils(const char *str, int *i, int *j, t_alloc *mem)
+char	*search_expand_utils(const char *str, int *i, t_alloc *mem)
 {
 	char	*exp_param;
 

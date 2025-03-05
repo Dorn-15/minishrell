@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 09:22:45 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 10:34:16 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:25:47 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,4 +22,5 @@ int	*get_fd_here_doc(int *fd)
 		return (fd_stock);
 	if (!fd_stock && !fd)
 		return (NULL);
+	return (fd);
 }

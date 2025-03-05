@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:44:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/04 09:55:18 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:29:44 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,12 @@ void	close_fd_handle(t_alloc *mem)
 		mem->exit_status = 1;
 		return ;
 	}
+}
+
+void	check_status_child(int status, t_alloc *mem)
+{
+	if (WIFEXITED(status))
+		mem->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		mem->exit_status = 128 + WTERMSIG(status);
 }

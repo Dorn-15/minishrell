@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/20 11:22:18 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:21:44 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,5 @@ int	exit_cmd(char **arg, int exit_status)
 		exit_num_err(arg);
 	ft_putstr_fd("exit\n", 1);
 	mem_exit(ft_atoi_uch(arg[1]));
+	return (0);
 }

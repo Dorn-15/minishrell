@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:32 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/26 16:17:02 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:20:28 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static char	*try_path(char *path_dir, char *cmd)
 	return (NULL);
 }
 
-static char	*path_env(char *cmd, char **env)
+static char	*path_env(char **env)
 {
 	int		i;
 	char	*path;
@@ -68,7 +68,7 @@ char	*find_path(char *cmd, char **env)
 	cmd_path = try_direct_path(cmd);
 	if (cmd_path || !env)
 		return (ft_strdup(cmd_path));
-	paths = ft_split(path_env(cmd, env), ':');
+	paths = ft_split(path_env(env), ':');
 	if (!paths)
 		paths = ft_split(get_mem()->env_path, ':');
 	if (!paths)

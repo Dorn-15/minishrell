@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 10:47:24 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/05 12:23:57 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ static char	**search_expand(const char *str, char **exp, t_alloc *mem)
 	{
 		if (str[i] == '$')
 		{
-			exp[j] = search_expand_utils(str, &i, &j, mem);
+			exp[j] = search_expand_utils(str, &i, mem);
 			if (!exp[j])
 				return (ft_freetab(exp));
 			j++;
