@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 22:43:20 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/06 11:23:21 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,19 @@ int	change_fd(t_alloc *mem, int pip_fd[2])
 
 static void	exec_child_process(t_alloc *mem, int pip[2])
 {
+	t_alloc	*tmp;
+
+	tmp = get_mem();
 	close(mem->stdoutstock);
 	close(mem->stdinstock);
 	change_fd_child(mem, pip);
 	close(pip[1]);
 	close_fd_child(mem);
 	if (!try_builtins(mem))
+	{
+		tmp->env = mem->env;
 		mem_exit(mem->exit_status);
+	}
 	mem->cmd_path = find_path(mem->cmd->cmd[0], mem->env);
 	if (!mem->cmd_path)
 		cmd_not_found(mem->cmd->cmd[0]);
@@ -107,12 +113,12 @@ void	multiple_pipe(t_alloc *mem)
 	{
 		if (tmp.cmd->limiter && !here_doc(&tmp, pip_fd[0]))
 			return ;
-		if (tmp.cmd->next && pipe(pip_fd) == -1)
+		if (pipe(pip_fd) == -1)
 			return ;
 		multiple_pipe_utils(&tmp, pip_fd, &i, tmp.pid);
 		tmp.cmd = tmp.cmd->next;
 	}
 	if (i > 0)
-		wait_process(i, c, tmp.pid, &tmp);
+		wait_process(i, c, tmp.pid, mem);
 	setup_parent_signals();
 }
