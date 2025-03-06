@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 21:08:52 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:15:27 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char	*create_exp_line(const char *str, char **exp, int i, int j)
 		return (ft_freetab(exp), NULL);
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '$' && exp[j])
 		{
 			ft_strlcat(tmp, (const char *) exp[j],
 				ft_strlen(exp[j]) + 1 + ft_strlen(tmp));
@@ -55,7 +55,7 @@ static char	*create_exp_line(const char *str, char **exp, int i, int j)
 			i += expand_size(&str[i]);
 			j++;
 		}
-		if (str[i])
+		else if (str[i])
 		{
 			tmp[len++] = str[i++];
 			tmp[len] = '\0';
@@ -86,12 +86,18 @@ static char	**search_expand(const char *str, char **exp, t_alloc *mem)
 {
 	int		i;
 	int		j;
+	int		sq;
+	int		dq;
 
+	sq = 0;
+	dq = 0;
 	i = 0;
 	j = 0;
 	while (str[i])
 	{
-		if (str[i] == '$')
+		if (str[i] == '"' || str[i] == '\'')
+			quote_counter_expand(str[i], &sq, &dq);
+		if ((str[i] == '$' && dq == 1) || (str[i] == '$' && sq == 0))
 		{
 			exp[j] = search_expand_utils(str, &i, mem);
 			if (!exp[j])

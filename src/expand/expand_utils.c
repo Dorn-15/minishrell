@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:15:30 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 20:39:09 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:11:03 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,22 @@ char	*del_space_tmp(char **exp, char *tmp)
 		tmp[ft_strlen(tmp) - 1] = '\0';
 	ft_freetab(exp);
 	return (tmp);
+}
+
+void	quote_counter_expand(char c, int *sq, int *dq)
+{
+	if (c == '"')
+	{
+		if (*dq == 0)
+			*dq = 1;
+		else
+			*dq = 0;
+	}
+	else
+	{
+		if (*sq == 0)
+			*sq = 1;
+		else
+			*sq = 0;
+	}
 }

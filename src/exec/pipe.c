@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/06 11:23:21 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:03:42 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ static void	exec_child_process(t_alloc *mem, int pip[2])
 	if (!mem->cmd_path)
 		cmd_not_found(mem->cmd->cmd[0]);
 	execve(mem->cmd_path, mem->cmd->cmd, mem->env);
+	if (!tmp->cmd_path && mem->cmd_path)
+		tmp->cmd_path = mem->cmd_path;
 	mem_exit(EXIT_FAILURE);
 }
 

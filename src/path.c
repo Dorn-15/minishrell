@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 11:51:32 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/05 12:20:28 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:59:24 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ static char	*try_direct_path(char *cmd)
 		return (NULL);
 	if ((cmd[0] == '/' || cmd[0] == '.') && access(cmd, X_OK) == 0)
 		return (cmd);
+	if (errno == EACCES)
+		cmd_not_found(cmd);
 	return (NULL);
 }
 
