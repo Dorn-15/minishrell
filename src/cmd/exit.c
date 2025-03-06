@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/05 12:21:44 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 12:29:29 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int	exit_cmd(char **arg, int exit_status)
 		ft_putstr_fd("exit\n", 1);
 		mem_exit(exit_status);
 	}
-	if (arg[1][0] == '-')
+	if (arg[1][0] == '-' || arg[1][0] == '+')
 		i = 1;
 	if (str_isdigit(arg[1] + i) != 0)
 		exit_num_err(arg);
