@@ -1,7 +1,7 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = -g -o -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror
 LFLAGS=-lreadline
 
 SRCS = src/main.c \
@@ -35,12 +35,14 @@ SRCS = src/main.c \
 
 OBJS = $(SRCS:.c=.o)
 
+LIBFT = ./libft/libft.a
+
 all: $(NAME)
 
-$(NAME): $(OBJS) libft
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) ./libft/libft.a $(LFLAGS)
+$(NAME):	$(OBJS) $(LIBFT)
+			$(CC) $(CFLAGS) -o $(NAME) $(OBJS) $(LIBFT) $(LFLAGS)
 
-libft:
+$(LIBFT):
 	make -C ./libft
 
 %.o: %.c

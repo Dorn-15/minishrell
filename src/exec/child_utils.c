@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:44:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 12:29:44 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:25:51 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,14 @@ void	close_fd_handle(t_alloc *mem)
 		if (mem->cmd->fd_in != -1)
 			close(mem->cmd->fd_in);
 		else
-			ft_putstr_fd("Minishell = Invalid infile fd\n", 2);
+			ft_putstr_fd("Minishell : Invalid infile fd\n", 2);
 	}
 	if (mem->cmd->fd_out != 1)
 	{
 		if (mem->cmd->fd_out != -1)
 			close(mem->cmd->fd_out);
 		else
-			ft_putstr_fd("Minishell = Invalid outfile fd\n", 2);
+			ft_putstr_fd("Minishell : Invalid outfile fd\n", 2);
 	}
 	if (mem->cmd->fd_out != -1 && mem->cmd->fd_in != -1)
 		return ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 09:11:54 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/03 15:07:13 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:43:54 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	*init_tab_pid(int c)
 {
 	int	*tab;
 
-	tab = malloc(sizeof(int) * (c));
+	tab = ft_calloc(sizeof(int), c);
 	if (!tab)
 		return (NULL);
 	else
@@ -50,11 +50,14 @@ void	wait_process(int i, int c, int *pid, t_alloc *mem)
 	while (i < c)
 	{
 		stat = 0;
-		waitpid(pid[i], &stat, 0);
-		if (WIFEXITED(stat))
-			mem->exit_status = WEXITSTATUS(stat);
-		else if (WIFSIGNALED(stat))
-			mem->exit_status = 128 + WTERMSIG(stat);
+		if (pid[i] != 0)
+		{
+			waitpid(pid[i], &stat, 0);
+			if (WIFEXITED(stat))
+				mem->exit_status = WEXITSTATUS(stat);
+			else if (WIFSIGNALED(stat))
+				mem->exit_status = 128 + WTERMSIG(stat);
+		}
 		i++;
 	}
 }

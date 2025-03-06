@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 08:20:59 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 15:35:24 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:24:26 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static size_t	ft_countword(char const *str, size_t tk, int i)
 			tk++;
 			space = 1;
 		}
-		else if (str[i] && space == 1 || (str[i] == '"' || str[i] == '\''))
+		else if ((str[i] && space == 1) || (str[i] == '"' || str[i] == '\''))
 		{
 			if (str[i] == '"' || str[i] == '\'')
 				i += quote_counter(&str[i]);

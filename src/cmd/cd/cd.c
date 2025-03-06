@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:28 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/04 14:58:50 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:07:54 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	cd_cmd(t_alloc *mem, char **arg)
 	err = 0;
 	if (!arg || !*arg)
 		return (1);
-	else if (!arg[1])
+	else if (!arg[1] || (arg[1] && !arg[1][0]))
 		return (cd_home(mem));
 	else if (arg[1][0] == '-' && arg[1][1] != '\0')
 		return (cd_invalid_option(arg[1][1]));
