@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 15:34:07 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:02:52 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,9 +115,7 @@ t_cmd	*launch_pars(t_alloc *mem)
 	char	**split_arg;
 	char	*tk_str;
 	t_cmd	*list;
-	t_cmd	*tmp;
 
-	tmp = NULL;
 	str = clear_param(mem->line);
 	if (!str)
 		return (error_pars(1, NULL, NULL, mem));

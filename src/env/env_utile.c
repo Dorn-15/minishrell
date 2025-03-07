@@ -3,24 +3,37 @@
 /*                                                        :::      ::::::::   */
 /*   env_utile.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:38:29 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/04 14:16:44 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:25:08 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/minishell.h"
 
+static void	get_path(char **env)
+{
+	int		i;
+	t_alloc	*mem;
+
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+			return ;
+		i++;
+	}
+	mem = get_mem();
+	mem->env_path = ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:"
+			"/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin");
+}
+
 static char	**new_env(void)
 {
 	char	**env;
 	char	cwd[PATH_MAX];
-	t_alloc	*mem;
 
-	mem = get_mem();
-	mem->env_path = ft_strdup("/usr/local/sbin:/usr/local/bin:/usr/sbin:"
-			"/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin");
 	env = ft_calloc(4, sizeof(char *));
 	if (!env)
 		mem_exit(EXIT_FAILURE);
@@ -37,6 +50,7 @@ static char	**new_env(void)
 			free(env[2]);
 		free(env);
 	}
+	get_path(env);
 	return (env);
 }
 
@@ -78,5 +92,6 @@ char	**dup_env(char **env)
 		else
 			envb[i] = ft_strdup("_=/usr/bin/env");
 	}
+	get_path(envb);
 	return (envb);
 }

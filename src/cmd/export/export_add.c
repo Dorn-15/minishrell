@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:23:11 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/04 15:02:36 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/07 16:22:40 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ int	add_export(t_alloc *mem, char **arg)
 		else if (ft_strchr(arg[i], '='))
 		{
 			if (ft_strncmp(arg[i], "PATH=", 5) == 0 && get_mem()->env_path)
+			{
 				free(get_mem()->env_path);
+				get_mem()->env_path = NULL;
+			}
 			if (add_export_with_equal(mem, arg[i]))
 				err = 1;
 		}

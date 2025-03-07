@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:24:45 by adoireau          #+#    #+#             */
-/*   Updated: 2025/02/18 14:41:06 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:02:15 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,19 +57,16 @@ void	cd_update_oldpwd(t_alloc *mem)
 void	cd_update_env(t_alloc *mem)
 {
 	int	i;
-	int	b;
 
 	cd_update_oldpwd(mem);
 	getcwd(mem->oldpwd, sizeof(mem->oldpwd));
 	i = 0;
-	b = 0;
 	while (mem->env[i])
 	{
 		if (ft_strncmp(mem->env[i], "PWD", 3) == 0)
 		{
 			free(mem->env[i]);
 			mem->env[i] = ft_strjoin("PWD=", mem->oldpwd);
-			b = 1;
 		}
 		i++;
 	}
