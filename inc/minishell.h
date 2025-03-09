@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/06 12:10:17 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:40:42 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ int			echo_cmd(char **arg);
 int			export_cmd(t_alloc *mem, char **arg);
 int			sort_export(char **env);
 int			add_export(t_alloc *mem, char **arg);
+int			add_export_with_equal(t_alloc *mem, char *arg);
 
 //cd_cmd
 int			cd_cmd(t_alloc *mem, char **arg);

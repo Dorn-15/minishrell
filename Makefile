@@ -18,6 +18,7 @@ SRCS = src/main.c \
 	src/cmd/export/export.c \
 	src/cmd/export/export_sort.c \
 	src/cmd/export/export_add.c \
+	src/cmd/export/export_add_with_equal.c \
 	src/cmd/unset/unset.c \
 	src/cmd/cd/cd.c \
 	src/cmd/cd/cd_err_1.c \

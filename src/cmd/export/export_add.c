@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:23:11 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/07 16:22:40 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/09 13:42:05 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_export(char *arg)
 	int	i;
 
 	i = 0;
-	if (!arg || !arg[0] || arg[0] == '=' || ft_isdigit(arg[0]) || arg[0] == '-')
+	if (!arg || !arg[0] || arg[0] == '=' || ft_isdigit(arg[0]) || arg[0] == '+')
 	{
 		ft_putstr_fd("bash: export: `", 2);
 		ft_putstr_fd(arg, 2);
@@ -26,7 +26,8 @@ static int	check_export(char *arg)
 	}
 	while (arg[i] && arg[i] != '=')
 	{
-		if (!ft_isalnum(arg[i]) && arg[i] != '_')
+		if (!ft_isalnum(arg[i]) && arg[i] != '_'
+			&& !(arg[i] == '+' && arg[i + 1] == '='))
 		{
 			ft_putstr_fd("bash: export: `", 2);
 			ft_putstr_fd(arg, 2);
@@ -36,31 +37,6 @@ static int	check_export(char *arg)
 		i++;
 	}
 	return (0);
-}
-
-static int	add_export_with_equal(t_alloc *mem, char *arg)
-{
-	int		i;
-	int		len;
-
-	len = 0;
-	while (arg[len] && arg[len] != '=')
-		len++;
-	i = 0;
-	while (mem->env[i])
-	{
-		if (!ft_strncmp(mem->env[i], arg, len)
-			&& (!mem->env[i][len] || mem->env[i][len] == '='))
-		{
-			free(mem->env[i]);
-			mem->env[i] = ft_strdup(arg);
-			if (!mem->env[i])
-				return (1);
-			return (0);
-		}
-		i++;
-	}
-	return (new_var_env(mem, arg, i));
 }
 
 static int	add_export_no_equal(t_alloc *mem, char *arg)
