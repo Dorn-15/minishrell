@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/09 13:40:42 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:04:39 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,6 @@ int			add_export_with_equal(t_alloc *mem, char *arg);
 int			cd_cmd(t_alloc *mem, char **arg);
 void		cd_update_env(t_alloc *mem);
 void		cd_update_oldpwd(t_alloc *mem);
-int			cd_oldpwd(t_alloc *mem);
 char		*cd_getenv(char *name, char **env);
 
 //cd_error

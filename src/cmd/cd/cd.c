@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 12:00:28 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/06 15:07:54 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:17:20 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	cd_chdir(t_alloc *mem, char *path)
 	return (err);
 }
 
-int	cd_home(t_alloc *mem)
+static int	cd_home(t_alloc *mem)
 {
 	char	*home;
 	int		err;
@@ -57,7 +57,7 @@ int	cd_home(t_alloc *mem)
 	return (err);
 }
 
-int	cd_oldpwd(t_alloc *mem)
+static int	cd_oldpwd(t_alloc *mem)
 {
 	char	*oldpwd;
 	int		err;
@@ -79,6 +79,23 @@ int	cd_oldpwd(t_alloc *mem)
 	return (err);
 }
 
+static int	cd_tilde(t_alloc *mem, char *arg)
+{
+	int		err;
+	char	*home;
+	char	*tmp;
+
+	err = 0;
+	home = cd_getenv("HOME", mem->env);
+	if (!home)
+		return (cd_home_not_set());
+	tmp = ft_strjoin(home, arg + 1);
+	err = cd_chdir(mem, tmp);
+	free(tmp);
+	free(home);
+	return (err);
+}
+
 int	cd_cmd(t_alloc *mem, char **arg)
 {
 	int	err;
@@ -94,6 +111,8 @@ int	cd_cmd(t_alloc *mem, char **arg)
 		return (cd_to_many_arg());
 	else if (arg[1][0] == '-')
 		return (cd_oldpwd(mem));
+	else if (arg[1][0] == '~')
+		return (cd_tilde(mem, arg[1]));
 	err = cd_chdir(mem, arg[1]);
 	return (err);
 }
