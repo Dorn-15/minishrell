@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/06 14:28:52 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:06:47 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ static void	exec_launch(t_alloc *mem)
 		{
 			if (mem->cmd)
 			{
-				if (mem->cmd->limiter && !here_doc(mem, fd[0]))
-					return ;
 				if (change_fd(mem, fd) && mem->cmd->cmd && try_builtins(mem))
 					child_process(mem);
 			}

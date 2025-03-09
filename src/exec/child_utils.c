@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:44:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/09 15:15:57 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:48:14 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	char_to_fd(t_alloc *mem)
 {
 	if (mem->cmd->name_in)
 		mem->cmd->fd_in = open(mem->cmd->name_in, O_RDONLY, 0777);
+	else if (mem->cmd->here_doc && mem->cmd->fd_in == -2)
+		read_from_here_doc(mem);
 	if (mem->cmd->name_out && mem->cmd->append == 0)
 		mem->cmd->fd_out = open(mem->cmd->name_out, O_WRONLY | O_CREAT
 				| O_TRUNC, 0777);

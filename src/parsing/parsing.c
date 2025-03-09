@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/09 14:46:11 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:40:16 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,8 @@ static t_cmd	*search_fd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	new_cmd->name_in = NULL;
 	new_cmd->name_out = NULL;
 	new_cmd->append = 0;
+	new_cmd->here_doc = NULL;
+	new_cmd->next = NULL;
 	while (tk_str[i] && tk_str[i] != '1')
 	{
 		if (tk_str[i] == '6' && !new_cmd->limiter)
@@ -71,6 +73,7 @@ static t_cmd	*create_new_node(char *tk_str, char **split_arg, int *i)
 	new_cmd = malloc(sizeof(t_cmd));
 	if (!new_cmd)
 		return (NULL);
+	new_cmd->cmd = NULL;
 	new_cmd = search_fd(tk_str, split_arg, *i, new_cmd);
 	if (!new_cmd)
 		return (NULL);
@@ -133,6 +136,9 @@ t_cmd	*launch_pars(t_alloc *mem)
 		return (error_pars(0, NULL, tk_str, mem));
 	split_arg = NULL;
 	free (tk_str);
+	list = here_doc_pars_list(list);
+	if (!list)
+		return (NULL);
 	list = check_special_case(list, mem);
 	return (list);
 }

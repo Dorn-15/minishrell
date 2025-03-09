@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/09 15:04:31 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:48:31 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_cmd
 	int				append;
 	char			*name_in;
 	char			*name_out;
+	char			**here_doc;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -125,7 +126,6 @@ void		null_mem(t_alloc *mem);
 t_alloc		*get_mem(void);
 
 //Exec
-int			here_doc(t_alloc *mem, int fd_out);
 void		child_process(t_alloc *mem);
 void		multiple_pipe(t_alloc *mem);
 void		multiple_pipe_utils(t_alloc *mem, int pip_fd[2], int *i, int *pid);
@@ -142,6 +142,7 @@ int			change_fd_child(t_alloc *mem, int pip_fd[2]);
 void		close_fd_handle(t_alloc *mem);
 void		char_to_fd(t_alloc *mem);
 void		cmd_not_found(char *cmd);
+void		read_from_here_doc(t_alloc *mem);
 
 //Clear
 char		*clear_param(char *str);
@@ -160,6 +161,9 @@ t_cmd		*launch_pars(t_alloc *mem);
 t_cmd		*error_pars(int n, char **split_arg, char *tk_str, t_alloc *mem);
 t_cmd		*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd);
 t_cmd		*check_special_case(t_cmd *list, t_alloc *mem);
+t_cmd		*here_doc(t_cmd *cmd);
+void		read_from_pipe(int fd, t_cmd **cmd);
+t_cmd		*here_doc_pars_list(t_cmd *cmd);
 char		**limiter_setting(char *tk_str, char **arg, int i);
 int			count_cmd(char *tk_str, int i, char n);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/05 12:01:01 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:41:57 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ t_alloc	*get_mem(void)
 		mem->exit_status = 0;
 		mem->env_path = NULL;
 		mem->pid = NULL;
+		mem->cmd = NULL;
 		return (mem);
 	}
 	return (mem);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/06 15:15:19 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:35:13 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	verif_limiter(char *s1, char *s2)
 	return (s1b[i] - s2b[i]);
 }
 
-static void	here_doc_read(int fd[2], char *limiter)
+static void	here_doc_read(int fd[2], char *limiter, t_cmd *cmd)
 {
 	char	*str;
 
@@ -63,10 +63,11 @@ static void	here_doc_read(int fd[2], char *limiter)
 		ft_putstr_fd("bash: warning: here-document delimited by"
 			"end-of-file (wanted `limiter')\n", 2);
 	close(fd[1]);
+	ft_lstclear_pars(&cmd);
 	mem_exit(0);
 }
 
-static int	here_doc_handle(char *limiter, int i, t_alloc *mem)
+static int	here_doc_handle(char *limiter, int i, t_alloc *mem, t_cmd **cmd)
 {
 	int	pid;
 	int	fd[2];
@@ -82,38 +83,39 @@ static int	here_doc_handle(char *limiter, int i, t_alloc *mem)
 	{
 		close(mem->stdinstock);
 		close(mem->stdoutstock);
-		here_doc_read(fd, limiter);
+		here_doc_read(fd, limiter, *(cmd));
 	}
 	else
 	{
 		close(fd[1]);
 		if (i == 1)
-			dup2(fd[0], 0);
+			read_from_pipe(fd[0], cmd);
 		waitpid(pid, &status, 0);
 		close(fd[0]);
 	}
 	return (check_return_here_doc(status));
 }
 
-int	here_doc(t_alloc *mem, int fd_out)
+t_cmd	*here_doc(t_cmd *cmd)
 {
-	int	i;
-	int	r;
+	int		i;
+	int		r;
+	t_alloc	*mem;
 
+	mem = get_mem();
 	i = 0;
 	r = 0;
 	g_sign = 1;
-	(void) fd_out;
-	while (mem->cmd->limiter[i] && r != 130)
+	while (cmd->limiter[i] && r != 130)
 	{
-		if (!mem->cmd->limiter[i + 1])
-			r = here_doc_handle(mem->cmd->limiter[i], 1, mem);
+		if (!cmd->limiter[i + 1])
+			r = here_doc_handle(cmd->limiter[i], 1, mem, &cmd);
 		else
-			r = here_doc_handle(mem->cmd->limiter[i], 0, mem);
+			r = here_doc_handle(cmd->limiter[i], 0, mem, &cmd);
 		i++;
 	}
 	if (r == 130)
-		return (0);
+		return (NULL);
 	mem->exit_status = 0;
-	return (1);
+	return (cmd);
 }

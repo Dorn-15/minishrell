@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/09 15:16:05 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 16:17:49 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ t_cmd	*ft_lstclear_pars(t_cmd **list)
 			ft_freetab(tmp->cmd);
 		if (tmp->limiter)
 			ft_freetab(tmp->limiter);
+		if (tmp->here_doc)
+			ft_freetab(tmp->here_doc);
 		if (tmp->name_in)
 			free(tmp->name_in);
 		if (tmp->name_out)
