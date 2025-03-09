@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_add_with_equal.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 18:23:11 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/09 13:42:04 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:16:28 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ static int	add_export_just_equal(t_alloc *mem, char *arg, int len)
 		i++;
 	}
 	return (new_var_env(mem, arg, i));
-
 }
 
 int	add_export_with_equal(t_alloc *mem, char *arg)

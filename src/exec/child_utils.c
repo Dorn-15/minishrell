@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:44:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/06 14:25:51 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:15:57 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	change_fd_child(t_alloc *mem, int pip_fd[2])
 {
+	char_to_fd(mem);
 	if (mem->cmd->fd_in != 0 && mem->cmd->fd_in != -2)
 	{
 		if (mem->cmd->fd_in != -1)
@@ -69,4 +70,16 @@ void	check_status_child(int status, t_alloc *mem)
 		mem->exit_status = WEXITSTATUS(status);
 	else if (WIFSIGNALED(status))
 		mem->exit_status = 128 + WTERMSIG(status);
+}
+
+void	char_to_fd(t_alloc *mem)
+{
+	if (mem->cmd->name_in)
+		mem->cmd->fd_in = open(mem->cmd->name_in, O_RDONLY, 0777);
+	if (mem->cmd->name_out && mem->cmd->append == 0)
+		mem->cmd->fd_out = open(mem->cmd->name_out, O_WRONLY | O_CREAT
+				| O_TRUNC, 0777);
+	else if (mem->cmd->name_out && mem->cmd->append == 1)
+		mem->cmd->fd_out = open(mem->cmd->name_out, O_WRONLY | O_CREAT
+				| O_APPEND, 0777);
 }

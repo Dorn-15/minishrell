@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 14:19:53 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:16:05 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ t_cmd	*ft_lstclear_pars(t_cmd **list)
 			ft_freetab(tmp->cmd);
 		if (tmp->limiter)
 			ft_freetab(tmp->limiter);
-		if (tmp->fd_in > 0 && tmp->fd_in != -2)
-			close(tmp->fd_in);
-		if (tmp->fd_out > 1)
-			close(tmp->fd_out);
+		if (tmp->name_in)
+			free(tmp->name_in);
+		if (tmp->name_out)
+			free(tmp->name_out);
 		if (tmp)
 			free(tmp);
 		tmp = *list;
@@ -51,30 +51,39 @@ t_cmd	*ft_lstclear_pars(t_cmd **list)
 	return (NULL);
 }
 
-t_cmd	*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
+static t_cmd	*out_fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 {
 	if (tk_str[i] == '8')
 	{
-		if (new_cmd->fd_out != 1)
-			close(new_cmd->fd_out);
-		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT | O_TRUNC, 0777);
-	}
-	else if (tk_str[i] == '7')
-	{
-		if (new_cmd->fd_in != 0 && new_cmd->fd_in != -2 && new_cmd->fd_in != -1)
-			close(new_cmd->fd_in);
-		new_cmd->fd_in = open(arg[i], O_RDONLY, 0777);
+		if (new_cmd->name_out != NULL)
+			free(new_cmd->name_out);
+		new_cmd->name_out = ft_strdup(arg[i]);
+		new_cmd->append = 0;
 	}
 	else if (tk_str[i] == '9')
 	{
-		if (new_cmd->fd_out != 1)
-			close(new_cmd->fd_out);
-		new_cmd->fd_out = open(arg[i], O_WRONLY | O_CREAT | O_APPEND, 0777);
+		if (new_cmd->name_out != NULL)
+			free(new_cmd->name_out);
+		new_cmd->name_out = ft_strdup(arg[i]);
+		new_cmd->append = 1;
+	}
+	return (new_cmd);
+}
+
+t_cmd	*fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
+{
+	new_cmd = out_fd_handler(tk_str, arg, i, new_cmd);
+	if (tk_str[i] == '7')
+	{
+		if (new_cmd->name_in != NULL)
+			free(new_cmd->name_in);
+		new_cmd->name_in = ft_strdup(arg[i]);
 	}
 	else if (tk_str[i] == '6')
 	{
-		if (new_cmd->fd_in != 0 && new_cmd->fd_in != -2)
-			close(new_cmd->fd_in);
+		if (new_cmd->name_in)
+			free(new_cmd->name_in);
+		new_cmd->name_in = NULL;
 		new_cmd->fd_in = -2;
 	}
 	return (new_cmd);

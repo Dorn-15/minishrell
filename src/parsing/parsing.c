@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/07 12:02:52 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/09 14:46:11 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,9 @@ static t_cmd	*search_fd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 	new_cmd->limiter = NULL;
 	new_cmd->fd_in = 0;
 	new_cmd->fd_out = 1;
+	new_cmd->name_in = NULL;
+	new_cmd->name_out = NULL;
+	new_cmd->append = 0;
 	while (tk_str[i] && tk_str[i] != '1')
 	{
 		if (tk_str[i] == '6' && !new_cmd->limiter)

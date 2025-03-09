@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/09 14:04:39 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:04:31 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,9 @@ typedef struct s_cmd
 	char			**limiter;
 	int				fd_in;
 	int				fd_out;
+	int				append;
+	char			*name_in;
+	char			*name_out;
 	struct s_cmd	*next;
 }					t_cmd;
 
@@ -70,9 +73,6 @@ typedef struct s_alloc
 
 //read_right
 char		*read_cmd(void);
-void		bash_start(void);
-void		cmd_not_found(char *cmd);
-
 //env_utils
 void		swap_env(char **env1, char **env2);
 char		**dup_env(char **env);
@@ -140,6 +140,8 @@ int			*init_tab_pid(int c);
 int			create_process(t_alloc *mem, int fd[2]);
 int			change_fd_child(t_alloc *mem, int pip_fd[2]);
 void		close_fd_handle(t_alloc *mem);
+void		char_to_fd(t_alloc *mem);
+void		cmd_not_found(char *cmd);
 
 //Clear
 char		*clear_param(char *str);

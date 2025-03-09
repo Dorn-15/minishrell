@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 17:19:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/06 14:03:42 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/09 15:06:19 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static int	ft_lstsize_pipe(t_cmd*lst)
 
 int	change_fd(t_alloc *mem, int pip_fd[2])
 {
+	char_to_fd(mem);
 	if (mem->cmd->fd_in != 0 && mem->cmd->fd_in != -2)
 	{
 		if (mem->cmd->fd_in != -1)
