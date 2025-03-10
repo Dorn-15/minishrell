@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/09 16:35:13 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/10 11:40:25 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	verif_limiter(char *s1, char *s2)
 	return (s1b[i] - s2b[i]);
 }
 
-static void	here_doc_read(int fd[2], char *limiter, t_cmd *cmd)
+static void	here_doc_read(int fd[2], char *limiter)
 {
 	char	*str;
 
@@ -63,7 +63,6 @@ static void	here_doc_read(int fd[2], char *limiter, t_cmd *cmd)
 		ft_putstr_fd("bash: warning: here-document delimited by"
 			"end-of-file (wanted `limiter')\n", 2);
 	close(fd[1]);
-	ft_lstclear_pars(&cmd);
 	mem_exit(0);
 }
 
@@ -83,7 +82,7 @@ static int	here_doc_handle(char *limiter, int i, t_alloc *mem, t_cmd **cmd)
 	{
 		close(mem->stdinstock);
 		close(mem->stdoutstock);
-		here_doc_read(fd, limiter, *(cmd));
+		here_doc_read(fd, limiter);
 	}
 	else
 	{
