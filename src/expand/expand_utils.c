@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:15:30 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/06 12:11:03 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:25:19 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*search_expand_utils(const char *str, int *i, t_alloc *mem)
 					expand_size(&str[*i + 1])), mem->env);
 	}
 	*i = *i + expand_size(&str[*i + 1]);
-	return (exp_param);
+	return (clear_word(exp_param));
 }
 
 char	*del_space_tmp(char **exp, char *tmp)

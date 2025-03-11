@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:44:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/09 16:48:14 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:03:16 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,28 @@ void	check_status_child(int status, t_alloc *mem)
 		mem->exit_status = 128 + WTERMSIG(status);
 }
 
+static int	fd_open_handle(char **tab, int append)
+{
+	int	i;
+	int	fd;
+
+	i = 0;
+	fd = 1;
+	while (tab && tab[i])
+	{
+		if (fd > 1)
+			close (fd);
+		if (append == 0)
+			fd = open(tab[i], O_WRONLY | O_CREAT
+					| O_TRUNC, 0777);
+		else
+			fd = open(tab[i], O_WRONLY | O_CREAT
+					| O_APPEND, 0777);
+		i++;
+	}
+	return (fd);
+}
+
 void	char_to_fd(t_alloc *mem)
 {
 	if (mem->cmd->name_in)
@@ -79,9 +101,19 @@ void	char_to_fd(t_alloc *mem)
 	else if (mem->cmd->here_doc && mem->cmd->fd_in == -2)
 		read_from_here_doc(mem);
 	if (mem->cmd->name_out && mem->cmd->append == 0)
-		mem->cmd->fd_out = open(mem->cmd->name_out, O_WRONLY | O_CREAT
-				| O_TRUNC, 0777);
-	else if (mem->cmd->name_out && mem->cmd->append == 1)
-		mem->cmd->fd_out = open(mem->cmd->name_out, O_WRONLY | O_CREAT
-				| O_APPEND, 0777);
+	{
+		if (mem->cmd->name_append)
+			mem->cmd->fd_out = fd_open_handle(mem->cmd->name_append, 1);
+		if (mem->cmd->fd_out > 1)
+			close (mem->cmd->fd_out);
+		mem->cmd->fd_out = fd_open_handle(mem->cmd->name_out, 0);
+	}
+	else if (mem->cmd->name_append && mem->cmd->append == 1)
+	{
+		if (mem->cmd->name_out)
+			mem->cmd->fd_out = fd_open_handle(mem->cmd->name_out, 0);
+		if (mem->cmd->fd_out > 1)
+			close (mem->cmd->fd_out);
+		mem->cmd->fd_out = fd_open_handle(mem->cmd->name_append, 1);
+	}
 }

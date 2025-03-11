@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 08:20:59 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/06 15:24:26 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 13:16:38 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static size_t	ft_countword(char const *str, size_t tk, int i)
 	return (tk);
 }
 
-static size_t	ft_wordlen(const char *s)
+size_t	ft_wordlen(const char *s)
 {
 	size_t	i;
 	char	c;
@@ -82,33 +82,20 @@ static size_t	ft_wordlen(const char *s)
 	return (i);
 }
 
-static char	*ft_word_to_dest(char const *str, t_alloc *mem)
+static char	*ft_word_to_dest(char const *str)
 {
 	char	*word;
 	size_t	lenw;
-	char	*tmp;
 
 	lenw = ft_wordlen(str);
-	if (is_expand(str))
-	{
-		tmp = ft_substr(str, 0, lenw + 1);
-		if (!tmp)
-			return (NULL);
-		word = expand(tmp, mem);
-		free(tmp);
-	}
-	else
-	{
-		word = malloc(sizeof(char) * (lenw + 1));
-		if (!word)
-			return (NULL);
-		ft_strlcpy(word, str, lenw + 1);
-	}
-	word = clear_word(word);
+	word = malloc(sizeof(char) * (lenw + 1));
+	if (!word)
+		return (NULL);
+	ft_strlcpy(word, str, lenw + 1);
 	return (word);
 }
 
-char	**lex_split(char *str, t_alloc *mem)
+char	**lex_split(char *str)
 {
 	size_t	countw;
 	size_t	w;
@@ -124,7 +111,7 @@ char	**lex_split(char *str, t_alloc *mem)
 	{
 		if (str[0] && !(str[0] >= 9 && str[0] <= 13) && str[0] != ' ')
 		{
-			dest[w] = ft_word_to_dest(str, mem);
+			dest[w] = ft_word_to_dest(str);
 			if (!dest[w])
 				return (ft_freetab(dest));
 			str = str + ft_wordlen(str);

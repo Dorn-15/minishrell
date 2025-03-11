@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/05 09:22:45 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/09 16:47:59 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:07:07 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int	*get_fd_here_doc(int *fd)
 	return (fd);
 }
 
-static char	**ft_realloc(int size, int count, char *line, char **here_doc)
+char	**ft_realloc(int size, int count, char *line, char **here_doc)
 {
 	char	**new;
 	int		i;
@@ -33,8 +33,12 @@ static char	**ft_realloc(int size, int count, char *line, char **here_doc)
 	i = 0;
 	new = ft_calloc(size, count);
 	if (!new)
-		return (ft_freetab(here_doc));
-	while (here_doc[i])
+	{	
+		if (here_doc)
+			return (ft_freetab(here_doc));
+		return (NULL);
+	}
+	while (here_doc && here_doc[i])
 	{
 		new[i] = here_doc[i];
 		i++;

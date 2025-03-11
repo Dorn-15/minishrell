@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/09 16:06:47 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:23:56 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	child_process(t_alloc *mem)
 	check_minishell_signal(mem->cmd->cmd[0]);
 	pid = fork();
 	if (pid == -1)
-		mem_exit(EXIT_FAILURE);
+		return ;
 	if (pid == 0)
 	{
 		g_sign = 1;
@@ -106,8 +106,7 @@ static void	shell_loop(t_alloc *mem)
 			break ;
 		exec_launch(mem);
 		null_mem(mem);
-		dup2(mem->stdoutstock, 1);
-		dup2(mem->stdinstock, 0);
+		reset_fd(mem);
 	}
 	close(mem->stdinstock);
 	close(mem->stdoutstock);
@@ -120,6 +119,8 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	mem = get_mem();
+	if (!mem)
+		exit(1);
 	mem->env = dup_env(env);
 	shell_loop(mem);
 	exit_cmd(NULL, mem->exit_status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mem.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:43:27 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/09 15:41:57 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:42:11 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ t_alloc	*get_mem(void)
 	if (!mem)
 	{
 		mem = ft_calloc(1, sizeof(t_alloc));
+		if (!mem)
+			return (NULL);
 		getcwd(mem->oldpwd, sizeof(mem->oldpwd));
 		mem->exit_status = 0;
 		mem->env_path = NULL;

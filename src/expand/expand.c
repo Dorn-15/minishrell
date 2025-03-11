@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/06 12:15:27 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 14:41:21 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	expand_size(const char *str)
 		return (i);
 	else
 		i++;
-	if (str[i] && !(ft_isalpha(str[i + 1]) || str[i + 1] == '_'
-			|| str[i + 1] == '?'))
+	if (str[i] && !(ft_isalpha(str[i]) || str[i] == '_'
+			|| str[i] == '?'))
 		return (i + 1);
 	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?'))
 	{
@@ -132,5 +132,5 @@ char	*expand(const char *str, t_alloc *mem)
 		return (NULL);
 	i = 0;
 	count = 0;
-	return (create_exp_line(str, exp, i, count));
+	return (create_exp_line(str, exp, count, i));
 }

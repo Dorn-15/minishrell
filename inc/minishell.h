@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/09 16:48:31 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 15:10:19 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,9 @@ typedef struct s_cmd
 	int				fd_in;
 	int				fd_out;
 	int				append;
+	char			**name_append;
 	char			*name_in;
-	char			*name_out;
+	char			**name_out;
 	char			**here_doc;
 	struct s_cmd	*next;
 }					t_cmd;
@@ -131,7 +132,7 @@ void		multiple_pipe(t_alloc *mem);
 void		multiple_pipe_utils(t_alloc *mem, int pip_fd[2], int *i, int *pid);
 void		wait_process(int i, int c, int *pid, t_alloc *mem);
 void		close_fd_child(t_alloc *mem);
-void		reset_fd(t_alloc *mem, int pip_fd[2]);
+void		reset_fd(t_alloc *mem);
 void		check_status_child(int status, t_alloc *mem);
 int			change_fd(t_alloc *mem, int pip_fd[2]);
 int			*get_fd_here_doc(int *fd);
@@ -150,7 +151,8 @@ char		*error_clear(char *str);
 
 //Lexer
 char		*lexer(char **split_arg);
-char		**lex_split(char *str, t_alloc *mem);
+size_t		ft_wordlen(const char *s);
+char		**lex_split(char *str);
 char		**ft_freetab(char **dest);
 int			count_tab(char**tab);
 char		*clear_word(char *str);
@@ -165,7 +167,9 @@ t_cmd		*here_doc(t_cmd *cmd);
 void		read_from_pipe(int fd, t_cmd **cmd);
 t_cmd		*here_doc_pars_list(t_cmd *cmd);
 char		**limiter_setting(char *tk_str, char **arg, int i);
+char		**ft_realloc(int size, int count, char *line, char **here_doc);
 int			count_cmd(char *tk_str, int i, char n);
+int			ft_count_tab(char **tab);
 
 //Expand
 char		*expand(const char *str, t_alloc *mem);
@@ -175,7 +179,9 @@ char		*tmp_create(const char *str, char **exp);
 char		*del_space_tmp(char **exp, char *tmp);
 int			is_expand(const char *str);
 int			expand_size(const char *str);
+char		**expand_and_clear(char **tab);
 void		quote_counter_expand(char c, int *sq, int *dq);
+char		**ft_split_expand(char const *s, char c);
 
 //List
 t_cmd		*ft_lstclear_pars(t_cmd **list);

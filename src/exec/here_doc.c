@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 16:21:20 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/10 11:40:25 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 12:20:06 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ static int	here_doc_handle(char *limiter, int i, t_alloc *mem, t_cmd **cmd)
 
 	status = 0;
 	if (pipe(fd) == -1)
-		mem_exit(EXIT_FAILURE);
+		return (129);
 	pid = fork();
 	if (pid == -1)
-		mem_exit(EXIT_FAILURE);
+		return (1);
 	if (pid == 0)
 	{
 		close(mem->stdinstock);
@@ -115,6 +115,6 @@ t_cmd	*here_doc(t_cmd *cmd)
 	}
 	if (r == 130)
 		return (NULL);
-	mem->exit_status = 0;
+	mem->exit_status = r;
 	return (cmd);
 }

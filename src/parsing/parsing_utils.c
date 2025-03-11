@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 13:44:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/10 11:38:03 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 11:14:17 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,10 @@ t_cmd	*ft_lstclear_pars(t_cmd **list)
 			ft_freetab(tmp->here_doc);
 		if (tmp->name_in)
 			free(tmp->name_in);
+		if (tmp->name_append)
+			ft_freetab(tmp->name_append);
 		if (tmp->name_out)
-			free(tmp->name_out);
+			ft_freetab(tmp->name_out);
 		if (tmp)
 			free(tmp);
 		tmp = *list;
@@ -57,16 +59,16 @@ static t_cmd	*out_fd_handler(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 {
 	if (tk_str[i] == '8')
 	{
-		if (new_cmd->name_out != NULL)
-			free(new_cmd->name_out);
-		new_cmd->name_out = ft_strdup(arg[i]);
+		new_cmd->name_out = ft_realloc(sizeof(char *),
+				ft_count_tab(new_cmd->name_out) + 2,
+				ft_strdup(arg[i]), new_cmd->name_out);
 		new_cmd->append = 0;
 	}
 	else if (tk_str[i] == '9')
 	{
-		if (new_cmd->name_out != NULL)
-			free(new_cmd->name_out);
-		new_cmd->name_out = ft_strdup(arg[i]);
+		new_cmd->name_append = ft_realloc(sizeof(char *),
+				ft_count_tab(new_cmd->name_append) + 2,
+				ft_strdup(arg[i]), new_cmd->name_append);
 		new_cmd->append = 1;
 	}
 	return (new_cmd);

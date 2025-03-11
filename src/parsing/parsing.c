@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:50:44 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/09 16:40:16 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:27:51 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static t_cmd	*search_cmd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 
 	n = i;
 	c = count_cmd(tk_str, i, '0');
-	new_cmd->cmd = malloc(sizeof(char *) * (c + 1));
+	new_cmd->cmd = ft_calloc(sizeof(char *), (c + 1));
 	if (!new_cmd->cmd)
 		return (NULL);
 	i = n;
@@ -36,11 +36,13 @@ static t_cmd	*search_cmd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 		i++;
 	}
 	new_cmd->cmd[n] = NULL;
+	new_cmd->cmd = expand_and_clear(new_cmd->cmd);
 	return (new_cmd);
 }
 
 static t_cmd	*search_fd(char *tk_str, char **arg, int i, t_cmd *new_cmd)
 {
+	new_cmd->name_append = NULL;
 	new_cmd->limiter = NULL;
 	new_cmd->fd_in = 0;
 	new_cmd->fd_out = 1;
@@ -70,7 +72,7 @@ static t_cmd	*create_new_node(char *tk_str, char **split_arg, int *i)
 {
 	t_cmd	*new_cmd;
 
-	new_cmd = malloc(sizeof(t_cmd));
+	new_cmd = ft_calloc(sizeof(t_cmd), 1);
 	if (!new_cmd)
 		return (NULL);
 	new_cmd->cmd = NULL;
@@ -125,7 +127,7 @@ t_cmd	*launch_pars(t_alloc *mem)
 	str = clear_param(mem->line);
 	if (!str)
 		return (error_pars(1, NULL, NULL, mem));
-	split_arg = lex_split(str, mem);
+	split_arg = lex_split(str);
 	if (!split_arg)
 		return (error_pars(0, NULL, NULL, mem));
 	tk_str = lexer(split_arg);

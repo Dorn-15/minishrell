@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_pars.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:03:29 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/05 21:09:06 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 16:38:34 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,77 @@ t_cmd	*check_special_case(t_cmd *list, t_alloc *mem)
 		list = list->next;
 	}
 	return (start);
+}
+
+int	ft_count_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (i);
+	while (tab[i])
+		i++;
+	return (i);
+}
+
+static char	**fusion_two_tab_char(char **dest, char **add, int *i)
+{
+	char	**tmp;
+	int		j;
+	int		n;
+
+	j = 0;
+	n = ft_count_tab(dest) + ft_count_tab(add) + 1;
+	tmp = ft_calloc(sizeof(char *), n);
+	n = 0;
+	if (!tmp)
+		return (ft_freetab(dest), ft_freetab(add));
+	while (dest[j] && j < *i)
+	{
+		tmp[j] = clear_word(dest[j]);
+		j++;
+	}
+	while (add && add[n])
+		tmp[j++] = clear_word(add[n++]);
+	n = *i + 1;
+	*i = j;
+	while (dest && dest[n])
+		tmp[j++] = clear_word(dest[n++]);
+	tmp[j] = NULL;
+	free(dest);
+	return (tmp);
+}
+
+char	**expand_and_clear(char **tab)
+{
+	int		i;
+	size_t	lenw;
+	char	*word;
+	char	*tmp;
+	char	**exp;
+
+	i = 0;
+	lenw = ft_wordlen(tab[i]);
+	while (tab && tab[i])
+	{
+		lenw = ft_wordlen(tab[i]);
+		if (is_expand(tab[i]))
+		{
+			tmp = ft_substr(tab[i], 0, lenw + 1);
+			if (!tmp)
+				return (NULL);
+			word = expand(tmp, get_mem());
+			exp = ft_split_expand(word, ' ');
+			free(word);
+			if (!exp)
+				return (NULL);
+			free (tab[i]);
+			free(tmp);
+			tab = fusion_two_tab_char(tab, exp, &i);
+			free (exp);
+		}
+		i++;
+	}
+	return (tab);
 }
