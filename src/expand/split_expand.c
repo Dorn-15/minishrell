@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:08:08 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/11 16:35:10 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/11 17:45:38 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,10 @@ static int	allocate_tab(char const *s, char c, char **tab)
 		if (s[i] != c && in_coat == 0)
 		{
 			if (s[i] == '"')
+			{
 				in_coat = (in_coat + 1) % 2;
+				i++;
+			}
 			j = i;
 			while (s[i] && (s[i] != c || in_coat == 1))
 				if (s[i++] == '"')
@@ -93,7 +96,6 @@ char	**ft_split_expand(char const *s, char c)
 	size_t	words;
 	char	**tab;
 
-	printf("%s\n", s);
 	if (!s)
 		return (NULL);
 	words = count_words(s, c);
@@ -106,8 +108,5 @@ char	**ft_split_expand(char const *s, char c)
 		free_split(tab);
 		return (NULL);
 	}
-	int	j = 0;
-	while (tab[j])
-		printf("%s\n", tab[j++]);
 	return (tab);
 }
