@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_pars.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:03:29 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/11 16:38:34 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:07:07 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static char	**fusion_two_tab_char(char **dest, char **add, int *i)
 	n = *i + 1;
 	*i = j;
 	while (dest && dest[n])
-		tmp[j++] = clear_word(dest[n++]);
+		tmp[j++] = dest[n++];
 	tmp[j] = NULL;
 	free(dest);
 	return (tmp);
@@ -126,7 +126,11 @@ char	**expand_and_clear(char **tab)
 			tab = fusion_two_tab_char(tab, exp, &i);
 			free (exp);
 		}
-		i++;
+		else
+		{
+			tab[i] = clear_word(tab[i]);
+			i++;
+		}
 	}
 	return (tab);
 }
