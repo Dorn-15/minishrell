@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:15:30 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/12 16:10:47 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/12 17:25:55 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,15 @@ char	*search_expand_utils(const char *str, int *i, t_alloc *mem)
 
 	if (str[*i] == '$' && str[*i + 1] && str[*i + 1] == '?')
 		exp_param = ft_itoa(mem->exit_status);
-	else
+	else if (str[*i] == '$' && str[*i + 1])
 	{
 		exp_param = expand_getenv(ft_substr(str, (*i + 1),
 					expand_size(&str[*i + 1])), mem->env);
+	}
+	else if (str[*i] == '$' && !str[*i + 1])
+	{
+		*i += 1;
+		return (ft_strdup("\0"));
 	}
 	*i = *i + expand_size(&str[*i + 1]);
 	return (clear_word(exp_param));
