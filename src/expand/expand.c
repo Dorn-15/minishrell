@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/17 08:14:49 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/11 14:41:21 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/12 16:16:13 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	expand_size(const char *str)
 	if ((str[i] == '$' && !str[i + 1]) || ((str[i] == '$' && str[i + 1])
 			&& ((str[i] >= 9 && str[i] <= 13) || str[i] == ' ')))
 		return (i);
-	else
+	else if (str[i] == '$')
 		i++;
 	if (str[i] && !(ft_isalpha(str[i]) || str[i] == '_'
 			|| str[i] == '?'))
@@ -104,7 +104,8 @@ static char	**search_expand(const char *str, char **exp, t_alloc *mem)
 				return (ft_freetab(exp));
 			j++;
 		}
-		i++;
+		else
+			i++;
 	}
 	exp[j] = NULL;
 	return (exp);
