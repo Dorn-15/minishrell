@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_expand.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/11 15:08:08 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/11 17:45:38 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:44:51 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,34 @@ static char	*allocate_word(const char *s, size_t start, size_t end)
 	return (word);
 }
 
+static int	process_word(char const *s, size_t *i, char **tab, size_t *index)
+{
+	size_t	j;
+	size_t	in_coat;
+
+	in_coat = 0;
+	if (s[*i] == '"')
+	{
+		in_coat = 1;
+		*i += 1;
+	}
+	j = *i;
+	while (s[*i] && (s[*i] != ' ' || in_coat == 1))
+	{
+		if (s[*i] == '"')
+			in_coat = (in_coat + 1) % 2;
+		*i += 1;
+	}
+	tab[*index] = allocate_word(s, j, *i);
+	if (tab[*index] == NULL)
+		return (0);
+	*index += 1;
+	return (1);
+}
+
 static int	allocate_tab(char const *s, char c, char **tab)
 {
 	size_t	i;
-	size_t	j;
 	size_t	index;
 	size_t	in_coat;
 
@@ -68,21 +92,10 @@ static int	allocate_tab(char const *s, char c, char **tab)
 	{
 		if (s[i] != c && in_coat == 0)
 		{
-			if (s[i] == '"')
-			{
-				in_coat = (in_coat + 1) % 2;
-				i++;
-			}
-			j = i;
-			while (s[i] && (s[i] != c || in_coat == 1))
-				if (s[i++] == '"')
-					in_coat = (in_coat + 1) % 2;
-			tab[index] = allocate_word(s, j, i);
-			if (tab[index] == NULL)
+			if (!process_word(s, &i, tab, &index))
 				return (0);
 			if (!s[i])
 				break ;
-			index++;
 		}
 		if (s[i] == '"')
 			in_coat = (in_coat + 1) % 2;

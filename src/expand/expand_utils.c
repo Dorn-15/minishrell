@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
+/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:15:30 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/11 16:25:19 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:45:19 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,16 @@ void	quote_counter_expand(char c, int *sq, int *dq)
 		else
 			*sq = 0;
 	}
+}
+
+int	ft_count_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (!tab)
+		return (i);
+	while (tab[i])
+		i++;
+	return (i);
 }

@@ -6,7 +6,7 @@
 /*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:03:29 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/12 13:07:07 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/12 13:43:37 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,6 @@ t_cmd	*check_special_case(t_cmd *list, t_alloc *mem)
 	return (start);
 }
 
-int	ft_count_tab(char **tab)
-{
-	int	i;
-
-	i = 0;
-	if (!tab)
-		return (i);
-	while (tab[i])
-		i++;
-	return (i);
-}
-
 static char	**fusion_two_tab_char(char **dest, char **add, int *i)
 {
 	char	**tmp;
@@ -98,33 +86,39 @@ static char	**fusion_two_tab_char(char **dest, char **add, int *i)
 	return (tmp);
 }
 
+static char	**process_expansion(char **tab, int *i)
+{
+	char	*tmp;
+	char	*word;
+	char	**exp;
+
+	tmp = ft_substr(tab[*i], 0, ft_wordlen(tab[*i]) + 1);
+	if (!tmp)
+		return (ft_freetab(tab));
+	word = expand(tmp, get_mem());
+	exp = ft_split_expand(word, ' ');
+	free(word);
+	free(tmp);
+	if (!exp)
+		return (ft_freetab(tab));
+	free(tab[*i]);
+	tab = fusion_two_tab_char(tab, exp, i);
+	free(exp);
+	return (tab);
+}
+
 char	**expand_and_clear(char **tab)
 {
 	int		i;
-	size_t	lenw;
-	char	*word;
-	char	*tmp;
-	char	**exp;
 
 	i = 0;
-	lenw = ft_wordlen(tab[i]);
 	while (tab && tab[i])
 	{
-		lenw = ft_wordlen(tab[i]);
 		if (is_expand(tab[i]))
 		{
-			tmp = ft_substr(tab[i], 0, lenw + 1);
-			if (!tmp)
+			tab = process_expansion(tab, &i);
+			if (!tab)
 				return (NULL);
-			word = expand(tmp, get_mem());
-			exp = ft_split_expand(word, ' ');
-			free(word);
-			if (!exp)
-				return (NULL);
-			free (tab[i]);
-			free(tmp);
-			tab = fusion_two_tab_char(tab, exp, &i);
-			free (exp);
 		}
 		else
 		{
