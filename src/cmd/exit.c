@@ -6,7 +6,7 @@
 /*   By: adoireau <adoireau@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/05 17:14:12 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/06 12:29:29 by adoireau         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:41:49 by adoireau         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ static int	exit_test_long(char *arg, int signe)
 static void	exit_num_err(char **arg)
 {
 	ft_putstr_fd("exit\nbash: exit: ", 2);
-	ft_putstr_fd(arg[1], 2);
+	if (arg)
+		ft_putstr_fd(arg[1], 2);
 	ft_putstr_fd(": numeric argument required\n", 2);
 	mem_exit(2);
 }
@@ -71,6 +72,8 @@ int	exit_cmd(char **arg, int exit_status)
 		ft_putstr_fd("exit\n", 1);
 		mem_exit(exit_status);
 	}
+	if (arg[1] && !arg[2] && !arg[1][0])
+		exit_num_err(NULL);
 	if (arg[1][0] == '-' || arg[1][0] == '+')
 		i = 1;
 	if (str_isdigit(arg[1] + i) != 0)
