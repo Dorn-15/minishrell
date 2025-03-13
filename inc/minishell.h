@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/04 16:46:55 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/11 15:10:19 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/13 09:18:30 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ char		**limiter_setting(char *tk_str, char **arg, int i);
 char		**ft_realloc(int size, int count, char *line, char **here_doc);
 int			count_cmd(char *tk_str, int i, char n);
 int			ft_count_tab(char **tab);
+int			error_invalid_files(char *str, t_alloc *mem);
 
 //Expand
 char		*expand(const char *str, t_alloc *mem);

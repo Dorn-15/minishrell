@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 11:44:53 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/11 11:03:16 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/13 09:00:26 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ int	change_fd_child(t_alloc *mem, int pip_fd[2])
 		if (mem->cmd->fd_in != -1)
 		{
 			dup2(mem->cmd->fd_in, 0);
-			close(mem->cmd->fd_in);
 		}
 	}
 	if (mem->cmd->fd_out != 1)
@@ -28,11 +27,11 @@ int	change_fd_child(t_alloc *mem, int pip_fd[2])
 		if (mem->cmd->fd_out != -1)
 		{
 			dup2(mem->cmd->fd_out, 1);
-			close(mem->cmd->fd_out);
 		}
 	}
 	else if (mem->cmd->next)
 		dup2(pip_fd[1], 1);
+	close_fd_handle(mem);
 	if (mem->cmd->fd_out != -1 && mem->cmd->fd_in != -1)
 		return (1);
 	else

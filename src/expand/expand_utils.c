@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 07:15:30 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/12 17:25:55 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/13 08:48:49 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ char	*search_expand_utils(const char *str, int *i, t_alloc *mem)
 {
 	char	*exp_param;
 
+	exp_param = NULL;
 	if (str[*i] == '$' && str[*i + 1] && str[*i + 1] == '?')
 		exp_param = ft_itoa(mem->exit_status);
 	else if (str[*i] == '$' && str[*i + 1])

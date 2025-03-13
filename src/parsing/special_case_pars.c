@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_case_pars.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: altheven <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/23 17:03:29 by altheven          #+#    #+#             */
-/*   Updated: 2025/03/12 17:13:47 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/13 10:03:32 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ static int	check_if_repo(char *str, t_alloc *mem)
 				mem->exit_status = 126;
 				return (1);
 			}
-			else
-				return (0);
 		}
+		else
+			return (error_invalid_files(str, mem));
 	}
 	return (0);
 }

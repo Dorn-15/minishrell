@@ -6,7 +6,7 @@
 /*   By: altheven <altheven@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/03 13:48:18 by adoireau          #+#    #+#             */
-/*   Updated: 2025/03/11 12:23:56 by altheven         ###   ########.fr       */
+/*   Updated: 2025/03/13 09:50:31 by altheven         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	child_process(t_alloc *mem)
 		if (!try_builtins(mem))
 			mem_exit(mem->exit_status);
 		mem->cmd_path = find_path(mem->cmd->cmd[0], mem->env);
-		if (!mem->cmd_path)
+		if (!mem->cmd_path || !mem->cmd->cmd[0][0])
 			cmd_not_found(mem->cmd->cmd[0]);
 		execve(mem->cmd_path, mem->cmd->cmd, mem->env);
 		mem_exit(EXIT_FAILURE);
